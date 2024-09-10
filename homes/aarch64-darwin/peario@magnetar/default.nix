@@ -1,8 +1,14 @@
-{ config, lib, namespace, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkForce;
   inherit (lib.${namespace}) enabled disabled;
-in {
+in
+{
   space = {
     user = {
       enable = true;
@@ -31,7 +37,9 @@ in {
           };
         };
 
-        editors = { vscode = mkForce disabled; };
+        editors = {
+          vscode = mkForce disabled;
+        };
 
         # apps = {
         #   _1password = enabled;
@@ -50,12 +58,12 @@ in {
       };
     };
 
+    # These services are from `<root>/modules/home/services`
     services = {
       sops = {
         enable = true;
         # TODO(sops): Update `shared` to `magnetar` or other device specific identifier
-        defaultSopsFile =
-          lib.snowfall.fs.get-file "secrets/shared/default.yaml";
+        defaultSopsFile = lib.snowfall.fs.get-file "secrets/shared/default.yaml";
         sshKeyPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
       };
     };

@@ -1,16 +1,24 @@
-{ lib, config, namespace, ... }:
+{
+  lib,
+  config,
+  namespace,
+  ...
+}:
 let
   inherit (lib.${namespace}) enabled;
 
   cfg = config.${namespace}.user;
-in {
+in
+{
   space = {
     archetypes = {
       personal = enabled;
       workstation = enabled;
     };
 
-    security = { sops = enabled; };
+    security = {
+      sops = enabled;
+    };
 
     suites = {
       art = enabled;
@@ -40,7 +48,11 @@ in {
 
   security.pam.enableSudoTouchIdAuth = true;
 
-  users.users.${cfg.name} = { openssh = { authorizedKeys.keys = [ ]; }; };
+  users.users.${cfg.name} = {
+    openssh = {
+      authorizedKeys.keys = [ ];
+    };
+  };
 
   system.stateVersion = 4;
 }

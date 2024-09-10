@@ -2,9 +2,17 @@
   description = "Peario's Space";
 
   inputs = {
+    # A customizable runner
     anyrun.url = "github:anyrun-org/anyrun";
     anyrun-nixos-options.url = "github:n3oney/anyrun-nixos-options";
 
+    # Cachix agent for caching binaries
+    cachix-deploy-flake = {
+      url = "github:cachix/cachix-deploy-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    # Theme - Catppuccin
     catppuccin-cursors.url = "github:catppuccin/cursors";
     catppuccin.url = "github:catppuccin/nix";
 
@@ -21,7 +29,9 @@
     };
 
     # System Deployment
-    deploy-rs = { url = "github:serokell/deploy-rs"; };
+    deploy-rs = {
+      url = "github:serokell/deploy-rs";
+    };
 
     # GPG default configuration
     gpg-base-conf = {
@@ -123,10 +133,14 @@
     };
 
     # NixPkgs (nixos-unstable)
-    nixpkgs = { url = "github:nixos/nixpkgs/nixos-unstable"; };
+    nixpkgs = {
+      url = "github:nixos/nixpkgs/nixos-unstable";
+    };
 
     # NixPkgs (nixos-unstable)
-    nixpkgs-small = { url = "github:nixos/nixpkgs/nixos-unstable-small"; };
+    nixpkgs-small = {
+      url = "github:nixos/nixpkgs/nixos-unstable-small";
+    };
 
     # Build system images and artifacts supported by nixos-generators.
     nixos-generators = {
@@ -147,10 +161,14 @@
     };
 
     # Nix User Repository (master)
-    nur = { url = "github:nix-community/NUR"; };
+    nur = {
+      url = "github:nix-community/NUR";
+    };
 
     # Pre commit hooks
-    pre-commit-hooks = { url = "github:cachix/git-hooks.nix"; };
+    pre-commit-hooks = {
+      url = "github:cachix/git-hooks.nix";
+    };
 
     # Snowfall lib
     snowfall-lib = {
@@ -187,10 +205,13 @@
       flake = false;
     };
 
-    wezterm = { url = "github:wez/wezterm?dir=nix"; };
+    wezterm = {
+      url = "github:wez/wezterm?dir=nix";
+    };
   };
 
-  outputs = inputs:
+  outputs =
+    inputs:
     let
       inherit (inputs) snowfall-lib;
 
@@ -207,7 +228,8 @@
           namespace = "space";
         };
       };
-    in lib.mkFlake {
+    in
+    lib.mkFlake {
       channels-config = {
         allowBroken = true; # for 1Password
         allowUnfree = true;
@@ -215,11 +237,10 @@
         permittedInsecurePackages = [ ];
       };
 
-      overlays = with inputs;
-        [
-          # Use the overlay provided by this flake.
-          snowfall-flake.overlays."package/flake"
-        ];
+      overlays = with inputs; [
+        # Use the overlay provided by this flake.
+        snowfall-flake.overlays."package/flake"
+      ];
 
       homes.modules = with inputs; [
         anyrun.homeManagerModules.default
@@ -231,14 +252,18 @@
         spicetify-nix.homeManagerModules.default
       ];
 
-      systems = { modules = { nixos = with inputs; [ ]; }; };
+      systems = {
+        modules = {
+          nixos = with inputs; [ ];
+        };
+      };
 
-      templates = { snowfall.description = "Snowfall-lib template"; };
+      templates = {
+        snowfall.description = "Snowfall-lib template";
+      };
 
       deploy = lib.mkDeploy { inherit (inputs) self; };
 
-      outputs-builder = channels: {
-        formatter = channels.nixpkgs.nixfmt-rfc-style;
-      };
+      outputs-builder = channels: { formatter = channels.nixpkgs.nixfmt-rfc-style; };
     };
 }

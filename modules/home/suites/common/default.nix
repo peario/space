@@ -1,10 +1,17 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt enabled;
 
   cfg = config.${namespace}.suites.common;
-in {
+in
+{
   options.${namespace}.suites.common = {
     enable = mkBoolOpt false "Enable common configuration.";
   };
@@ -14,12 +21,21 @@ in {
     #   nixcfg = "nvim ~/${namespace}/flake.nix";
     # };
 
-    home.packages = with pkgs;
-      lib.optionals pkgs.stdenv.isLinux [ ncdu toilet tree ];
+    home.packages =
+      with pkgs;
+      lib.optionals pkgs.stdenv.isLinux [
+        ncdu
+        toilet
+        tree
+      ];
 
     space = {
       programs = {
-        graphical = { browsers = { firefox = enabled; }; };
+        graphical = {
+          browsers = {
+            firefox = enabled;
+          };
+        };
 
         terminal = {
           emulators = {
@@ -41,12 +57,16 @@ in {
             bottom = enabled;
             # btop = enabled;
             # colorls = enabled;
+            cachix = enabled;
             comma = enabled;
             direnv = enabled;
             eza = {
               enable = true;
 
-              extraOptions = [ "--group-directories-first" "--color=always" ];
+              extraOptions = [
+                "--group-directories-first"
+                "--color=always"
+              ];
 
               git = true;
               icons = true;
