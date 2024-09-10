@@ -1,20 +1,45 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
-  inherit (lib) mkIf mkOption mkEnableOption mkPackageOption types;
+  inherit (lib)
+    mkIf
+    mkOption
+    mkEnableOption
+    mkPackageOption
+    types
+    lists
+    ;
 
   cfg = config.${namespace}.programs.development.rust;
-in {
+in
+{
   options.${namespace}.programs.development.rust = {
-    enable = mkEnableOption "Enable Rust.";
+    enable = mkEnableOption "Enable Rust. Depends on C.";
 
     package = mkPackageOption pkgs "rustup" { };
 
-    # TODO(rust): Implement nested options
     other = {
       enable = mkEnableOption "Enable other tooling for Rust.";
       packages = mkOption {
         type = with types; listOf package;
-        default = with pkgs; [ ];
+        default = with pkgs; [
+          rustycli
+          systemfd
+          cargo-watch
+          cargo-bloat
+          cargo-expand
+          cargo-sort
+          wasm-pack
+          wasm-tools
+          wasm-bindgen-cli
+          trunk
+          silicon
+        ];
         description = "Other packages for Rust.";
       };
     };
@@ -30,7 +55,23 @@ in {
 
   config = mkIf cfg.enable {
     home = {
-      packages = [ cfg.package ];
+      packages =
+        [ cfg.package ]
+        ++ lists.optionals cfg.other.enable cfg.other.packages
+        ++ lists.optionals pkgs.stdenv.isDarwin (
+          with pkgs.darwin.apple_sdk.frameworks;
+          [
+            # TODO(apple_sdk): Check if all of them are necessary. Maybe extract somewhere else and
+            # make "opt-in"?
+            # For macOS systems
+            Security
+            CoreServices
+            CoreFoundation
+            Foundation
+            AppKit
+            IOKit
+          ]
+        );
 
       sessionVariables = {
         CARGO_HOME = "${config.home.homeDirectory}/${cfg.cargoHome}";
@@ -38,6 +79,14 @@ in {
           "$PATH"
           "${config.home.homeDirectory}/${cfg.cargoHome}/bin"
         ];
+        RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
+        # Add precompiled library to rustc search path
+        RUSTFLAGS = builtins.concatStringsSep " " (
+          builtins.map (a: ''-L ${a}/lib'') [
+            # add libraries here (e.g. pkgs.libvmi)
+            pkgs.libiconv
+          ]
+        );
       };
     };
   };

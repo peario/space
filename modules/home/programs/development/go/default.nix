@@ -1,11 +1,25 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib)
-    mkIf literalExpression mkOption mkEnableOption mkPackageOption types
-    mapAttrsToList;
+    mkIf
+    literalExpression
+    mkOption
+    mkEnableOption
+    mkPackageOption
+    types
+    mapAttrsToList
+    mkMerge
+    ;
 
   cfg = config.${namespace}.programs.development.go;
-in {
+in
+{
   options.${namespace}.programs.development.go = {
     enable = mkEnableOption "Enable Go.";
 
@@ -25,7 +39,10 @@ in {
       packages = mkOption {
         type = with types; listOf (uniq package);
         # NOTE(golang): goimports is included in gotools, maybe extract it into it's own package?
-        default = with pkgs; [ gotools gofumpt ];
+        default = with pkgs; [
+          gotools
+          gofumpt
+        ];
         description = "Packages for Go formatting.";
       };
     };
@@ -82,7 +99,7 @@ in {
 
     goPath = mkOption {
       type = with types; nullOr str;
-      default = null;
+      default = ".local/go";
       example = "go";
       description = ''
         Primary {env}`GOPATH` relative to
@@ -94,7 +111,10 @@ in {
     extraGoPaths = mkOption {
       type = types.listOf types.str;
       default = [ ];
-      example = [ "extraGoPath1" "extraGoPath2" ];
+      example = [
+        "extraGoPath1"
+        "extraGoPath2"
+      ];
       description = ''
         Extra {env}`GOPATH`s relative to {env}`HOME` appended
         after [](#opt-programs.go.goPath), if that option is set.
@@ -103,7 +123,7 @@ in {
 
     goBin = mkOption {
       type = with types; nullOr str;
-      default = null;
+      default = ".local/go/bin";
       example = ".local/bin.go";
       description = "GOBIN relative to HOME";
     };
@@ -111,7 +131,10 @@ in {
     goPrivate = mkOption {
       type = with types; listOf str;
       default = [ ];
-      example = [ "*.corp.example.com" "rsc.io/private" ];
+      example = [
+        "*.corp.example.com"
+        "rsc.io/private"
+      ];
       description = ''
         The {env}`GOPRIVATE` environment variable controls
         which modules the go command considers to be private (not
@@ -121,27 +144,32 @@ in {
     };
   };
 
-  config = mkIf cfg.enable {
-    home = {
-      packages = [ cfg.package ];
+  config = mkIf cfg.enable (mkMerge [
+    {
+      home.packages = [ cfg.package ];
 
-      file = let
-        goPath = if cfg.goPath != null then cfg.goPath else "go";
-        mkSrc = n: v: { "${goPath}/src/${n}".source = v; };
-      in builtins.foldl' (a: b: a // b) { } (mapAttrsToList mkSrc cfg.packages);
+      home.file =
+        let
+          goPath = if cfg.goPath != null then cfg.goPath else "go";
+          mkSrc = n: v: { "${goPath}/src/${n}".source = v; };
+        in
+        builtins.foldl' (a: b: a // b) { } (mapAttrsToList mkSrc cfg.packages);
+    }
 
-      sessionVariables = {
-        GOPATH = mkIf (cfg.goPath != null) builtins.concatStringsSep ":"
-          (map builtins.toPath
-            (builtins.map (path: "${config.home.homeDirectory}/${path}")
-              ([ cfg.goPath ] ++ cfg.extraGoPaths)));
+    (mkIf (cfg.goPath != null) {
+      home.sessionVariables.GOPATH = builtins.concatStringsSep ":" (
+        map builtins.toPath (
+          map (path: "${config.home.homeDirectory}/${path}") ([ cfg.goPath ] ++ cfg.extraGoPaths)
+        )
+      );
+    })
 
-        GOBIN = mkIf (cfg.goBin != null) builtins.toPath
-          "${config.home.homeDirectory}/${cfg.goBin}";
+    (mkIf (cfg.goBin != null) {
+      home.sessionVariables.GOBIN = "${config.home.homeDirectory}/${cfg.goBin}";
+    })
 
-        GOPRIVATE = mkIf (cfg.goPrivate != [ ]) builtins.concatStringsSep ","
-          cfg.goPrivate;
-      };
-    };
-  };
+    (mkIf (cfg.goPrivate != [ ]) {
+      home.sessionVariables.GOPRIVATE = builtins.concatStringsSep "," cfg.goPrivate;
+    })
+  ]);
 }

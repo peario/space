@@ -1,6 +1,15 @@
-{ inputs, mkShell, pkgs, system, namespace, ... }:
-let inherit (inputs) snowfall-flake;
-in mkShell {
+{
+  inputs,
+  mkShell,
+  pkgs,
+  system,
+  namespace,
+  ...
+}:
+let
+  inherit (inputs) snowfall-flake;
+in
+mkShell {
   packages = with pkgs; [
     # Development tools
     direnv
@@ -9,6 +18,7 @@ in mkShell {
     ripgrep
     fd
     fzf
+    silicon
 
     # Security
     age
