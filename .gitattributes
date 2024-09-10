@@ -1,0 +1,42 @@
+# Auto
+#  Detect text files and perform LF normalization
+*       text=auto
+
+# Graphics
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.svg   text
+
+# Lua
+*.lua   text
+
+# Markdown
+*.md    text linguist-detectable diff=markdown
+
+# Scripts
+*.bash  text eol=lf
+*.sh    text eol=lf
+*.zsh   text eol=lf
+
+# Serialisation
+*.json  text
+*.toml  text
+*.xml   text
+*.yaml  text
+*.yml   text
+
+# Sops (secrets)
+secrets/**/*.yaml diff=sopsdiffer
+secrets/**/*.json diff=sopsdiffer
+secrets/**/*.env diff=sopsdiffer
+secrets/**/*.ini diff=sopsdiffer
+
+
+# Text files where line endings should be preserved
+*.patch -text
+
+# Vim
+*.vim   text eol=lf
+.vimrc  text eol=lf
