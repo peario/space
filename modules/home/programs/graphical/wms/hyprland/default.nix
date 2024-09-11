@@ -1,4 +1,12 @@
-{ config, inputs, lib, pkgs, system, namespace, ... }:
+{
+  config,
+  inputs,
+  lib,
+  pkgs,
+  system,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf mkEnableOption getExe;
   inherit (lib.${namespace}) enabled;
@@ -6,25 +14,21 @@ let
 
   cfg = config.${namespace}.programs.graphical.wms.hyprland;
 
-  historicalLogAliases = builtins.listToAttrs (builtins.genList (x: {
-    name = "hl${toString (x + 1)}";
-    value =
-      "cat /tmp/hypr/$(command ls -t /tmp/hypr/ | grep -v '.lock$' | head -n ${
-        toString (x + 2)
-      } | tail -n 1)/hyprland${lib.optionalString cfg.enableDebug "d"}.log";
-  }) 4);
+  historicalLogAliases = builtins.listToAttrs (
+    builtins.genList (x: {
+      name = "hl${toString (x + 1)}";
+      value = "cat /tmp/hypr/$(command ls -t /tmp/hypr/ | grep -v '.lock$' | head -n ${toString (x + 2)} | tail -n 1)/hyprland${lib.optionalString cfg.enableDebug "d"}.log";
+    }) 4
+  );
 
-  historicalCrashAliases = builtins.listToAttrs (builtins.genList (x: {
-    name = "hlc${toString (x + 1)}";
-    value = "cat /home/${
-        config.${namespace}.user.name
-      }/.local/cache/hyprland/$(command ls -t /home/${
-        config.${namespace}.user.name
-      }/.local/cache/hyprland/ | grep 'hyprlandCrashReport' | head -n ${
-        toString (x + 2)
-      } | tail -n 1)";
-  }) 4);
-in {
+  historicalCrashAliases = builtins.listToAttrs (
+    builtins.genList (x: {
+      name = "hlc${toString (x + 1)}";
+      value = "cat /home/${config.${namespace}.user.name}/.local/cache/hyprland/$(command ls -t /home/${config.${namespace}.user.name}/.local/cache/hyprland/ | grep 'hyprlandCrashReport' | head -n ${toString (x + 2)} | tail -n 1)";
+    }) 4
+  );
+in
+{
   options.${namespace}.programs.graphical.wms.hyprland = {
     enable = mkEnableOption "Hyprland.";
     enableDebug = mkEnableOption "Enable debug mode.";
@@ -55,44 +59,44 @@ in {
         slurp
       ];
 
-      sessionVariables = {
-        CLUTTER_BACKEND = "wayland";
-        GDK_BACKEND = "wayland,x11";
-        HYPRCURSOR_THEME = config.${namespace}.theme.gtk.cursor.name;
-        HYPRCURSOR_SIZE = "${toString config.${namespace}.theme.cursor.size}";
-        MOZ_ENABLE_WAYLAND = "1";
-        MOZ_USE_XINPUT2 = "1";
-        # NOTE: causes gldriverquery crash on wayland
-        # SDL_VIDEODRIVER = "wayland";
-        WLR_DRM_NO_ATOMIC = "1";
-        XDG_SESSION_TYPE = "wayland";
-        _JAVA_AWT_WM_NONREPARENTING = "1";
-        __GL_GSYNC_ALLOWED = "0";
-        __GL_VRR_ALLOWED = "0";
-      } // mkIf cfg.enableDebug {
-        AQ_TRACE = "1";
-        HYPRLAND_LOG_WLR = "1";
-        HYPRLAND_TRACE = "1";
-      };
+      sessionVariables =
+        {
+          CLUTTER_BACKEND = "wayland";
+          GDK_BACKEND = "wayland,x11";
+          HYPRCURSOR_THEME = config.${namespace}.theme.gtk.cursor.name;
+          HYPRCURSOR_SIZE = "${toString config.${namespace}.theme.cursor.size}";
+          MOZ_ENABLE_WAYLAND = "1";
+          MOZ_USE_XINPUT2 = "1";
+          # NOTE: causes gldriverquery crash on wayland
+          # SDL_VIDEODRIVER = "wayland";
+          WLR_DRM_NO_ATOMIC = "1";
+          XDG_SESSION_TYPE = "wayland";
+          _JAVA_AWT_WM_NONREPARENTING = "1";
+          __GL_GSYNC_ALLOWED = "0";
+          __GL_VRR_ALLOWED = "0";
+        }
+        // mkIf cfg.enableDebug {
+          AQ_TRACE = "1";
+          HYPRLAND_LOG_WLR = "1";
+          HYPRLAND_TRACE = "1";
+        };
 
       shellAliases = {
-        hl = "cat $XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/hyprland${
-            lib.optionalString cfg.enableDebug "d"
-          }.log";
-        hlc = "cat /home/${
-            config.${namespace}.user.name
-          }/.local/cache/hyprland/$(command ls -t /home/${
-            config.${namespace}.user.name
-          }/.local/cache/hyprland/ | grep 'hyprlandCrashReport' | head -n 1)";
+        hl = "cat $XDG_RUNTIME_DIR/hypr/$HYPRLAND_INSTANCE_SIGNATURE/hyprland${lib.optionalString cfg.enableDebug "d"}.log";
+        hlc = "cat /home/${config.${namespace}.user.name}/.local/cache/hyprland/$(command ls -t /home/${config.${namespace}.user.name}/.local/cache/hyprland/ | grep 'hyprlandCrashReport' | head -n 1)";
       } // historicalLogAliases // historicalCrashAliases;
     };
 
     space = {
       programs = {
         graphical = {
-          launchers = { anyrun = enabled; };
+          launchers = {
+            anyrun = enabled;
+          };
 
-          screenlockers = { hyprlock = enabled; };
+          screenlockers = {
+            hyprlock = enabled;
+          };
         };
       };
 
@@ -107,7 +111,9 @@ in {
         };
       };
 
-      suites = { wlroots = enabled; };
+      suites = {
+        wlroots = enabled;
+      };
 
       theme = {
         gtk = enabled;
@@ -116,8 +122,10 @@ in {
     };
 
     wayland.windowManager.hyprland =
-      let systemctl = lib.getExe' pkgs.systemd "systemctl";
-      in {
+      let
+        systemctl = lib.getExe' pkgs.systemd "systemctl";
+      in
+      {
         enable = true;
 
         extraConfig =
@@ -128,18 +136,14 @@ in {
             ${cfg.appendConfig}
           '';
 
-        package = if cfg.enableDebug then
-          hyprland.packages.${system}.hyprland-debug
-        else
-          hyprland.packages.${system}.hyprland;
+        package =
+          if cfg.enableDebug then
+            hyprland.packages.${system}.hyprland-debug
+          else
+            hyprland.packages.${system}.hyprland;
 
         settings = {
-          exec = [
-            ''
-              ${
-                getExe pkgs.libnotify
-              } --icon ~/.face -u normal "Hello $(whoami)"''
-          ];
+          exec = [ ''${getExe pkgs.libnotify} --icon ~/.face -u normal "Hello $(whoami)"'' ];
         };
 
         systemd = {

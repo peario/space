@@ -1,54 +1,64 @@
-{ config, lib, namespace, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf mkMerge mkEnableOption;
 
   cfg = config.${namespace}.system.input;
-in {
+in
+{
   options.${namespace}.system.input = {
     enable = mkEnableOption "macOS input";
   };
 
-  config = mkIf cfg.enable (mkMerge [{
-    system = {
-      keyboard = {
-        enableKeyRemapping = true;
-        remapCapsLockToEscape = true;
-        # swapLeftCommandAndLeftAlt = true;
-      };
-
-      defaults = {
-        # trackpad settings
-        trackpad = {
-          # silent clicking = 0, default = 1
-          ActuationStrength = 0;
-          # enable tap to click
-          Clicking = true;
-          # firmness level, 0 = lightest, 2 = heaviest
-          FirstClickThreshold = 1;
-          # firmness level for force touch
-          SecondClickThreshold = 1;
-          # don't allow positional right click
-          TrackpadRightClick = true;
-          # three finger drag for space switching
-          # TrackpadThreeFingerDrag = true;
+  config = mkIf cfg.enable (mkMerge [
+    {
+      system = {
+        keyboard = {
+          enableKeyRemapping = true;
+          remapCapsLockToEscape = true;
+          # swapLeftCommandAndLeftAlt = true;
         };
 
-        ".GlobalPreferences" = { "com.apple.mouse.scaling" = 1.0; };
+        defaults = {
+          # trackpad settings
+          trackpad = {
+            # silent clicking = 0, default = 1
+            ActuationStrength = 0;
+            # enable tap to click
+            Clicking = true;
+            # firmness level, 0 = lightest, 2 = heaviest
+            FirstClickThreshold = 1;
+            # firmness level for force touch
+            SecondClickThreshold = 1;
+            # don't allow positional right click
+            TrackpadRightClick = true;
+            # three finger drag for space switching
+            # TrackpadThreeFingerDrag = true;
+          };
 
-        NSGlobalDomain = {
-          AppleKeyboardUIMode = 3;
-          ApplePressAndHoldEnabled = false;
+          ".GlobalPreferences" = {
+            "com.apple.mouse.scaling" = 1.0;
+          };
 
-          KeyRepeat = 1;
-          InitialKeyRepeat = 10;
+          NSGlobalDomain = {
+            AppleKeyboardUIMode = 3;
+            ApplePressAndHoldEnabled = false;
 
-          NSAutomaticCapitalizationEnabled = false;
-          NSAutomaticDashSubstitutionEnabled = false;
-          NSAutomaticQuoteSubstitutionEnabled = false;
-          NSAutomaticPeriodSubstitutionEnabled = false;
-          NSAutomaticSpellingCorrectionEnabled = false;
+            KeyRepeat = 1;
+            InitialKeyRepeat = 10;
+
+            NSAutomaticCapitalizationEnabled = false;
+            NSAutomaticDashSubstitutionEnabled = false;
+            NSAutomaticQuoteSubstitutionEnabled = false;
+            NSAutomaticPeriodSubstitutionEnabled = false;
+            NSAutomaticSpellingCorrectionEnabled = false;
+          };
         };
       };
-    };
-  }]);
+    }
+  ]);
 }

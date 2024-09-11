@@ -1,9 +1,15 @@
-{ config, lib, namespace, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf mkForce;
 
   cfg = config.${namespace}.system.networking;
-in {
+in
+{
   config = mkIf cfg.enable {
     networking.useNetworkd = mkForce true;
 
@@ -28,14 +34,13 @@ in {
         };
 
         # let me configure tailscale manually
-        "20-tailscale-ignore" =
-          mkIf config.${namespace}.services.tailscale.enable {
-            matchConfig.Name = "tailscale*";
-            linkConfig = {
-              Unmanaged = "yes";
-              RequiredForOnline = false;
-            };
+        "20-tailscale-ignore" = mkIf config.${namespace}.services.tailscale.enable {
+          matchConfig.Name = "tailscale*";
+          linkConfig = {
+            Unmanaged = "yes";
+            RequiredForOnline = false;
           };
+        };
       };
     };
   };

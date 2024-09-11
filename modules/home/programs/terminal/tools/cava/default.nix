@@ -1,16 +1,25 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.terminal.tools.cava;
-in {
+in
+{
   options.${namespace}.programs.terminal.tools.cava = {
     enable = mkBoolOpt false "Enable cava.";
   };
 
   config = mkIf cfg.enable {
-    home.shellAliases = { cava = "TERM=st-256color cava"; };
+    home.shellAliases = {
+      cava = "TERM=st-256color cava";
+    };
 
     programs.cava = {
       enable = true;

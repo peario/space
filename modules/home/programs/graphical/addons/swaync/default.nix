@@ -1,4 +1,13 @@
-{ config, inputs, lib, osConfig, pkgs, system, namespace, ... }:
+{
+  config,
+  inputs,
+  lib,
+  osConfig,
+  pkgs,
+  system,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
@@ -21,10 +30,10 @@ let
 
   settings = import ./settings.nix { inherit lib osConfig pkgs; };
   style = import ./style.nix;
-in {
+in
+{
   options.${namespace}.programs.graphical.addons.swaync = {
-    enable =
-      mkBoolOpt false "Whether to enable swaync in the desktop environment.";
+    enable = mkBoolOpt false "Whether to enable swaync in the desktop environment.";
   };
 
   config = mkIf cfg.enable {
@@ -36,7 +45,6 @@ in {
       inherit (style) style;
     };
 
-    systemd.user.services.swaync.Service.Environment =
-      "PATH=/run/wrappers/bin:${lib.makeBinPath dependencies}";
+    systemd.user.services.swaync.Service.Environment = "PATH=/run/wrappers/bin:${lib.makeBinPath dependencies}";
   };
 }

@@ -1,14 +1,23 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf mapAttrs;
 
   cfg = config.${namespace}.system.fonts;
-in {
-  imports =
-    [ (lib.snowfall.fs.get-file "modules/shared/system/fonts/default.nix") ];
+in
+{
+  imports = [ (lib.snowfall.fs.get-file "modules/shared/system/fonts/default.nix") ];
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ font-manager fontpreview ];
+    environment.systemPackages = with pkgs; [
+      font-manager
+      fontpreview
+    ];
 
     fonts = {
       packages = cfg.fonts;
@@ -21,20 +30,25 @@ in {
         hinting.enable = true;
 
         # TODO(fonts): Update list to fit my taste
-        defaultFonts = let
-          common = [
-            "MonaspiceNe Nerd Font"
-            "CaskaydiaCove Nerd Font Mono"
-            "Iosevka Nerd Font"
-            "Symbols Nerd Font"
-            "Noto Color Emoji"
-          ];
-        in mapAttrs (_: fonts: fonts ++ common) {
-          serif = [ "Noto Serif" ];
-          sansSerif = [ "Lexend" ];
-          emoji = [ "Noto Color Emoji" ];
-          monospace = [ "Source Code Pro Medium" "Source Han Mono" ];
-        };
+        defaultFonts =
+          let
+            common = [
+              "MonaspiceNe Nerd Font"
+              "CaskaydiaCove Nerd Font Mono"
+              "Iosevka Nerd Font"
+              "Symbols Nerd Font"
+              "Noto Color Emoji"
+            ];
+          in
+          mapAttrs (_: fonts: fonts ++ common) {
+            serif = [ "Noto Serif" ];
+            sansSerif = [ "Lexend" ];
+            emoji = [ "Noto Color Emoji" ];
+            monospace = [
+              "Source Code Pro Medium"
+              "Source Han Mono"
+            ];
+          };
       };
 
       fontDir = {

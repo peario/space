@@ -1,11 +1,19 @@
-{ config, inputs, lib, system, namespace, ... }:
+{
+  config,
+  inputs,
+  lib,
+  system,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf getExe getExe';
   inherit (lib.${namespace}) mkBoolOpt;
   inherit (inputs) hypridle;
 
   cfg = config.${namespace}.services.hypridle;
-in {
+in
+{
   options.${namespace}.services.hypridle = {
     enable = mkBoolOpt false "Whether to enable hypridle service.";
   };
@@ -17,9 +25,7 @@ in {
 
       settings = {
         general = {
-          after_sleep_cmd = "${
-              getExe' config.wayland.windowManager.hyprland.package "hyprctl"
-            } dispatch dpms on";
+          after_sleep_cmd = "${getExe' config.wayland.windowManager.hyprland.package "hyprctl"} dispatch dpms on";
           ignore_dbus_inhibit = false;
           lock_cmd = "${getExe config.programs.hyprlock.package}";
         };
@@ -31,18 +37,13 @@ in {
           }
           {
             timeout = 600;
-            on-timeout = "${
-                getExe' config.wayland.windowManager.hyprland.package "hyprctl"
-              } dispatch dpms off";
-            on-resume = "${
-                getExe' config.wayland.windowManager.hyprland.package "hyprctl"
-              } dispatch dpms on";
+            on-timeout = "${getExe' config.wayland.windowManager.hyprland.package "hyprctl"} dispatch dpms off";
+            on-resume = "${getExe' config.wayland.windowManager.hyprland.package "hyprctl"} dispatch dpms on";
           }
         ];
       };
     };
 
-    systemd.user.services.hypridle.Install.WantedBy =
-      [ "hyprland-session.target" ];
+    systemd.user.services.hypridle.Install.WantedBy = [ "hyprland-session.target" ];
   };
 }

@@ -1,4 +1,10 @@
-{ config, lib, namespace, pkgs, ... }:
+{
+  config,
+  lib,
+  namespace,
+  pkgs,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
@@ -11,9 +17,11 @@ let
     export PATH=${concatStringsSep ":" config.home.sessionPath}:$PATH
   '';
 
-  sessionVariables = concatStringsSep "\n" (mapAttrsToList (key: value: ''
-    export ${key}="${toString value}"
-  '') config.home.sessionVariables);
+  sessionVariables = concatStringsSep "\n" (
+    mapAttrsToList (key: value: ''
+      export ${key}="${toString value}"
+    '') config.home.sessionVariables
+  );
 
   apply-hm-env = pkgs.writeShellScript "apply-hm-env" ''
     ${sessionPath}
@@ -31,7 +39,8 @@ let
       --wait \
       bash -lc "exec ${apply-hm-env} $@"
   '';
-in {
+in
+{
   # TODO(run-as-service): Figure out what this is.
   options.${namespace}.programs.terminal.tools.run-as-service = {
     enable = mkBoolOpt false "Configure systemd-run support.";

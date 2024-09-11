@@ -1,10 +1,17 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.terminal.tools.git-crypt;
-in {
+in
+{
   options.${namespace}.programs.terminal.tools.git-crypt = {
     enable = mkBoolOpt false "Enable git-crypt.";
   };

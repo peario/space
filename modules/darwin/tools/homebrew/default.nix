@@ -1,10 +1,16 @@
-{ config, lib, namespace, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.tools.homebrew;
-in {
+in
+{
   options.${namespace}.tools.homebrew = {
     enable = mkBoolOpt false "Enable homebrew.";
     masEnable = mkBoolOpt false "Enable Mac App Store downloads.";
@@ -25,7 +31,10 @@ in {
         upgrade = true;
       };
 
-      taps = [ "homebrew/bundle" "homebrew/services" ];
+      taps = [
+        "homebrew/bundle"
+        "homebrew/services"
+      ];
     };
   };
 }

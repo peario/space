@@ -1,9 +1,15 @@
-{ config, lib, namespace, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkDefault mkIf mkForce;
 
   cfg = config.${namespace}.nix;
-in {
+in
+{
   imports = [ (lib.snowfall.fs.get-file "modules/shared/nix/default.nix") ];
 
   config = mkIf cfg.enable {
@@ -26,7 +32,9 @@ in {
       daemonIOSchedClass = "idle";
       daemonIOSchedPriority = 7;
 
-      gc = { dates = "Sun *-*-* 03:00"; };
+      gc = {
+        dates = "Sun *-*-* 03:00";
+      };
 
       optimise = {
         automatic = true;

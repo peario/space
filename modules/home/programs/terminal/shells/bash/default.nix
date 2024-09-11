@@ -1,10 +1,16 @@
-{ config, lib, namespace, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.terminal.shell.bash;
-in {
+in
+{
   options.${namespace}.programs.terminal.shell.bash = {
     enable = mkBoolOpt false "Enable bash.";
   };

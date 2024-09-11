@@ -1,4 +1,10 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
@@ -11,7 +17,8 @@ let
   tasks = import ./keymap/tasks.nix { };
 
   cfg = config.${namespace}.programs.terminal.tools.yazi;
-in {
+in
+{
   imports = lib.snowfall.fs.get-non-default-nix-files ./configs/plugins;
 
   options.${namespace}.programs.terminal.tools.yazi = {
@@ -37,16 +44,26 @@ in {
       enableNushellIntegration = true;
       enableZshIntegration = true;
 
-      keymap = lib.mkMerge [ completion help input manager select tasks ];
+      keymap = lib.mkMerge [
+        completion
+        help
+        input
+        manager
+        select
+        tasks
+      ];
       settings = import ./yazi.nix { inherit lib pkgs; };
     };
 
     xdg.configFile = {
       "yazi" = {
         source = lib.cleanSourceWith {
-          filter = name: _type:
-            let baseName = baseNameOf (toString name);
-            in !lib.hasSuffix ".nix" baseName;
+          filter =
+            name: _type:
+            let
+              baseName = baseNameOf (toString name);
+            in
+            !lib.hasSuffix ".nix" baseName;
           src = lib.cleanSource ./configs/.;
         };
 

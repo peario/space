@@ -1,57 +1,67 @@
-{ config, lib, namespace, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf mkMerge mkEnableOption;
 
   cfg = config.${namespace}.system.input;
-in {
+in
+{
   options.${namespace}.system.input = {
     enable = mkEnableOption "macOS input";
   };
 
-  config = mkIf cfg.enable (mkMerge [{
-    system = {
-      keyboard = {
-        enableKeyMapping = true;
-        remapCapsLockToEscape = true;
-        # swapLeftCommandAndLeftAlt = true;
-      };
-
-      defaults = {
-        # trackpad settings
-        trackpad = {
-          # silent clicking = 0, default = 1
-          ActuationStrength = 0;
-          # enable tap to click
-          Clicking = true;
-          # firmness level, 0 = lightest, 2 = heaviest
-          FirstClickThreshold = 1;
-          # firmness level for force touch
-          SecondClickThreshold = 1;
-          # don't allow positional right click
-          TrackpadRightClick = true;
-          # three finger drag for space switching
-          # TrackpadThreeFingerDrag = true;
+  config = mkIf cfg.enable (mkMerge [
+    {
+      system = {
+        keyboard = {
+          enableKeyMapping = true;
+          remapCapsLockToEscape = true;
+          # swapLeftCommandAndLeftAlt = true;
         };
 
-        ".GlobalPreferences" = { "com.apple.mouse.scaling" = 1.0; };
+        defaults = {
+          # trackpad settings
+          trackpad = {
+            # silent clicking = 0, default = 1
+            ActuationStrength = 0;
+            # enable tap to click
+            Clicking = true;
+            # firmness level, 0 = lightest, 2 = heaviest
+            FirstClickThreshold = 1;
+            # firmness level for force touch
+            SecondClickThreshold = 1;
+            # don't allow positional right click
+            TrackpadRightClick = true;
+            # three finger drag for space switching
+            # TrackpadThreeFingerDrag = true;
+          };
 
-        NSGlobalDomain = {
-          AppleKeyboardUIMode = 3;
+          ".GlobalPreferences" = {
+            "com.apple.mouse.scaling" = 1.0;
+          };
 
-          # Allow key repeat
-          ApplePressAndHoldEnabled = false;
-          # Deley between repeated keystrokes upon holding a key
-          KeyRepeat = 2; # normal minimum is 2 (30 ms)
-          # Delay before repeating keystrokes
-          InitialKeyRepeat = 15; # normal minimum is 15 (225 ms)
+          NSGlobalDomain = {
+            AppleKeyboardUIMode = 3;
 
-          NSAutomaticCapitalizationEnabled = false;
-          NSAutomaticDashSubstitutionEnabled = false;
-          NSAutomaticQuoteSubstitutionEnabled = false;
-          NSAutomaticPeriodSubstitutionEnabled = false;
-          NSAutomaticSpellingCorrectionEnabled = false;
+            # Allow key repeat
+            ApplePressAndHoldEnabled = false;
+            # Deley between repeated keystrokes upon holding a key
+            KeyRepeat = 2; # normal minimum is 2 (30 ms)
+            # Delay before repeating keystrokes
+            InitialKeyRepeat = 15; # normal minimum is 15 (225 ms)
+
+            NSAutomaticCapitalizationEnabled = false;
+            NSAutomaticDashSubstitutionEnabled = false;
+            NSAutomaticQuoteSubstitutionEnabled = false;
+            NSAutomaticPeriodSubstitutionEnabled = false;
+            NSAutomaticSpellingCorrectionEnabled = false;
+          };
         };
       };
-    };
-  }]);
+    }
+  ]);
 }

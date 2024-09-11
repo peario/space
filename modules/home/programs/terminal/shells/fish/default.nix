@@ -1,10 +1,18 @@
-{ config, lib, pkgs, osConfig, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  osConfig,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.terminal.shell.fish;
-in {
+in
+{
   options.${namespace}.programs.terminal.shell.fish = {
     enable = mkBoolOpt false "Enable fish.";
   };
@@ -18,22 +26,23 @@ in {
     programs.fish = {
       enable = true;
 
-      loginShellInit = let
-        # This naive quoting is good enough in this case. There shouldn't be any
-        # double quotes in the input string, and it needs to be double quoted in case
-        # it contains a space (which is unlikely!)
-        dquote = str: ''"'' + str + ''"'';
+      loginShellInit =
+        let
+          # This naive quoting is good enough in this case. There shouldn't be any
+          # double quotes in the input string, and it needs to be double quoted in case
+          # it contains a space (which is unlikely!)
+          dquote = str: ''"'' + str + ''"'';
 
-        makeBinPathList = map (path: path + "/bin");
-      in lib.optionalString pkgs.stdenv.isDarwin # fish
-      ''
-        export NIX_PATH="darwin-config=$HOME/.nixpkgs/darwin-configuration.nix:$HOME/.nix-defexpr/channels:$NIX_PATH"
-        fish_add_path --move --prepend --path ${
-          lib.concatMapStringsSep " " dquote
-          (makeBinPathList osConfig.environment.profiles)
-        }
-        set fish_user_paths $fish_user_paths
-      '';
+          makeBinPathList = map (path: path + "/bin");
+        in
+        lib.optionalString pkgs.stdenv.isDarwin # fish
+          ''
+            export NIX_PATH="darwin-config=$HOME/.nixpkgs/darwin-configuration.nix:$HOME/.nix-defexpr/channels:$NIX_PATH"
+            fish_add_path --move --prepend --path ${
+              lib.concatMapStringsSep " " dquote (makeBinPathList osConfig.environment.profiles)
+            }
+            set fish_user_paths $fish_user_paths
+          '';
 
       interactiveShellInit = # fish
         ''
@@ -41,7 +50,8 @@ in {
           if [ -f ~/.config/op/plugins.sh ];
               source ~/.config/op/plugins.sh
           end
-        '' + lib.optionalString pkgs.stdenv.isDarwin ''
+        ''
+        + lib.optionalString pkgs.stdenv.isDarwin ''
           # Brew environment
           if [ -f /opt/homebrew/bin/brew ];
           	eval "$("/opt/homebrew/bin/brew" shellenv)"
@@ -56,7 +66,8 @@ in {
            source '/nix/var/nix/profiles/default/etc/profile.d/nix.fish'
           end
           # End Nix
-        '' + ''
+        ''
+        + ''
           # Disable greeting
           set fish_greeting
 

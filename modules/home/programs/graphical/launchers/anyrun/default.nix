@@ -1,14 +1,23 @@
-{ config, inputs, pkgs, lib, namespace, system, osConfig, ... }:
+{
+  config,
+  inputs,
+  pkgs,
+  lib,
+  namespace,
+  system,
+  osConfig,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) compileSCSS mkBoolOpt;
   inherit (inputs) anyrun anyrun-nixos-options;
 
   cfg = config.${namespace}.programs.graphical.launchers.anyrun;
-in {
+in
+{
   options.${namespace}.programs.graphical.launchers.anyrun = {
-    enable =
-      mkBoolOpt false "Whether to enable anyrun in the desktop environment.";
+    enable = mkBoolOpt false "Whether to enable anyrun in the desktop environment.";
   };
 
   config = mkIf cfg.enable {
@@ -68,17 +77,18 @@ in {
           )
         '';
 
-        "nixos-options.ron".text = let
-          nixos-options = osConfig.system.build.manual.optionsJSON
-            + "/share/doc/nixos/options.json";
-          options = builtins.toJSON { ":nix" = [ nixos-options ]; };
-        in ''
-          Config(
-            options: ${options},
-            min_score: 5,
-            max_entries: Some(3),
-          )
-        '';
+        "nixos-options.ron".text =
+          let
+            nixos-options = osConfig.system.build.manual.optionsJSON + "/share/doc/nixos/options.json";
+            options = builtins.toJSON { ":nix" = [ nixos-options ]; };
+          in
+          ''
+            Config(
+              options: ${options},
+              min_score: 5,
+              max_entries: Some(3),
+            )
+          '';
 
         "symbols.ron".text = ''
           Config(
@@ -119,10 +129,12 @@ in {
 
       # this compiles the SCSS file from the given path into CSS
       # by default, `-t expanded` as the args to the sass compiler
-      extraCss = builtins.readFile (compileSCSS pkgs {
-        name = "style-dark";
-        source = ./styles/dark.scss;
-      });
+      extraCss = builtins.readFile (
+        compileSCSS pkgs {
+          name = "style-dark";
+          source = ./styles/dark.scss;
+        }
+      );
     };
   };
 }

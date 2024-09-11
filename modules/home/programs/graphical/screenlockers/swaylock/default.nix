@@ -1,13 +1,19 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.graphical.screenlockers.swaylock;
-in {
+in
+{
   options.${namespace}.programs.graphical.screenlockers.swaylock = {
-    enable =
-      mkBoolOpt false "Whether to enable swaylock in the desktop environment.";
+    enable = mkBoolOpt false "Whether to enable swaylock in the desktop environment.";
   };
 
   config = mkIf cfg.enable {
@@ -25,9 +31,7 @@ in {
         timestr = "%R";
         datestr = "%a, %e of %B";
 
-        image = "${
-            pkgs.${namespace}.wallpapers
-          }/share/wallpapers/flatppuccin_macchiato.png";
+        image = "${pkgs.${namespace}.wallpapers}/share/wallpapers/flatppuccin_macchiato.png";
 
         fade-in = "0.2";
 

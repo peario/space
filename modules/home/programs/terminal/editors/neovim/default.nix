@@ -1,16 +1,22 @@
-{ config, lib, pkgs, namespace, inputs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  inputs,
+  ...
+}:
 let
   inherit (lib) mkEnableOption mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.terminal.editors.neovim;
-in {
+in
+{
   options.${namespace}.programs.terminal.editors.neovim = {
     enable = mkEnableOption "Enable neovim";
-    defaultEditor =
-      mkBoolOpt true "Set neovim as the session ${lib.env}`EDITOR`.";
-    defaultVisual =
-      mkBoolOpt true "Set neovim as the session ${lib.env}`VISUAL`.";
+    defaultEditor = mkBoolOpt true "Set neovim as the session ${lib.env}`EDITOR`.";
+    defaultVisual = mkBoolOpt true "Set neovim as the session ${lib.env}`VISUAL`.";
   };
 
   config = mkIf cfg.enable {

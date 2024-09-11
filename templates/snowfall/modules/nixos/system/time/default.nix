@@ -1,13 +1,19 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.system.time;
-in {
+in
+{
   options.${namespace}.system.time = {
-    enable =
-      mkBoolOpt false "Whether or not to configure time related settings.";
+    enable = mkBoolOpt false "Whether or not to configure time related settings.";
   };
 
   config = mkIf cfg.enable {

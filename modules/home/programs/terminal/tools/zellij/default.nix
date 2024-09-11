@@ -1,4 +1,10 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
@@ -15,7 +21,8 @@ let
         zellij -s $session_name -l dev options --default-cwd $(pwd)
     fi
   '';
-in {
+in
+{
   # TODO(zellij): Research what this is
   options.${namespace}.programs.terminal.tools.zellij = {
     enable = mkBoolOpt false "Enable zellij.";
@@ -23,9 +30,13 @@ in {
 
   config = mkIf cfg.enable {
     programs = {
-      bash.shellAliases = { inherit zns zas zo; };
+      bash.shellAliases = {
+        inherit zns zas zo;
+      };
 
-      zsh.shellAliases = { inherit zns zas zo; };
+      zsh.shellAliases = {
+        inherit zns zas zo;
+      };
 
       zellij = {
         enable = true;
@@ -40,12 +51,13 @@ in {
           layout_dir = "${./layouts}";
 
           # clipboard provider
-          copy_command = if pkgs.stdenv.isLinux then
-            "wl-copy"
-          else if pkgs.stdenv.isDarwin then
-            "pbcopy"
-          else
-            "";
+          copy_command =
+            if pkgs.stdenv.isLinux then
+              "wl-copy"
+            else if pkgs.stdenv.isDarwin then
+              "pbcopy"
+            else
+              "";
 
           auto_layouts = true;
 

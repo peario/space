@@ -1,16 +1,22 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) types mkDefault mkIf;
   inherit (lib.${namespace}) mkBoolOpt mkOpt;
 
   cfg = config.${namespace}.theme.qt;
-in {
+in
+{
   options.${namespace}.theme.qt = with types; {
     enable = mkBoolOpt false "Customize qt and apply themes.";
 
     theme = {
-      name = mkOpt str "Catppuccin-Macchiato-Blue"
-        "The name of the kvantum theme to apply.";
+      name = mkOpt str "Catppuccin-Macchiato-Blue" "The name of the kvantum theme to apply.";
       package = mkOpt package (pkgs.catppuccin-kvantum.override {
         accent = "Blue";
         variant = "Macchiato";
@@ -21,34 +27,27 @@ in {
       Appearance = {
         color_scheme_path = mkOpt types.str "" "Color scheme path";
         custom_palette = mkBoolOpt true "Use custom palette";
-        icon_theme =
-          mkOpt types.str config.${namespace}.theme.gtk.icon.name "Icon theme";
+        icon_theme = mkOpt types.str config.${namespace}.theme.gtk.icon.name "Icon theme";
         standard_dialogs = mkOpt types.str "gtk3" "Dialog type";
         style = mkOpt types.str "kvantum" "Style";
       };
 
       Fonts = {
         fixed = mkOpt types.str "MonaspiceKr Nerd Font 10" "Fixed font type";
-        general =
-          mkOpt types.str "MonaspiceNe Nerd Font 10" "General font type";
+        general = mkOpt types.str "MonaspiceNe Nerd Font 10" "General font type";
       };
 
       Interface = {
-        activate_item_on_single_click =
-          mkOpt types.int 1 "Activate item on single click";
+        activate_item_on_single_click = mkOpt types.int 1 "Activate item on single click";
         buttonbox_layout = mkOpt types.int 0 "Buttonbox layout";
         cursor_flash_time = mkOpt types.int 1000 "Cursor flash time";
-        dialog_buttons_have_icons =
-          mkOpt types.int 1 "Dialog buttons have icons";
+        dialog_buttons_have_icons = mkOpt types.int 1 "Dialog buttons have icons";
         double_click_interval = mkOpt types.int 400 "Double click interval";
-        gui_effects = mkOpt (types.nullOr types.int) null
-          "Enable effects"; # You might need to adjust this depending on Nix version
+        gui_effects = mkOpt (types.nullOr types.int) null "Enable effects"; # You might need to adjust this depending on Nix version
         keyboard_scheme = mkOpt types.int 2 "keyboard_scheme";
         menus_have_icons = mkBoolOpt true "Menus have icons";
-        show_shortcuts_in_context_menus =
-          mkBoolOpt true "Show shortcuts in context menus";
-        stylesheets = mkOpt (types.nullOr (types.listOf types.str)) null
-          "Stylesheets"; # You might need to adjust this depending on Nix version
+        show_shortcuts_in_context_menus = mkBoolOpt true "Show shortcuts in context menus";
+        stylesheets = mkOpt (types.nullOr (types.listOf types.str)) null "Stylesheets"; # You might need to adjust this depending on Nix version
         toolbutton_style = mkOpt types.str "kvantum" "Toolbutton style";
         underline_shortcut = mkOpt types.int 1 "Underline shortcuts";
         # wheel_scroll_lines = 3;
@@ -56,9 +55,9 @@ in {
 
       Troubleshooting = {
         force_raster_widgets = mkOpt types.int 1 "Force rastering of widgets";
-        ignored_applications =
-          mkOpt (types.nullOr (types.listOf types.str)) null
-          "List of applications to ignore"; # You might need to adjust this depending on Nix version
+        ignored_applications = mkOpt (types.nullOr (
+          types.listOf types.str
+        )) null "List of applications to ignore"; # You might need to adjust this depending on Nix version
       };
     };
   };
@@ -105,7 +104,9 @@ in {
     qt = {
       enable = true;
 
-      platformTheme = { name = "qtct"; };
+      platformTheme = {
+        name = "qtct";
+      };
 
       style = mkDefault { name = "qt6ct-style"; };
     };

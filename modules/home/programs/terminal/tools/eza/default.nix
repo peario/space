@@ -1,16 +1,29 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib)
-    mkIf mkPackageOption mkOption types escapeShellArgs optionalAttrs optional;
+    mkIf
+    mkPackageOption
+    mkOption
+    types
+    escapeShellArgs
+    optionalAttrs
+    optional
+    ;
   inherit (lib.${namespace}) mkBoolOpt mkOpt;
 
   cfg = config.${namespace}.programs.terminal.tools.eza;
-in rec {
+in
+rec {
   options.${namespace}.programs.terminal.tools.eza = {
     enable = mkBoolOpt false "Enable eza.";
 
-    enableIntegrations =
-      mkBoolOpt true "Configures aliases for multiple shells.";
+    enableIntegrations = mkBoolOpt true "Configures aliases for multiple shells.";
 
     # shells = mkOption {
     #   type = types.listOf types.str;
@@ -29,7 +42,10 @@ in rec {
     extraOptions = mkOption {
       type = types.listOf types.str;
       default = [ ];
-      example = [ "--group-directories-first" "--color=always" ];
+      example = [
+        "--group-directories-first"
+        "--color=always"
+      ];
       description = ''
         Extra command line options passed to eza.
       '';
@@ -54,33 +70,31 @@ in rec {
     package = mkPackageOption pkgs "eza" { };
   };
 
-  config = let
-    args = lib.escapeShellArgs (optional cfg.icons "--icons"
-      ++ optional cfg.git "--git" ++ cfg.extraOptions);
+  config =
+    let
+      args = lib.escapeShellArgs (
+        optional cfg.icons "--icons" ++ optional cfg.git "--git" ++ cfg.extraOptions
+      );
 
-    optionsAlias = optionalAttrs (args != "") { eza = "eza ${args}"; };
+      optionsAlias = optionalAttrs (args != "") { eza = "eza ${args}"; };
 
-    aliases = builtins.mapAttrs (_name: value: lib.mkDefault value) cfg.aliases;
-  in mkIf cfg.enable {
-    home.packages = [ cfg.package ];
+      aliases = builtins.mapAttrs (_name: value: lib.mkDefault value) cfg.aliases;
+    in
+    mkIf cfg.enable {
+      home.packages = [ cfg.package ];
 
-    programs = {
-      bash.shellAliases = optionsAlias
-        // optionalAttrs cfg.enableIntegrations aliases;
+      programs = {
+        bash.shellAliases = optionsAlias // optionalAttrs cfg.enableIntegrations aliases;
 
-      zsh.shellAliases = optionsAlias
-        // optionalAttrs cfg.enableIntegrations aliases;
+        zsh.shellAliases = optionsAlias // optionalAttrs cfg.enableIntegrations aliases;
 
-      fish.shellAliases = optionsAlias
-        // optionalAttrs cfg.enableIntegrations aliases;
+        fish.shellAliases = optionsAlias // optionalAttrs cfg.enableIntegrations aliases;
 
-      # TODO(shell): Take a look at shells: Ion and Nushell
-      # see: https://github.com/nix-community/home-manager/blob/master/modules/programs/eza.nix#L24-L40
-      ion.shellAliases = optionsAlias
-        // optionalAttrs cfg.enableIntegrations aliases;
+        # TODO(shell): Take a look at shells: Ion and Nushell
+        # see: https://github.com/nix-community/home-manager/blob/master/modules/programs/eza.nix#L24-L40
+        ion.shellAliases = optionsAlias // optionalAttrs cfg.enableIntegrations aliases;
 
-      nushell.shellAliases = optionsAlias
-        // optionalAttrs cfg.enableIntegrations aliases;
+        nushell.shellAliases = optionsAlias // optionalAttrs cfg.enableIntegrations aliases;
+      };
     };
-  };
 }

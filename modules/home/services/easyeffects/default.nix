@@ -1,6 +1,13 @@
-{ config, lib, namespace, ... }:
-let cfg = config.${namespace}.services.easyeffects;
-in {
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
+let
+  cfg = config.${namespace}.services.easyeffects;
+in
+{
   options.${namespace}.services.easyeffects = {
     enable = lib.mkEnableOption "easyeffects";
   };

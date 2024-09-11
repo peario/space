@@ -1,10 +1,17 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.terminal.tools.comma;
-in {
+in
+{
   options.${namespace}.programs.terminal.tools.comma = {
     enable = mkBoolOpt false "Enable comma.";
   };

@@ -1,11 +1,18 @@
-{ config, pkgs, lib, namespace, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.terminal.emulators.warp;
 
-in {
+in
+{
   options.${namespace}.programs.terminal.emulators.warp = {
     enable = mkBoolOpt false "Whether or not to enable warp.";
   };

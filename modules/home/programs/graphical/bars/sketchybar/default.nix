@@ -1,4 +1,10 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf getExe;
   inherit (lib.${namespace}) mkBoolOpt;
@@ -9,10 +15,10 @@ let
     push = # bash
       "command git push && ${getExe sketchybar} --trigger git_push";
   };
-in {
+in
+{
   options.${namespace}.programs.graphical.bars.sketchybar = {
-    enable = mkBoolOpt false
-      "Whether to enable sketchybar in the desktop environment.";
+    enable = mkBoolOpt false "Whether to enable sketchybar in the desktop environment.";
   };
 
   config = mkIf cfg.enable {
@@ -57,9 +63,7 @@ in {
       };
 
       "dynamic-island-sketchybar" = {
-        source = lib.cleanSourceWith {
-          src = lib.cleanSource ./dynamic-island-sketchybar/.;
-        };
+        source = lib.cleanSourceWith { src = lib.cleanSource ./dynamic-island-sketchybar/.; };
 
         recursive = true;
       };

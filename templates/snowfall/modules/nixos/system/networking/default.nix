@@ -1,25 +1,42 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
-  inherit (lib) types mkIf mkDefault mkForce;
+  inherit (lib)
+    types
+    mkIf
+    mkDefault
+    mkForce
+    ;
   inherit (lib.${namespace}) mkBoolOpt mkOpt;
 
   cfg = config.${namespace}.system.networking;
-in {
+in
+{
   options.${namespace}.system.networking = with types; {
     enable = mkBoolOpt false "Whether or not to enable networking support";
-    hosts = mkOpt attrs { }
-      "An attribute set to merge with <option>networking.hosts</option>";
+    hosts = mkOpt attrs { } "An attribute set to merge with <option>networking.hosts</option>";
     optimizeTcp = mkBoolOpt false "Optimize TCP connections";
-    dns = mkOpt (types.enum [ "dnsmasq" "systemd-resolved" ]) "systemd-resolved"
-      "Dns resolver to use";
+    dns = mkOpt (types.enum [
+      "dnsmasq"
+      "systemd-resolved"
+    ]) "systemd-resolved" "Dns resolver to use";
   };
 
   config = mkIf cfg.enable {
     boot = {
       extraModprobeConfig = "options bonding max_bonds=0";
 
-      kernelModules = [ "af_packet" ]
-        ++ lib.optionals cfg.optimizeTcp [ "tls" "tcp_bbr" ];
+      kernelModules =
+        [ "af_packet" ]
+        ++ lib.optionals cfg.optimizeTcp [
+          "tls"
+          "tcp_bbr"
+        ];
 
       kernel.sysctl = {
         # TCP hardening
@@ -88,23 +105,39 @@ in {
     };
 
     # network tools that are helpful and nice to have
-    environment.systemPackages = with pkgs; [ mtr tcpdump traceroute ];
+    environment.systemPackages = with pkgs; [
+      mtr
+      tcpdump
+      traceroute
+    ];
 
-    space.user.extraGroups = [ "network" "wireshark" ];
+    space.user.extraGroups = [
+      "network"
+      "wireshark"
+    ];
 
     networking = {
-      hosts = { "127.0.0.1" = cfg.hosts."127.0.0.1" or [ ]; } // cfg.hosts;
+      hosts = {
+        "127.0.0.1" = cfg.hosts."127.0.0.1" or [ ];
+      } // cfg.hosts;
 
       firewall = {
         allowedUDPPorts = [ 5353 ];
-        allowedTCPPorts = [ 443 8080 ];
+        allowedTCPPorts = [
+          443
+          8080
+        ];
         checkReversePath = mkDefault false;
         logReversePathDrops = true;
         logRefusedConnections = true;
       };
 
-      nameservers =
-        [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001" ];
+      nameservers = [
+        "1.1.1.1"
+        "1.0.0.1"
+        "2606:4700:4700::1111"
+        "2606:4700:4700::1001"
+      ];
 
       useDHCP = mkForce false;
       usePredictableInterfaceNames = mkForce true;

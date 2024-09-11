@@ -1,18 +1,30 @@
-{ config, lib, namespace, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkEnableOption mkIf;
 
   cfg = config.${namespace}.system.xdg;
 
-  browser = [ "firefox-devedition.desktop" "firefox.desktop" ];
+  browser = [
+    "firefox-devedition.desktop"
+    "firefox.desktop"
+  ];
   editor = [ "nvim.desktop" ];
   excel = [ "libreoffice-calc.desktop" ];
   fileManager = [ "thunar.desktop" ];
   image = [ "feh.desktop" ];
   mail = [ "thunderbird.desktop" ];
   powerpoint = [ "libreoffice-impress.desktop" ];
-  terminal =
-    [ "kitty.desktop" "foot.desktop" "wezterm.desktop" "alacritty.desktop" ];
+  terminal = [
+    "kitty.desktop"
+    "foot.desktop"
+    "wezterm.desktop"
+    "alacritty.desktop"
+  ];
   video = [ "vlc.desktop" ];
   word = [ "libreoffice-writer.desktop" ];
 
@@ -24,14 +36,10 @@ let
     "application/vnd.ms-excel" = excel;
     "application/vnd.ms-powerpoint" = powerpoint;
     "application/vnd.ms-word" = word;
-    "application/vnd.oasis.opendocument.database" =
-      [ "libreoffice-base.desktop" ];
-    "application/vnd.oasis.opendocument.formula" =
-      [ "libreoffice-math.desktop" ];
-    "application/vnd.oasis.opendocument.graphics" =
-      [ "libreoffice-draw.desktop" ];
-    "application/vnd.oasis.opendocument.graphics-template" =
-      [ "libreoffice-draw.desktop" ];
+    "application/vnd.oasis.opendocument.database" = [ "libreoffice-base.desktop" ];
+    "application/vnd.oasis.opendocument.formula" = [ "libreoffice-math.desktop" ];
+    "application/vnd.oasis.opendocument.graphics" = [ "libreoffice-draw.desktop" ];
+    "application/vnd.oasis.opendocument.graphics-template" = [ "libreoffice-draw.desktop" ];
     "application/vnd.oasis.opendocument.presentation" = powerpoint;
     "application/vnd.oasis.opendocument.presentation-template" = powerpoint;
     "application/vnd.oasis.opendocument.spreadsheet" = excel;
@@ -40,17 +48,12 @@ let
     "application/vnd.oasis.opendocument.text-master" = word;
     "application/vnd.oasis.opendocument.text-template" = word;
     "application/vnd.oasis.opendocument.text-web" = word;
-    "application/vnd.openxmlformats-officedocument.presentationml.presentation" =
-      powerpoint;
-    "application/vnd.openxmlformats-officedocument.presentationml.template" =
-      powerpoint;
+    "application/vnd.openxmlformats-officedocument.presentationml.presentation" = powerpoint;
+    "application/vnd.openxmlformats-officedocument.presentationml.template" = powerpoint;
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" = excel;
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.template" =
-      excel;
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.document" =
-      word;
-    "application/vnd.openxmlformats-officedocument.wordprocessingml.template" =
-      word;
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.template" = excel;
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.document" = word;
+    "application/vnd.openxmlformats-officedocument.wordprocessingml.template" = word;
     "application/vnd.stardivision.calc" = excel;
     "application/vnd.stardivision.draw" = [ "libreoffice-draw.desktop" ];
     "application/vnd.stardivision.impress" = powerpoint;
@@ -153,8 +156,11 @@ let
     "x-www-browser" = browser;
     # "x-scheme-handler/chrome" = ["chromium-browser.desktop"];
   };
-in {
-  options.${namespace}.system.xdg = { enable = mkEnableOption "xdg"; };
+in
+{
+  options.${namespace}.system.xdg = {
+    enable = mkEnableOption "xdg";
+  };
 
   config = mkIf cfg.enable {
     xdg = {

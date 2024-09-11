@@ -1,4 +1,8 @@
-{ lib, buildGoModule, fetchFromGitHub, }:
+{
+  lib,
+  buildGoModule,
+  fetchFromGitHub,
+}:
 buildGoModule rec {
   pname = "bunnyfetch";
   version = "0.2.0";
@@ -12,7 +16,10 @@ buildGoModule rec {
 
   vendorHash = "sha256-w+O1dU8t7uNvdlFnYhCdJCDixpWWZAnj9GrtsCbu9SM=";
 
-  ldflags = [ "-s" "-w" ];
+  ldflags = [
+    "-s"
+    "-w"
+  ];
 
   meta = {
     description = "Tiny system info fetch utility";

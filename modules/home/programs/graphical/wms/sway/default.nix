@@ -1,11 +1,18 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf mkEnableOption getExe;
   inherit (lib.${namespace}) enabled;
 
   cfg = config.${namespace}.programs.graphical.wms.sway;
 
-in {
+in
+{
   options.${namespace}.programs.graphical.wms.sway = {
     enable = mkEnableOption "sway.";
     enableDebug = mkEnableOption "Enable debug mode.";
@@ -64,9 +71,13 @@ in {
     space = {
       programs = {
         graphical = {
-          launchers = { anyrun = enabled; };
+          launchers = {
+            anyrun = enabled;
+          };
 
-          screenlockers = { swaylock = enabled; };
+          screenlockers = {
+            swaylock = enabled;
+          };
         };
       };
 
@@ -76,7 +87,9 @@ in {
         swayidle = enabled;
       };
 
-      suites = { wlroots = enabled; };
+      suites = {
+        wlroots = enabled;
+      };
 
       theme = {
         gtk = enabled;
@@ -92,7 +105,9 @@ in {
       config = {
         bars = [ ];
 
-        floating = { modifier = "Shift"; };
+        floating = {
+          modifier = "Shift";
+        };
 
         gaps = {
           inner = 5;

@@ -1,16 +1,26 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf getExe getExe';
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.graphical.addons.mako;
-in {
+in
+{
   options.${namespace}.programs.graphical.addons.mako = {
     enable = mkBoolOpt false "Whether to enable Mako in Sway.";
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ mako libnotify ];
+    home.packages = with pkgs; [
+      mako
+      libnotify
+    ];
 
     xdg.configFile."mako/config".source = ./config;
 

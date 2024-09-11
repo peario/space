@@ -1,4 +1,10 @@
-{ clang, fetchFromGitHub, gcc, readline, lua, }:
+{
+  clang,
+  fetchFromGitHub,
+  gcc,
+  readline,
+  lua,
+}:
 lua.stdenv.mkDerivation rec {
   pname = "SBarLua";
   version = "unstable-2024-07-15";
@@ -12,7 +18,10 @@ lua.stdenv.mkDerivation rec {
     hash = "sha256-nz8NAeoprQ7OeFfs+7ixd6EFJyJV35WZK4mAS5izn8k=";
   };
 
-  nativeBuildInputs = [ clang gcc ];
+  nativeBuildInputs = [
+    clang
+    gcc
+  ];
 
   buildInputs = [ readline ];
 

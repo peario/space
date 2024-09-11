@@ -21,7 +21,8 @@
     };
   };
 
-  outputs = inputs:
+  outputs =
+    inputs:
     let
       inherit (inputs) snowfall-lib;
 
@@ -38,7 +39,8 @@
           namespace = "globe";
         };
       };
-    in lib.mkFlake {
+    in
+    lib.mkFlake {
       alias = {
         packages = {
           default = "globe";
@@ -46,10 +48,10 @@
         };
       };
 
-      channels-config = { allowUnfree = true; };
-
-      outputs-builder = channels: {
-        formatter = channels.nixpkgs.nixfmt-rfc-style;
+      channels-config = {
+        allowUnfree = true;
       };
+
+      outputs-builder = channels: { formatter = channels.nixpkgs.nixfmt-rfc-style; };
     };
 }

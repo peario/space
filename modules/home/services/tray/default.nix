@@ -1,10 +1,18 @@
-{ config, lib, namespace, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkEnableOption mkIf;
 
   cfg = config.${namespace}.services.tray;
-in {
-  options.${namespace}.services.tray = { enable = mkEnableOption "tray"; };
+in
+{
+  options.${namespace}.services.tray = {
+    enable = mkEnableOption "tray";
+  };
 
   config = mkIf cfg.enable {
     systemd.user.targets.tray = {

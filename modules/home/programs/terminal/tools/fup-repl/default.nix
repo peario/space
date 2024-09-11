@@ -1,4 +1,10 @@
-{ lib, pkgs, config, namespace, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf getExe';
   inherit (lib.${namespace}) mkBoolOpt;
@@ -8,7 +14,8 @@ let
   fup-repl = pkgs.writeShellScriptBin "fup-repl" ''
     ${getExe' pkgs.fup-repl "repl"} ''${@}
   '';
-in {
+in
+{
   options.${namespace}.programs.terminal.tools.fup-repl = {
     enable = mkBoolOpt false "Enable fup-repl.";
   };

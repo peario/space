@@ -1,10 +1,17 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.terminal.tools.k9s;
-in {
+in
+{
   options.${namespace}.programs.terminal.tools.k9s = {
     enable = mkBoolOpt false "Enable k9s.";
   };
@@ -29,7 +36,9 @@ in {
           liveViewAutoRefresh = true;
           refreshRate = 1;
           maxConnRetry = 3;
-          ui = { enableMouse = true; };
+          ui = {
+            enableMouse = true;
+          };
         };
       };
 

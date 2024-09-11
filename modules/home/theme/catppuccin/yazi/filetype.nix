@@ -1,6 +1,8 @@
 _:
-let catppuccin = import ../colors.nix;
-in {
+let
+  catppuccin = import ../colors.nix;
+in
+{
   filetype = {
     rules = [
       {

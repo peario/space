@@ -1,13 +1,21 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) types mkIf;
   inherit (lib.${namespace}) mkBoolOpt mkOpt;
 
   cfg = config.${namespace}.system.fonts;
-in {
+in
+{
   options.${namespace}.system.fonts = with types; {
     enable = mkBoolOpt false "Manage fonts.";
-    fonts = with pkgs;
+    fonts =
+      with pkgs;
       mkOpt (listOf package) [
         # Desktop Fonts
         corefonts # MS fonts
@@ -29,7 +37,11 @@ in {
 
         # Nerd Fonts
         (nerdfonts.override {
-          fonts = [ "FiraCode" "Monaspace" "NerdFontsSymbolsOnly" ];
+          fonts = [
+            "FiraCode"
+            "Monaspace"
+            "NerdFontsSymbolsOnly"
+          ];
         })
       ] "Custom font packages to install.";
     default = mkOpt types.str "Victor Mono" "Default font name";

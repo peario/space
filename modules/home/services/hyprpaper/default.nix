@@ -1,17 +1,32 @@
-{ config, inputs, lib, pkgs, system, namespace, ... }:
+{
+  config,
+  inputs,
+  lib,
+  pkgs,
+  system,
+  namespace,
+  ...
+}:
 let
-  inherit (lib) mkIf mkEnableOption types mkOption;
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    types
+    mkOption
+    ;
   inherit (inputs) hyprpaper hypr-socket-watch;
   inherit (lib.${namespace}) mkOpt;
 
   cfg = config.${namespace}.services.hyprpaper;
-in {
+in
+{
   options.${namespace}.services.hyprpaper = {
     enable = mkEnableOption "Hyprpaper";
     enableSocketWatch = mkEnableOption "hypr-socket-watch";
     monitors = mkOption {
       description = "Monitors and their wallpapers";
-      type = with types;
+      type =
+        with types;
         listOf (submodule {
           options = {
             name = mkOption { type = str; };
@@ -30,8 +45,7 @@ in {
 
         settings = {
           preload = cfg.wallpapers;
-          wallpaper =
-            map (monitor: "${monitor.name},${monitor.wallpaper}") cfg.monitors;
+          wallpaper = map (monitor: "${monitor.name},${monitor.wallpaper}") cfg.monitors;
         };
       };
 

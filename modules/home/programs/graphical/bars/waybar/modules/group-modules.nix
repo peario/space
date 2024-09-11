@@ -5,7 +5,10 @@
       transition-duration = 500;
       transition-left-to-right = false;
     };
-    modules = [ "pulseaudio" "pulseaudio/slider" ];
+    modules = [
+      "pulseaudio"
+      "pulseaudio/slider"
+    ];
   };
 
   "group/power" = {
@@ -44,7 +47,13 @@
 
   "group/stats" = {
     orientation = "horizontal";
-    modules = [ "network" "cpu" "memory" "disk" "temperature" ];
+    modules = [
+      "network"
+      "cpu"
+      "memory"
+      "disk"
+      "temperature"
+    ];
   };
 
   "group/stats-drawer" = {
@@ -69,6 +78,9 @@
       transition-duration = 500;
       transition-left-to-right = false;
     };
-    modules = [ "custom/separator-right" "tray" ];
+    modules = [
+      "custom/separator-right"
+      "tray"
+    ];
   };
 }

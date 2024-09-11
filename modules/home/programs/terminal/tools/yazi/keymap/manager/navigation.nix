@@ -92,7 +92,10 @@ _: {
       desc = "Enter the child directory";
     }
     {
-      on = [ "g" "T" ];
+      on = [
+        "g"
+        "T"
+      ];
       run = "arrow -99999999";
       desc = "Move cursor to the top";
     }

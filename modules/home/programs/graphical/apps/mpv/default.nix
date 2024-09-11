@@ -1,11 +1,18 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.graphical.apps.mpv;
 
-in {
+in
+{
   options.${namespace}.programs.graphical.apps.mpv = {
     enable = mkBoolOpt false "Whether or not to enable support for mpv.";
   };

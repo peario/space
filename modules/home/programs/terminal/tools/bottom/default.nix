@@ -1,10 +1,17 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.terminal.tools.bottom;
-in {
+in
+{
   options.${namespace}.programs.terminal.tools.bottom = {
     enable = mkBoolOpt false "Enable bottom.";
   };
@@ -20,15 +27,21 @@ in {
         row = [
           {
             ratio = 3;
-            child = [ { type = "cpu"; } { type = "mem"; } { type = "net"; } ];
+            child = [
+              { type = "cpu"; }
+              { type = "mem"; }
+              { type = "net"; }
+            ];
           }
           {
             ratio = 3;
-            child = [{
-              type = "proc";
-              ratio = 1;
-              default = true;
-            }];
+            child = [
+              {
+                type = "proc";
+                ratio = 1;
+                default = true;
+              }
+            ];
           }
         ];
       };

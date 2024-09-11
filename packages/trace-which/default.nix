@@ -1,8 +1,16 @@
-{ writeShellApplication, pkgs, lib, namespace, ... }:
+{
+  writeShellApplication,
+  pkgs,
+  lib,
+  namespace,
+  ...
+}:
 writeShellApplication {
   name = "trace-which";
 
-  meta = { mainProgram = "trace-which"; };
+  meta = {
+    mainProgram = "trace-which";
+  };
 
   checkPhase = "";
 

@@ -1,9 +1,16 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.graphical.apps.obs;
-in {
+in
+{
   options.${namespace}.programs.graphical.apps.obs = {
     enable = mkBoolOpt false "Whether or not to enable support for OBS.";
   };

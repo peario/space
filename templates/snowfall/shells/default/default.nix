@@ -1,6 +1,15 @@
-{ inputs, mkShell, pkgs, system, namespace, ... }:
-let inherit (inputs) snowfall-flake;
-in mkShell {
+{
+  inputs,
+  mkShell,
+  pkgs,
+  system,
+  namespace,
+  ...
+}:
+let
+  inherit (inputs) snowfall-flake;
+in
+mkShell {
   packages = with pkgs; [
     hydra-check
     nix-inspect

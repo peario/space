@@ -1,13 +1,23 @@
-{ config, lib, namespace, }:
-let catppuccin = import ../colors.nix;
-in {
+{
+  config,
+  lib,
+  namespace,
+}:
+let
+  catppuccin = import ../colors.nix;
+in
+{
   manager = {
-    cwd = { fg = catppuccin.colors.text.hex; };
+    cwd = {
+      fg = catppuccin.colors.text.hex;
+    };
     hovered = {
       fg = catppuccin.colors.base.hex;
       bg = catppuccin.colors.blue.hex;
     };
-    preview_hovered = { underline = true; };
+    preview_hovered = {
+      underline = true;
+    };
     find_keyword = {
       fg = catppuccin.colors.yellow.hex;
       italic = true;
@@ -39,7 +49,9 @@ in {
     };
     tab_width = 1;
     border_symbol = "│";
-    border_style = { fg = catppuccin.colors.blue.hex; };
+    border_style = {
+      fg = catppuccin.colors.blue.hex;
+    };
     count_copied = {
       fg = catppuccin.colors.base.hex;
       bg = catppuccin.colors.yellow.hex;
@@ -52,9 +64,11 @@ in {
       fg = catppuccin.colors.base.hex;
       bg = catppuccin.colors.green.hex;
     };
-    syntect_theme = let
-      cfg = config.${namespace}.theme.catppuccin;
-      inherit (lib.${namespace}) capitalize;
-    in "/bat/Catppuccin ${capitalize cfg.flavor}.tmTheme";
+    syntect_theme =
+      let
+        cfg = config.${namespace}.theme.catppuccin;
+        inherit (lib.${namespace}) capitalize;
+      in
+      "/bat/Catppuccin ${capitalize cfg.flavor}.tmTheme";
   };
 }

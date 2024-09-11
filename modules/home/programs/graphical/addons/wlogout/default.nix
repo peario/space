@@ -1,13 +1,19 @@
-{ config, lib, namespace, pkgs, ... }:
+{
+  config,
+  lib,
+  namespace,
+  pkgs,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.graphical.addons.wlogout;
-in {
+in
+{
   options.${namespace}.programs.graphical.addons.wlogout = {
-    enable =
-      mkBoolOpt false "Whether to enable wlogout in the desktop environment.";
+    enable = mkBoolOpt false "Whether to enable wlogout in the desktop environment.";
   };
 
   config = mkIf cfg.enable {

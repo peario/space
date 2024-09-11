@@ -1,4 +1,11 @@
-{ config, lib, pkgs, inputs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
@@ -7,7 +14,8 @@ let
   cfg = config.${namespace}.programs.graphical.apps.spicetify;
 
   spicePkgs = spicetify-nix.legacyPackages.${pkgs.system};
-in {
+in
+{
   options.${namespace}.programs.graphical.apps.spicetify = {
     enable = mkBoolOpt false "Whether or not to enable support for spicetify.";
   };

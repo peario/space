@@ -1,6 +1,8 @@
 { config, lib, ... }:
-let inherit (lib) getExe';
-in {
+let
+  inherit (lib) getExe';
+in
+{
   "sway/window" = {
     format = "{}";
     separate-outputs = true;
@@ -10,12 +12,8 @@ in {
     all-outputs = false;
     active-only = "false";
     on-click = "activate";
-    on-scroll-up = "${
-        getExe' config.wayland.windowManager.sway.package "swaymsg"
-      } workspace next";
-    on-scroll-down = "${
-        getExe' config.wayland.windowManager.sway.package "swaymsg"
-      } workspace prev";
+    on-scroll-up = "${getExe' config.wayland.windowManager.sway.package "swaymsg"} workspace next";
+    on-scroll-down = "${getExe' config.wayland.windowManager.sway.package "swaymsg"} workspace prev";
     format = "{icon} {windows}";
     format-icons = {
       "1" = "󰎤";
@@ -74,8 +72,7 @@ in {
       "class<dropbox>" = "";
       "class<dupeGuru>" = "";
       "class<firefox.*> title<.*github.*>" = "";
-      "class<firefox.*> title<.*twitch|youtube|plex|tntdrama|bally sports.*>" =
-        "";
+      "class<firefox.*> title<.*twitch|youtube|plex|tntdrama|bally sports.*>" = "";
       "class<firefox.*>" = "";
       "class<foot>" = "";
       "class<fr.handbrake.ghb" = "󱁆";
