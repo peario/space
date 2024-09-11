@@ -1,4 +1,10 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
@@ -23,12 +29,11 @@ let
         set -g @continuum-restore 'on'
       '';
     }
-    {
-      plugin = tmux-fzf;
-    }
+    { plugin = tmux-fzf; }
     # { plugin = vim-tmux-navigator; }
   ];
-in {
+in
+{
   # TODO(tmux): Update config
   options.${namespace}.programs.terminal.tools.tmux = {
     enable = mkBoolOpt false "Enable tmux.";
@@ -48,8 +53,7 @@ in {
       prefix = "C-a";
       sensibleOnTop = true;
       terminal = "xterm-256color";
-      extraConfig = builtins.concatStringsSep "\n"
-        (builtins.map lib.strings.fileContents configFiles);
+      extraConfig = builtins.concatStringsSep "\n" (builtins.map lib.strings.fileContents configFiles);
 
       inherit plugins;
     };

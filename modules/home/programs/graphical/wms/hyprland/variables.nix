@@ -1,4 +1,12 @@
-{ config, inputs, lib, pkgs, system, namespace, ... }:
+{
+  config,
+  inputs,
+  lib,
+  pkgs,
+  system,
+  namespace,
+  ...
+}:
 let
   inherit (inputs) hyprland-contrib;
   inherit (lib) mkIf getExe getExe';
@@ -8,16 +16,18 @@ let
   wl-copy = getExe' pkgs.wl-clipboard "wl-copy";
   wl-paste = getExe' pkgs.wl-clipboard "wl-paste";
 
-  getDateTime = getExe (pkgs.writeShellScriptBin "getDateTime" # bash
-    ''
-      echo $(date +'%Y%m%d_%H%M%S')
-    '');
+  getDateTime = getExe (
+    pkgs.writeShellScriptBin "getDateTime" # bash
+      ''
+        echo $(date +'%Y%m%d_%H%M%S')
+      ''
+  );
 
-  screenshot-path =
-    "/home/${config.${namespace}.user.name}/Pictures/screenshots";
+  screenshot-path = "/home/${config.${namespace}.user.name}/Pictures/screenshots";
 
   cfg = config.${namespace}.programs.graphical.wms.hyprland;
-in {
+in
+{
   config = mkIf cfg.enable {
     wayland.windowManager.hyprland = {
       settings = {
@@ -78,8 +88,7 @@ in {
           # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
           # force_split = 0;
           preserve_split = true; # you probably want this
-          pseudotile =
-            false; # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+          pseudotile = false; # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
           no_gaps_when_only = false;
           special_scale_factor = 0.9;
         };
@@ -158,12 +167,13 @@ in {
 
           # window swallowing
           enable_swallow = true; # hide windows that spawn other windows
-          swallow_regex =
-            "foot|thunar|nemo|wezterm"; # windows for which swallow is applied
+          swallow_regex = "foot|thunar|nemo|wezterm"; # windows for which swallow is applied
         };
 
         # unscale XWayland
-        xwayland = { force_zero_scaling = true; };
+        xwayland = {
+          force_zero_scaling = true;
+        };
 
         "$mainMod" = "SUPER";
         "$HYPER" = "SUPER_SHIFT_CTRL";
@@ -180,52 +190,32 @@ in {
         "$editor" = "${getExe pkgs.neovim}";
         "$explorer" = "${getExe pkgs.xfce.thunar}";
         "$music" = "${getExe pkgs.spotify}";
-        "$notification_center" =
-          "${getExe' config.services.swaync.package "swaync-client"}";
+        "$notification_center" = "${getExe' config.services.swaync.package "swaync-client"}";
         "$launcher" = "anyrun";
         # "$launcher_alt" = "${getExe config.programs.rofi.package} -show drun -n";
         # "$launcher_shift" = "${getExe config.programs.rofi.package} -show run -n";
         # "$launchpad" = "${getExe config.programs.rofi.package} -show drun -config '~/.config/rofi/appmenu/rofi.rasi'";
         "$looking-glass" = "${getExe pkgs.looking-glass-client}";
         "$screen-locker" = "${getExe config.programs.hyprlock.package}";
-        "$window-inspector" =
-          "${getExe hyprland-contrib.packages.${system}.hyprprop}";
+        "$window-inspector" = "${getExe hyprland-contrib.packages.${system}.hyprprop}";
         "$screen-recorder" = "${getExe pkgs.${namespace}.record_screen}";
 
         # screenshot commands
-        "$notify-screenshot" =
-          ''${getExe pkgs.libnotify} --icon "$file" "Screenshot Saved"'';
-        "$screenshot-path" =
-          "/home/${config.${namespace}.user.name}/Pictures/screenshots";
-        "$grimblast_area_file" = ''
-          file="${screenshot-path}/$(${getDateTime}).png" && ${grimblast} --freeze --notify save area "$file"'';
-        "$grimblast_active_file" = ''
-          file="${screenshot-path}/$(${getDateTime}).png" && ${grimblast} --notify save active "$file"'';
-        "$grimblast_screen_file" = ''
-          file="${screenshot-path}/$(${getDateTime}).png" && ${grimblast} --notify save screen "$file"'';
-        "$grimblast_area_swappy" =
-          "${grimblast} --freeze save area - | ${getExe pkgs.swappy} -f -";
-        "$grimblast_active_swappy" =
-          "${grimblast} save active - | ${getExe pkgs.swappy} -f -";
-        "$grimblast_screen_swappy" =
-          "${grimblast} save screen - | ${getExe pkgs.swappy} -f -";
-        "$grimblast_area_clipboard" =
-          "${grimblast} --freeze --notify copy area";
+        "$notify-screenshot" = ''${getExe pkgs.libnotify} --icon "$file" "Screenshot Saved"'';
+        "$screenshot-path" = "/home/${config.${namespace}.user.name}/Pictures/screenshots";
+        "$grimblast_area_file" = ''file="${screenshot-path}/$(${getDateTime}).png" && ${grimblast} --freeze --notify save area "$file"'';
+        "$grimblast_active_file" = ''file="${screenshot-path}/$(${getDateTime}).png" && ${grimblast} --notify save active "$file"'';
+        "$grimblast_screen_file" = ''file="${screenshot-path}/$(${getDateTime}).png" && ${grimblast} --notify save screen "$file"'';
+        "$grimblast_area_swappy" = "${grimblast} --freeze save area - | ${getExe pkgs.swappy} -f -";
+        "$grimblast_active_swappy" = "${grimblast} save active - | ${getExe pkgs.swappy} -f -";
+        "$grimblast_screen_swappy" = "${grimblast} save screen - | ${getExe pkgs.swappy} -f -";
+        "$grimblast_area_clipboard" = "${grimblast} --freeze --notify copy area";
         "$grimblast_active_clipboard" = "${grimblast} --notify copy active";
         "$grimblast_screen_clipboard" = "${grimblast} --notify copy screen";
 
         # utility commands
-        "$color_picker" = ''
-          ${
-            getExe pkgs.hyprpicker
-          } -a && (${convert} -size 32x32 xc:$(${wl-paste}) /tmp/color.png && ${
-            getExe pkgs.libnotify
-          } "Color Code:" "$(${wl-paste})" -h "string:bgcolor:$(${wl-paste})" --icon /tmp/color.png -u critical -t 4000)'';
-        "$cliphist" = "${
-            getExe pkgs.cliphist
-          } list | anyrun --show-results-immediately true | ${
-            getExe pkgs.cliphist
-          } decode | ${wl-copy}";
+        "$color_picker" = ''${getExe pkgs.hyprpicker} -a && (${convert} -size 32x32 xc:$(${wl-paste}) /tmp/color.png && ${getExe pkgs.libnotify} "Color Code:" "$(${wl-paste})" -h "string:bgcolor:$(${wl-paste})" --icon /tmp/color.png -u critical -t 4000)'';
+        "$cliphist" = "${getExe pkgs.cliphist} list | anyrun --show-results-immediately true | ${getExe pkgs.cliphist} decode | ${wl-copy}";
       };
     };
   };

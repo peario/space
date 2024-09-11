@@ -1,16 +1,27 @@
-{ config, lib, namespace, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.system.networking;
-in {
+in
+{
   options.${namespace}.system.networking = {
     enable = mkBoolOpt false "Enable networking support?";
   };
 
   config = mkIf cfg.enable {
-    networking = { dns = [ "1.1.1.1" "8.8.8.8" ]; };
+    networking = {
+      dns = [
+        "1.1.1.1"
+        "8.8.8.8"
+      ];
+    };
 
     system.defaults = {
       # firewall settings

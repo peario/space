@@ -1,10 +1,17 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.terminal.tools.colorls;
-in {
+in
+{
   options.${namespace}.programs.terminal.tools.colorls = {
     enable = mkBoolOpt false "Enable colorls.";
   };

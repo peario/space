@@ -1,12 +1,12 @@
 { config, lib, ... }:
-let inherit (lib) getExe';
-in {
+let
+  inherit (lib) getExe';
+in
+{
   "custom/quit" = {
     format = "󰗼";
     tooltip = false;
-    on-click = "${
-        getExe' config.wayland.windowManager.hyprland.package "hyprctl"
-      } dispatch exit";
+    on-click = "${getExe' config.wayland.windowManager.hyprland.package "hyprctl"} dispatch exit";
   };
 
   "hyprland/submap" = {
@@ -23,12 +23,8 @@ in {
   "hyprland/workspaces" = {
     all-outputs = false;
     active-only = "false";
-    on-scroll-up = "${
-        getExe' config.wayland.windowManager.hyprland.package "hyprctl"
-      } dispatch workspace e+1";
-    on-scroll-down = "${
-        getExe' config.wayland.windowManager.hyprland.package "hyprctl"
-      } dispatch workspace e-1";
+    on-scroll-up = "${getExe' config.wayland.windowManager.hyprland.package "hyprctl"} dispatch workspace e+1";
+    on-scroll-down = "${getExe' config.wayland.windowManager.hyprland.package "hyprctl"} dispatch workspace e-1";
     format = "{icon} {windows}";
     format-icons = {
       "1" = "󰎤";
@@ -77,8 +73,7 @@ in {
       "class<dropbox>" = "";
       "class<dupeGuru>" = "";
       "class<firefox.*> title<.*github.*>" = "";
-      "class<firefox.*> title<.*twitch|youtube|plex|tntdrama|bally sports.*>" =
-        "";
+      "class<firefox.*> title<.*twitch|youtube|plex|tntdrama|bally sports.*>" = "";
       "class<firefox.*>" = "";
       "class<foot>" = "";
       "class<fr.handbrake.ghb" = "󱁆";

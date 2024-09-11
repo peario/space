@@ -1,23 +1,36 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.suites.art;
-in {
+in
+{
   options.${namespace}.suites.art = {
     enable = mkBoolOpt false "Enable art configuration.";
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ imagemagick pngcheck ];
+    environment.systemPackages = with pkgs; [
+      imagemagick
+      pngcheck
+    ];
 
     homebrew = {
-      casks = [ "blender" "gimp" "inkscape" "mediainfo" ];
+      casks = [
+        "blender"
+        "gimp"
+        "inkscape"
+        "mediainfo"
+      ];
 
-      masApps = mkIf config.${namespace}.tools.homebrew.masEnable {
-        "Pixelmator" = 407963104;
-      };
+      masApps = mkIf config.${namespace}.tools.homebrew.masEnable { "Pixelmator" = 407963104; };
     };
   };
 }

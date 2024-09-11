@@ -1,4 +1,9 @@
-{ config, lib, namespace, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
   pagerArgs = [
     "--RAW-CONTROL-CHARS" # Only allow colors.
@@ -10,17 +15,21 @@ let
   ];
 
   cfg = config.${namespace}.system.env;
-in {
+in
+{
   options.${namespace}.system.env = lib.mkOption {
-    apply = lib.mapAttrs (_n: v:
-      if lib.isList v then
-        lib.concatMapStringsSep ":" toString v
-      else
-        (toString v));
+    apply = lib.mapAttrs (
+      _n: v: if lib.isList v then lib.concatMapStringsSep ":" toString v else (toString v)
+    );
     default = { };
     description = "A set of environment variables to set.";
-    type = with lib.types;
-      attrsOf (oneOf [ str path (listOf (either str path)) ]);
+    type =
+      with lib.types;
+      attrsOf (oneOf [
+        str
+        path
+        (listOf (either str path))
+      ]);
   };
 
   config = {
@@ -33,10 +42,13 @@ in {
         XDG_DESKTOP_DIR = "$HOME";
       };
 
-      extraInit = lib.concatStringsSep "\n" (lib.mapAttrsToList (n: v: # bash
-        ''
-          export ${n}="${v}"
-        '') cfg);
+      extraInit = lib.concatStringsSep "\n" (
+        lib.mapAttrsToList (
+          n: v: # bash
+          ''
+            export ${n}="${v}"
+          '') cfg
+      );
 
       pathsToLink = [
         "/share/zsh" # zsh completions
@@ -49,16 +61,18 @@ in {
         LESSHISTFILE = "$XDG_CACHE_HOME/less.history";
         WGETRC = "$XDG_CONFIG_HOME/wgetrc";
 
-        MANPAGER = ''
-          nvim -c 'set ft=man bt=nowrite noswapfile nobk shada=\"NONE\" ro noma' +Man! -o -'';
+        MANPAGER = ''nvim -c 'set ft=man bt=nowrite noswapfile nobk shada=\"NONE\" ro noma' +Man! -o -'';
         SYSTEMD_PAGERSECURE = "true";
         PAGER = "less -FR";
         LESS = lib.concatStringsSep " " pagerArgs;
-        SYSTEMD_LESS = lib.concatStringsSep " " (pagerArgs ++ [
-          "--quit-if-one-screen"
-          "--chop-long-lines"
-          "--no-init" # Keep content after quit.
-        ]);
+        SYSTEMD_LESS = lib.concatStringsSep " " (
+          pagerArgs
+          ++ [
+            "--quit-if-one-screen"
+            "--chop-long-lines"
+            "--no-init" # Keep content after quit.
+          ]
+        );
       };
     };
   };

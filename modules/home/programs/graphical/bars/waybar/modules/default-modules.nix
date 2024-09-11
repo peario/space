@@ -2,16 +2,27 @@
 let
   inherit (lib) getExe getExe';
 
-  catppuccin = import
-    (lib.snowfall.fs.get-file "modules/home/theme/catppuccin/colors.nix");
-in {
-  backlight = let brightnessctl = lib.getExe pkgs.brightnessctl;
-  in {
-    format = "{icon}";
-    format-icons = [ "󰋙" "󰫃" "󰫄" "󰫅" "󰫆" "󰫇" "󰫈" ];
-    on-scroll-up = "${brightnessctl} s 1%-";
-    on-scroll-down = "${brightnessctl} s +1%";
-  };
+  catppuccin = import (lib.snowfall.fs.get-file "modules/home/theme/catppuccin/colors.nix");
+in
+{
+  backlight =
+    let
+      brightnessctl = lib.getExe pkgs.brightnessctl;
+    in
+    {
+      format = "{icon}";
+      format-icons = [
+        "󰋙"
+        "󰫃"
+        "󰫄"
+        "󰫅"
+        "󰫆"
+        "󰫇"
+        "󰫈"
+      ];
+      on-scroll-up = "${brightnessctl} s 1%-";
+      on-scroll-down = "${brightnessctl} s +1%";
+    };
 
   battery = {
     states = {
@@ -22,7 +33,20 @@ in {
     format-charging = "󰂄";
     format-plugged = "󰂄";
     format-alt = "{icon}";
-    format-icons = [ "󰂃" "󰁺" "󰁻" "󰁼" "󰁽" "󰁾" "󰁾" "󰁿" "󰂀" "󰂁" "󰂂" "󰁹" ];
+    format-icons = [
+      "󰂃"
+      "󰁺"
+      "󰁻"
+      "󰁼"
+      "󰁽"
+      "󰁾"
+      "󰁾"
+      "󰁿"
+      "󰂀"
+      "󰂁"
+      "󰂂"
+      "󰁹"
+    ];
   };
 
   bluetooth = {
@@ -49,7 +73,16 @@ in {
     input_delay = 2;
     sleep_timer = 2;
     hide_on_silence = true;
-    format-icons = [ "▁" "▂" "▃" "▄" "▅" "▆" "▇" "█" ];
+    format-icons = [
+      "▁"
+      "▂"
+      "▃"
+      "▄"
+      "▅"
+      "▆"
+      "▇"
+      "█"
+    ];
   };
 
   clock = {
@@ -65,15 +98,11 @@ in {
       weeks-pos = "right";
       on-scroll = 1;
       format = {
-        months =
-          "<span color='${catppuccin.colors.rosewater.hex}'><b>{}</b></span>";
-        days =
-          "<span color='${catppuccin.colors.flamingo.hex}'><b>{}</b></span>";
+        months = "<span color='${catppuccin.colors.rosewater.hex}'><b>{}</b></span>";
+        days = "<span color='${catppuccin.colors.flamingo.hex}'><b>{}</b></span>";
         weeks = "<span color='${catppuccin.colors.teal.hex}'><b>W{}</b></span>";
-        weekdays =
-          "<span color='${catppuccin.colors.yellow.hex}'><b>{}</b></span>";
-        today =
-          "<span color='${catppuccin.colors.red.hex}'><b><u>{}</u></b></span>";
+        weekdays = "<span color='${catppuccin.colors.yellow.hex}'><b>{}</b></span>";
+        today = "<span color='${catppuccin.colors.red.hex}'><b><u>{}</u></b></span>";
       };
     };
     actions = {
@@ -95,7 +124,9 @@ in {
     };
   };
 
-  disk = { format = " {percentage_used}%"; };
+  disk = {
+    format = " {percentage_used}%";
+  };
 
   gamemode = {
     format = "󰊴";
@@ -128,7 +159,9 @@ in {
     };
   };
 
-  memory = { format = "󰍛 {}%"; };
+  memory = {
+    format = "󰍛 {}%";
+  };
 
   mpris = {
     format = "{player_icon} {status_icon} {dynamic}";
@@ -150,20 +183,24 @@ in {
   };
 
   mpd = {
-    format =
-      "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ";
+    format = "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ";
     format-disconnected = "Disconnected ";
-    format-stopped =
-      "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ";
+    format-stopped = "{consumeIcon}{randomIcon}{repeatIcon}{singleIcon}Stopped ";
     unknown-tag = "N/A";
     interval = 2;
-    consume-icons = { on = " "; };
+    consume-icons = {
+      on = " ";
+    };
     random-icons = {
       off = ''<span color="#f53c3c"></span> '';
       on = " ";
     };
-    repeat-icons = { on = " "; };
-    single-icons = { on = "1 "; };
+    repeat-icons = {
+      on = " ";
+    };
+    single-icons = {
+      on = "1 ";
+    };
     state-icons = {
       paused = "";
       playing = "";
@@ -172,22 +209,24 @@ in {
     tooltip-format-disconnected = "MPD (disconnected)";
   };
 
-  network = let
-    nm-editor = "${getExe' pkgs.networkmanagerapplet "nm-connection-editor"}";
-  in {
-    interval = 1;
-    format-wifi = ''
-      󰜷 {bandwidthUpBytes}
-      󰜮 {bandwidthDownBytes}'';
-    format-ethernet = ''
-      󰜷 {bandwidthUpBytes}
-      󰜮 {bandwidthDownBytes}'';
-    tooltip-format = "󰈀 {ifname} via {gwaddr}";
-    format-linked = "󰈁 {ifname} (No IP)";
-    format-disconnected = " Disconnected";
-    format-alt = "{ifname}: {ipaddr}/{cidr}";
-    on-click-right = "${nm-editor}";
-  };
+  network =
+    let
+      nm-editor = "${getExe' pkgs.networkmanagerapplet "nm-connection-editor"}";
+    in
+    {
+      interval = 1;
+      format-wifi = ''
+        󰜷 {bandwidthUpBytes}
+        󰜮 {bandwidthDownBytes}'';
+      format-ethernet = ''
+        󰜷 {bandwidthUpBytes}
+        󰜮 {bandwidthDownBytes}'';
+      tooltip-format = "󰈀 {ifname} via {gwaddr}";
+      format-linked = "󰈁 {ifname} (No IP)";
+      format-disconnected = " Disconnected";
+      format-alt = "{ifname}: {ipaddr}/{cidr}";
+      on-click-right = "${nm-editor}";
+    };
 
   pulseaudio = {
     format = "{volume}% {icon}";
@@ -200,7 +239,10 @@ in {
       phone = "";
       portable = "";
       car = "";
-      default = [ "" "" ];
+      default = [
+        ""
+        ""
+      ];
     };
     scroll-step = 1;
     on-click = "pavucontrol";
@@ -227,11 +269,17 @@ in {
     critical-threshold = 80;
     format-critical = "{temperatureC}°C {icon}";
     format = "{icon} {temperatureC}°C";
-    format-icons = [ "" "" "" ];
+    format-icons = [
+      ""
+      ""
+      ""
+    ];
     interval = "5";
   };
 
-  tray = { spacing = 10; };
+  tray = {
+    spacing = 10;
+  };
 
   user = {
     format = "{user}";
@@ -245,6 +293,10 @@ in {
     format = "{volume}% {icon}";
     format-muted = "";
     on-click = "${getExe' pkgs.coreutils "sleep"} 0.1 && ${getExe pkgs.helvum}";
-    format-icons = [ "" "" "" ];
+    format-icons = [
+      ""
+      ""
+      ""
+    ];
   };
 }

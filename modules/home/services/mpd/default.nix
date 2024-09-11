@@ -1,9 +1,21 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
-  inherit (lib) mkEnableOption mkIf mkOption types;
+  inherit (lib)
+    mkEnableOption
+    mkIf
+    mkOption
+    types
+    ;
 
   cfg = config.${namespace}.services.mpd;
-in {
+in
+{
   options.${namespace}.services.mpd = {
     enable = mkEnableOption "mpd";
     musicDirectory = mkOption {
@@ -21,11 +33,13 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs;
+    home.packages =
+      with pkgs;
       [
         playerctl # CLI interface for playerctld
         mpc_cli # CLI interface for mpd
-      ] ++ lib.optionals pkgs.stdenv.isLinux [
+      ]
+      ++ lib.optionals pkgs.stdenv.isLinux [
         cava # CLI music visualizer (cavalier is a gui alternative)
       ];
 

@@ -1,4 +1,10 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf getExe;
   inherit (lib.${namespace}) mkBoolOpt;
@@ -6,10 +12,10 @@ let
   inherit (config.users.users.${user.name}) home;
 
   cfg = config.${namespace}.programs.graphical.addons.kanshi;
-in {
+in
+{
   options.${namespace}.programs.graphical.addons.kanshi = {
-    enable =
-      mkBoolOpt false "Whether to enable Kanshi in the desktop environment.";
+    enable = mkBoolOpt false "Whether to enable Kanshi in the desktop environment.";
   };
 
   config = mkIf cfg.enable {
@@ -20,7 +26,9 @@ in {
     # configuring kanshi
     systemd.user.services.kanshi = {
       description = "Kanshi output autoconfig ";
-      environment = { XDG_CONFIG_HOME = "${home}/.config"; };
+      environment = {
+        XDG_CONFIG_HOME = "${home}/.config";
+      };
       partOf = [ "graphical-session.target" ];
       wantedBy = [ "graphical-session.target" ];
       serviceConfig = {

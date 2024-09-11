@@ -1,6 +1,8 @@
 _:
-let catppuccin = import ../colors.nix;
-in {
+let
+  catppuccin = import ../colors.nix;
+in
+{
   status = {
     separator_open = "";
     separator_close = "";
@@ -38,10 +40,20 @@ in {
       bg = catppuccin.colors.surface1.hex;
     };
 
-    permissions_t = { fg = catppuccin.colors.blue.hex; };
-    permissions_r = { fg = catppuccin.colors.yellow.hex; };
-    permissions_w = { fg = catppuccin.colors.red.hex; };
-    permissions_x = { fg = catppuccin.colors.green.hex; };
-    permissions_s = { fg = catppuccin.colors.overlay1.hex; };
+    permissions_t = {
+      fg = catppuccin.colors.blue.hex;
+    };
+    permissions_r = {
+      fg = catppuccin.colors.yellow.hex;
+    };
+    permissions_w = {
+      fg = catppuccin.colors.red.hex;
+    };
+    permissions_x = {
+      fg = catppuccin.colors.green.hex;
+    };
+    permissions_s = {
+      fg = catppuccin.colors.overlay1.hex;
+    };
   };
 }

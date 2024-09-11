@@ -1,9 +1,15 @@
-{ config, lib, namespace, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf mkForce;
 
   cfg = config.${namespace}.system.networking;
-in {
+in
+{
   config = mkIf (cfg.dns == "systemd-resolved") {
     networking.networkmanager.dns = "systemd-resolved";
     services.dnsmasq.enable = mkForce false;

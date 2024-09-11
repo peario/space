@@ -1,9 +1,15 @@
-{ config, lib, namespace, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkEnableOption mkIf;
 
   cfg = config.${namespace}.programs.terminal.media.ncspot;
-in {
+in
+{
   options.${namespace}.programs.terminal.media.ncspot = {
     enable = mkEnableOption "ncspot";
   };

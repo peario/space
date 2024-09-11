@@ -1,9 +1,16 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkEnableOption mkIf;
 
   cfg = config.${namespace}.programs.terminal.media.ncmpcpp;
-in {
+in
+{
   options.${namespace}.programs.terminal.media.ncmpcpp = {
     enable = mkEnableOption "ncmpcpp";
   };
@@ -25,16 +32,23 @@ in {
         }
         {
           key = "J";
-          command = [ "select_item" "scroll_down" ];
+          command = [
+            "select_item"
+            "scroll_down"
+          ];
         }
         {
           key = "K";
-          command = [ "select_item" "scroll_up" ];
+          command = [
+            "select_item"
+            "scroll_up"
+          ];
         }
       ];
 
-      mpdMusicDir = mkIf config.${namespace}.services.mpd.enable
-        config.${namespace}.services.mpd.musicDirectory;
+      mpdMusicDir =
+        mkIf config.${namespace}.services.mpd.enable
+          config.${namespace}.services.mpd.musicDirectory;
 
       settings = {
         # TODO: see how much UI customization can be done

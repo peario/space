@@ -1,10 +1,17 @@
-{ config, lib, namespace, pkgs, ... }:
+{
+  config,
+  lib,
+  namespace,
+  pkgs,
+  ...
+}:
 let
   inherit (lib) getExe getExe';
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.services.swayidle;
-in {
+in
+{
   options.${namespace}.services.swayidle = {
     enable = mkBoolOpt false "Whether to enable swayidle service.";
   };
@@ -23,10 +30,7 @@ in {
         }
         {
           event = "after-resume";
-          command = ''
-            ${
-              getExe' config.wayland.windowManager.sway.package "swaymsg"
-            } "output * dpms on"'';
+          command = ''${getExe' config.wayland.windowManager.sway.package "swaymsg"} "output * dpms on"'';
         }
         {
           event = "lock";
@@ -40,10 +44,7 @@ in {
         }
         {
           timeout = 600;
-          command = ''
-            ${
-              getExe' config.wayland.windowManager.sway.package "swaymsg"
-            } "output * dpms off"'';
+          command = ''${getExe' config.wayland.windowManager.sway.package "swaymsg"} "output * dpms off"'';
         }
       ];
     };

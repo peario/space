@@ -1,8 +1,14 @@
-{ config, lib, namespace, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   cfg = config.${namespace}.programs.graphical.wms.sway;
-in {
+in
+{
   config = mkIf cfg.enable {
     wayland.windowManager.sway = {
       config = {
@@ -19,17 +25,14 @@ in {
         # TODO: use sway's app_id for wayland and class for xwayland
         # use xlsclients to check which are x11
         assigns = {
-          "1" = [{
-            title =
-              "^(.*(Twitch|TNTdrama|YouTube|Bally Sports|Video Entertainment|Plex)).*(Firefox).*$";
-          }];
-          "2" = [{
-            title =
-              "^(?!.*(Twitch|TNTdrama|YouTube|Bally Sports|Video Entertainment|Plex)).*(Firefox).*$";
-          }
-          # TODO: hide/minimize
-          # { title = "^(.*(hidden tabs - Workona)).*(Firefox).*$"; }
-            ];
+          "1" = [
+            { title = "^(.*(Twitch|TNTdrama|YouTube|Bally Sports|Video Entertainment|Plex)).*(Firefox).*$"; }
+          ];
+          "2" = [
+            { title = "^(?!.*(Twitch|TNTdrama|YouTube|Bally Sports|Video Entertainment|Plex)).*(Firefox).*$"; }
+            # TODO: hide/minimize
+            # { title = "^(.*(hidden tabs - Workona)).*(Firefox).*$"; }
+          ];
           "3" = [
             { app_id = "^Code$"; }
             { app_id = "^neovide$"; }
@@ -49,18 +52,15 @@ in {
             { app_id = "^Slack$"; }
             { class = "[Cc]aprine$"; }
             { app_id = "^org.telegram.desktop$"; }
-            {
-              app_id = "^discord$";
-            }
+            { app_id = "^discord$"; }
             # { class = "^zoom$"; }
             { app_id = "^Element$"; }
             { app_id = "^teams-for-linux$"; }
           ];
-          "6" = [{
-            app_id = "^thunderbird$";
-          }
-          # { class = "^Mailspring$"; }
-            ];
+          "6" = [
+            { app_id = "^thunderbird$"; }
+            # { class = "^Mailspring$"; }
+          ];
           "7" = [
             { app_id = "^mpv|vlc|VLC|mpdevil$"; }
             { app_id = "^Spotify$"; }

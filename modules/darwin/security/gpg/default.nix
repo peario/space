@@ -1,6 +1,19 @@
-{ config, lib, pkgs, inputs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  inputs,
+  namespace,
+  ...
+}:
 let
-  inherit (lib) types mkEnableOption mkIf getExe getExe';
+  inherit (lib)
+    types
+    mkEnableOption
+    mkIf
+    getExe
+    getExe'
+    ;
   inherit (lib.${namespace}) mkOpt;
   inherit (inputs) gpg-base-conf yubikey-guide;
 
@@ -23,25 +36,26 @@ let
     sha256 = "1h48yqffpaz437f3c9hfryf23r95rr319lrb3y79kxpxbc9hihxb";
   };
 
-  guideHTML = pkgs.runCommand "yubikey-guide" { } # bash
-    ''
-      ${getExe pkgs.pandoc} \
-        --standalone \
-        --metadata title="Yubikey Guide" \
-        --from markdown \
-        --to html5+smart \
-        --toc \
-        --template ${theme}/template.html5 \
-        --css ${theme}/docs/css/theme.css \
-        --css ${theme}/docs/css/skylighting-solarized-theme.css \
-        -o $out \
-        ${guide}
-    '';
-in {
+  guideHTML =
+    pkgs.runCommand "yubikey-guide" { } # bash
+      ''
+        ${getExe pkgs.pandoc} \
+          --standalone \
+          --metadata title="Yubikey Guide" \
+          --from markdown \
+          --to html5+smart \
+          --toc \
+          --template ${theme}/template.html5 \
+          --css ${theme}/docs/css/theme.css \
+          --css ${theme}/docs/css/skylighting-solarized-theme.css \
+          -o $out \
+          ${guide}
+      '';
+in
+{
   options.${namespace}.security.gpg = {
     enable = mkEnableOption "Enable GPG.";
-    agentTimeout = mkOpt types.int 5
-      "The amount of time to wait before continuing with shell init.";
+    agentTimeout = mkOpt types.int 5 "The amount of time to wait before continuing with shell init.";
   };
 
   config = mkIf cfg.enable {
@@ -51,13 +65,9 @@ in {
       shellInit = # bash
         ''
           export GPG_TTY="$(tty)"
-          export SSH_AUTH_SOCK=$(${
-            getExe' pkgs.gnupg "gpgconf"
-          } --list-dirs agent-ssh-socket)
+          export SSH_AUTH_SOCK=$(${getExe' pkgs.gnupg "gpgconf"} --list-dirs agent-ssh-socket)
 
-          ${getExe' pkgs.coreutils "timeout"} ${
-            builtins.toString cfg.agentTimeout
-          } ${getExe' pkgs.gnupg "gpgconf"} --launch gpg-agent
+          ${getExe' pkgs.coreutils "timeout"} ${builtins.toString cfg.agentTimeout} ${getExe' pkgs.gnupg "gpgconf"} --launch gpg-agent
           gpg_agent_timeout_status=$?
 
           if [ "$gpg_agent_timeout_status" = 124 ]; then

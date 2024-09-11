@@ -1,9 +1,15 @@
-{ config, lib, namespace, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib.${namespace}) mkBoolOpt enabled;
 
   cfg = config.${namespace}.archetypes.workstation;
-in {
+in
+{
   options.${namespace}.archetypes.workstation = {
     enable = mkBoolOpt false "Enable the workstation archetype.";
   };

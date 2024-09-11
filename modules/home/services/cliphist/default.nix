@@ -1,9 +1,15 @@
-{ config, lib, namespace, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkEnableOption mkIf;
 
   cfg = config.${namespace}.services.cliphist;
-in {
+in
+{
   options.${namespace}.services.cliphist = {
     enable = mkEnableOption "cliphist";
 

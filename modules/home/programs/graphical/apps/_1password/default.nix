@@ -1,12 +1,19 @@
-{ config, pkgs, lib, namespace, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
-  identityAgent = if pkgs.stdenv.isLinux then
-    "~/.1password/agent.sock"
-  else
-    "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
+  identityAgent =
+    if pkgs.stdenv.isLinux then
+      "~/.1password/agent.sock"
+    else
+      "~/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock";
 
   _1PasswordAgentConf = # conf
     ''
@@ -15,7 +22,8 @@ let
     '';
 
   cfg = config.${namespace}.programs.graphical.apps._1password;
-in {
+in
+{
   options.${namespace}.programs.graphical.apps._1password = {
     enable = mkBoolOpt false "Enable 1password.";
   };

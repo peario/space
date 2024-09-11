@@ -1,9 +1,16 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkEnableOption mkIf;
 
   cfg = config.${namespace}.programs.terminal.editors.helix;
-in {
+in
+{
   imports = lib.snowfall.fs.get-non-default-nix-files ./.;
 
   options.${namespace}.programs.terminal.editors.helix = {
@@ -14,8 +21,10 @@ in {
     programs.helix = {
       enable = true;
       package = pkgs.helix.overrideAttrs (self: {
-        makeWrapperArgs = with pkgs;
-          self.makeWrapperArgs or [ ] ++ [
+        makeWrapperArgs =
+          with pkgs;
+          self.makeWrapperArgs or [ ]
+          ++ [
             "--suffix"
             "PATH"
             ":"
@@ -48,7 +57,12 @@ in {
             select = "block";
           };
 
-          gutters = [ "diagnostics" "line-numbers" "spacer" "diff" ];
+          gutters = [
+            "diagnostics"
+            "line-numbers"
+            "spacer"
+            "diff"
+          ];
 
           idle-timeout = 1;
 

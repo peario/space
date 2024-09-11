@@ -1,8 +1,15 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   cfg = config.${namespace}.programs.terminal.tools.yazi;
-in {
+in
+{
   config = mkIf cfg.enable {
     home.packages = with pkgs; [ glow ];
 

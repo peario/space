@@ -1,10 +1,17 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf literalExpression;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.graphical.mangohud;
-in {
+in
+{
   options.${namespace}.programs.graphical.mangohud = {
     enable = mkBoolOpt false "Whether or not to enable mangohud.";
   };

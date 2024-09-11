@@ -4,7 +4,10 @@ _: {
     # Selection
     {
       on = [ "<Space>" ];
-      run = [ "select --state=none" "arrow 1" ];
+      run = [
+        "select --state=none"
+        "arrow 1"
+      ];
       desc = "Toggle the current selection state";
     }
     {

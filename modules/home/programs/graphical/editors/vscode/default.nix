@@ -1,10 +1,17 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkEnableOption mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.graphical.editors.vscode;
-in {
+in
+{
   options.${namespace}.programs.graphical.editors.vscode = {
     enable = mkEnableOption "Whether or not to enable vscode.";
     declarativeConfig = mkBoolOpt false "Whether or not to enable vscode.";
@@ -68,17 +75,14 @@ in {
         "workbench.iconTheme" = "vscode-icons";
 
         # Font family
-        "editor.fontFamily" =
-          "MonaspiceAr Nerd Font, CaskaydiaCove Nerd Font,Consolas, monospace,Hack Nerd Font";
-        "editor.codeLensFontFamily" =
-          "MonaspiceNe Nerd Font, Liga SFMono Nerd Font, CaskaydiaCove Nerd Font,Consolas, 'Courier New', monospace,Hack Nerd Font";
+        "editor.fontFamily" = "MonaspiceAr Nerd Font, CaskaydiaCove Nerd Font,Consolas, monospace,Hack Nerd Font";
+        "editor.codeLensFontFamily" = "MonaspiceNe Nerd Font, Liga SFMono Nerd Font, CaskaydiaCove Nerd Font,Consolas, 'Courier New', monospace,Hack Nerd Font";
         "editor.inlayHints.fontFamily" = "MonaspiceKr Nerd Font";
         "debug.console.fontFamily" = "Monaspace Krypton";
         "scm.inputFontFamily" = "Monaspace Radon";
         "notebook.output.fontFamily" = "Monapsace Radon";
         "chat.editor.fontFamily" = "Monaspace Argon";
-        "markdown.preview.fontFamily" =
-          "Monaspace Xenon; -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif";
+        "markdown.preview.fontFamily" = "Monaspace Xenon; -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif";
         "terminal.integrated.fontFamily" = "JetBrainsMono Nerd Font Mono";
 
         # LSP
@@ -93,30 +97,44 @@ in {
 
         # Formatters
         "editor.defaultFormatter" = "esbenp.prettier-vscode";
-        "[cpp]" = { "editor.defaultFormatter" = "xaver.clang-format"; };
-        "[csharp]" = { "editor.defaultFormatter" = "ms-dotnettools.csharp"; };
+        "[cpp]" = {
+          "editor.defaultFormatter" = "xaver.clang-format";
+        };
+        "[csharp]" = {
+          "editor.defaultFormatter" = "ms-dotnettools.csharp";
+        };
         "[dockerfile]" = {
           "editor.defaultFormatter" = "ms-azuretools.vscode-docker";
         };
-        "[gitconfig]" = { "editor.defaultFormatter" = "yy0931.gitconfig-lsp"; };
+        "[gitconfig]" = {
+          "editor.defaultFormatter" = "yy0931.gitconfig-lsp";
+        };
         "[html]" = {
           "editor.defaultFormatter" = "vscode.html-language-features";
         };
-        "[java]" = { "editor.defaultFormatter" = "redhat.java"; };
+        "[java]" = {
+          "editor.defaultFormatter" = "redhat.java";
+        };
         "[javascript]" = {
           "editor.defaultFormatter" = "vscode.typescript-language-features";
         };
         "[json]" = {
           "editor.defaultFormatter" = "vscode.json-language-features";
         };
-        "[lua]" = { "editor.defaultFormatter" = "yinfei.luahelper"; };
+        "[lua]" = {
+          "editor.defaultFormatter" = "yinfei.luahelper";
+        };
         "[shellscript]" = {
           "editor.defaultFormatter" = "foxundermoon.shell-format";
         };
-        "[xml]" = { "editor.defaultFormatter" = "redhat.vscode-xml"; };
+        "[xml]" = {
+          "editor.defaultFormatter" = "redhat.vscode-xml";
+        };
 
         # Custom file associations
-        "files.associations" = { "*.avsc" = "json"; };
+        "files.associations" = {
+          "*.avsc" = "json";
+        };
 
         # Git settings
         "git.allowForcePush" = true;

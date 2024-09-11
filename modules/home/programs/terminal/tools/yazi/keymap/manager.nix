@@ -8,7 +8,8 @@ let
   selection = import ./manager/selection.nix { };
   sorting = import ./manager/sorting.nix { };
   tabs = import ./manager/tabs.nix { inherit config; };
-in {
+in
+{
   manager = {
     prepend_keymap = [
       {
@@ -37,7 +38,10 @@ in {
         desc = "Diff the selected with the hovered file";
       }
       {
-        on = [ "c" "m" ];
+        on = [
+          "c"
+          "m"
+        ];
         run = "plugin chmod";
         desc = "Chmod on selected files";
       }
@@ -63,8 +67,15 @@ in {
       }
     ];
 
-    keymap = copy.keymap ++ find.keymap ++ goto.keymap ++ navigation.keymap
-      ++ operation.keymap ++ selection.keymap ++ sorting.keymap ++ tabs.keymap
+    keymap =
+      copy.keymap
+      ++ find.keymap
+      ++ goto.keymap
+      ++ navigation.keymap
+      ++ operation.keymap
+      ++ selection.keymap
+      ++ sorting.keymap
+      ++ tabs.keymap
       ++ [
         # Exit
         {
@@ -75,8 +86,7 @@ in {
         {
           on = [ "q" ];
           run = "close";
-          desc =
-            "Close the current tab; if it's the last tab, exit the process instead.";
+          desc = "Close the current tab; if it's the last tab, exit the process instead.";
         }
         {
           on = [ "Q" ];

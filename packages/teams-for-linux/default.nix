@@ -1,11 +1,20 @@
-{ lib, stdenv, buildNpmPackage, fetchFromGitHub, alsa-utils, copyDesktopItems
-, electron_30, makeDesktopItem, makeWrapper, which, }:
+{
+  lib,
+  stdenv,
+  buildNpmPackage,
+  fetchFromGitHub,
+  alsa-utils,
+  copyDesktopItems,
+  electron_30,
+  makeDesktopItem,
+  makeWrapper,
+  which,
+}:
 
 let
-  electronDist = "${electron_30}/${
-      if stdenv.isDarwin then "Applications" else "libexec/electron"
-    }";
-in buildNpmPackage rec {
+  electronDist = "${electron_30}/${if stdenv.isDarwin then "Applications" else "libexec/electron"}";
+in
+buildNpmPackage rec {
   pname = "teams-for-linux";
   version = "1.9.5";
 
@@ -18,8 +27,7 @@ in buildNpmPackage rec {
 
   npmDepsHash = "sha256-vDRFFxkIQo5qU9gmkSwUhPz4FG2XbUNkTw6SCuvMqCc=";
 
-  nativeBuildInputs = [ makeWrapper ]
-    ++ lib.optionals stdenv.isLinux [ copyDesktopItems ];
+  nativeBuildInputs = [ makeWrapper ] ++ lib.optionals stdenv.isLinux [ copyDesktopItems ];
 
   env = {
     # disable code signing on Darwin
@@ -43,33 +51,42 @@ in buildNpmPackage rec {
     runHook postBuild
   '';
 
-  installPhase = ''
-    runHook preInstall
+  installPhase =
+    ''
+      runHook preInstall
 
-  '' + lib.optionalString stdenv.isLinux ''
-    mkdir -p $out/share/{applications,teams-for-linux}
-    cp dist/*-unpacked/resources/app.asar $out/share/teams-for-linux/
+    ''
+    + lib.optionalString stdenv.isLinux ''
+      mkdir -p $out/share/{applications,teams-for-linux}
+      cp dist/*-unpacked/resources/app.asar $out/share/teams-for-linux/
 
-    pushd build/icons
-    for image in *png; do
-      mkdir -p $out/share/icons/hicolor/''${image%.png}/apps
-      cp -r $image $out/share/icons/hicolor/''${image%.png}/apps/teams-for-linux.png
-    done
-    popd
+      pushd build/icons
+      for image in *png; do
+        mkdir -p $out/share/icons/hicolor/''${image%.png}/apps
+        cp -r $image $out/share/icons/hicolor/''${image%.png}/apps/teams-for-linux.png
+      done
+      popd
 
-    # Linux needs 'aplay' for notification sounds
-    makeWrapper '${lib.getExe electron_30}' "$out/bin/teams-for-linux" \
-      --prefix PATH : ${lib.makeBinPath [ alsa-utils which ]} \
-      --add-flags "$out/share/teams-for-linux/app.asar" \
-      --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations}}"
-  '' + lib.optionalString stdenv.isDarwin ''
-    mkdir -p $out/Applications
-    cp -r dist/mac*/teams-for-linux.app $out/Applications
-    makeWrapper $out/Applications/teams-for-linux.app/Contents/MacOS/teams-for-linux $out/bin/teams-for-linux
-  '' + ''
+      # Linux needs 'aplay' for notification sounds
+      makeWrapper '${lib.getExe electron_30}' "$out/bin/teams-for-linux" \
+        --prefix PATH : ${
+          lib.makeBinPath [
+            alsa-utils
+            which
+          ]
+        } \
+        --add-flags "$out/share/teams-for-linux/app.asar" \
+        --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations}}"
+    ''
+    + lib.optionalString stdenv.isDarwin ''
+      mkdir -p $out/Applications
+      cp -r dist/mac*/teams-for-linux.app $out/Applications
+      makeWrapper $out/Applications/teams-for-linux.app/Contents/MacOS/teams-for-linux $out/bin/teams-for-linux
+    ''
+    + ''
 
-    runHook postInstall
-  '';
+      runHook postInstall
+    '';
 
   desktopItems = [
     (makeDesktopItem {
@@ -78,7 +95,11 @@ in buildNpmPackage rec {
       icon = "teams-for-linux";
       desktopName = "Microsoft Teams for Linux";
       comment = meta.description;
-      categories = [ "Network" "InstantMessaging" "Chat" ];
+      categories = [
+        "Network"
+        "InstantMessaging"
+        "Chat"
+      ];
     })
   ];
 

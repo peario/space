@@ -1,10 +1,17 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.terminal.tools.oh-my-posh;
-in {
+in
+{
   # TODO(oh-my-posh): Is this needed?
   options.${namespace}.programs.terminal.tools.oh-my-posh = {
     enable = mkBoolOpt false "Enable oh-my-posh.";
@@ -17,8 +24,9 @@ in {
       enableFishIntegration = true;
       enableZshIntegration = true;
       package = pkgs.oh-my-posh;
-      settings = builtins.fromJSON
-        (builtins.unsafeDiscardStringContext (builtins.readFile ./config.json));
+      settings = builtins.fromJSON (
+        builtins.unsafeDiscardStringContext (builtins.readFile ./config.json)
+      );
     };
   };
 }

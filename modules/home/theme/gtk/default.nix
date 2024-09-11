@@ -1,27 +1,37 @@
-{ config, lib, pkgs, osConfig, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  osConfig,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf mkDefault types;
-  inherit (lib.${namespace}) boolToNum mkBoolOpt mkOpt nested-default-attrs;
+  inherit (lib.${namespace})
+    boolToNum
+    mkBoolOpt
+    mkOpt
+    nested-default-attrs
+    ;
 
   cfg = config.${namespace}.theme.gtk;
-in {
+in
+{
   options.${namespace}.theme.gtk = {
     enable = mkBoolOpt false "Customize GTK and apply themes.";
     usePortal = mkBoolOpt false "Use the GTK Portal.";
 
     cursor = {
-      name = mkOpt types.str "catppuccin-macchiato-blue-cursors"
-        "The name of the cursor theme to apply.";
-      package = mkOpt types.package (if pkgs.stdenv.isLinux then
-        pkgs.catppuccin-cursors.macchiatoBlue
-      else
-        pkgs.emptyDirectory) "The package to use for the cursor theme.";
+      name = mkOpt types.str "catppuccin-macchiato-blue-cursors" "The name of the cursor theme to apply.";
+      package = mkOpt types.package (
+        if pkgs.stdenv.isLinux then pkgs.catppuccin-cursors.macchiatoBlue else pkgs.emptyDirectory
+      ) "The package to use for the cursor theme.";
       size = mkOpt types.int 32 "The size of the cursor.";
     };
 
     icon = {
-      name =
-        mkOpt types.str "Papirus-Dark" "The name of the icon theme to apply.";
+      name = mkOpt types.str "Papirus-Dark" "The name of the icon theme to apply.";
       package = mkOpt types.package (pkgs.catppuccin-papirus-folders.override {
         accent = "blue";
         flavor = "macchiato";
@@ -29,8 +39,7 @@ in {
     };
 
     theme = {
-      name = mkOpt types.str "catppuccin-macchiato-blue-standard"
-        "The name of the theme to apply";
+      name = mkOpt types.str "catppuccin-macchiato-blue-standard" "The name of the theme to apply";
       package = mkOpt types.package (pkgs.catppuccin-gtk.override {
         accents = [ "blue" ];
         size = "standard";
@@ -66,11 +75,12 @@ in {
       settings = nested-default-attrs {
         "org/gnome/shell" = {
           disable-user-extensions = false;
-          enabled-extensions =
-            [ "user-theme@gnome-shell-extensions.gcampax.github.com" ];
+          enabled-extensions = [ "user-theme@gnome-shell-extensions.gcampax.github.com" ];
         };
 
-        "org/gnome/shell/extensions/user-theme" = { inherit (cfg.theme) name; };
+        "org/gnome/shell/extensions/user-theme" = {
+          inherit (cfg.theme) name;
+        };
 
         "org/gnome/desktop/interface" = {
           color-scheme = "prefer-dark";
@@ -87,7 +97,9 @@ in {
     gtk = {
       enable = true;
 
-      font = { name = osConfig.${namespace}.system.fonts.default; };
+      font = {
+        name = osConfig.${namespace}.system.fonts.default;
+      };
 
       gtk2 = {
         configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
@@ -125,22 +137,31 @@ in {
         gtk-xft-hintstyle = "hintslight";
       };
 
-      iconTheme = { inherit (cfg.icon) name package; };
+      iconTheme = {
+        inherit (cfg.icon) name package;
+      };
 
-      theme = { inherit (cfg.theme) name package; };
+      theme = {
+        inherit (cfg.theme) name package;
+      };
     };
 
     xdg = {
-      configFile = let
-        gtk4Dir = "${cfg.theme.package}/share/themes/${cfg.theme.name}/gtk-4.0";
-      in {
-        "gtk-4.0/assets".source = "${gtk4Dir}/assets";
-        "gtk-4.0/gtk.css".source = "${gtk4Dir}/gtk.css";
-        "gtk-4.0/gtk-dark.css".source = "${gtk4Dir}/gtk-dark.css";
-      };
+      configFile =
+        let
+          gtk4Dir = "${cfg.theme.package}/share/themes/${cfg.theme.name}/gtk-4.0";
+        in
+        {
+          "gtk-4.0/assets".source = "${gtk4Dir}/assets";
+          "gtk-4.0/gtk.css".source = "${gtk4Dir}/gtk.css";
+          "gtk-4.0/gtk-dark.css".source = "${gtk4Dir}/gtk-dark.css";
+        };
 
-      systemDirs.data = let schema = pkgs.gsettings-desktop-schemas;
-      in [ "${schema}/share/gsettings-schemas/${schema.name}" ];
+      systemDirs.data =
+        let
+          schema = pkgs.gsettings-desktop-schemas;
+        in
+        [ "${schema}/share/gsettings-schemas/${schema.name}" ];
     };
   };
 }

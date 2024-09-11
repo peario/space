@@ -1,7 +1,13 @@
-{ lib, osConfig, pkgs, }:
+{
+  lib,
+  osConfig,
+  pkgs,
+}:
 
-let inherit (lib) getExe' mkIf;
-in {
+let
+  inherit (lib) getExe' mkIf;
+in
+{
   "$schema" = "/etc/xdg/swaync/configSchema.json";
   control-center-height = 600;
   control-center-margin-bottom = 0;
@@ -47,7 +53,9 @@ in {
       clear-all-button = true;
       button-text = "Clear All";
     };
-    dnd = { text = "Do Not Disturb"; };
+    dnd = {
+      text = "Do Not Disturb";
+    };
     label = {
       max-lines = 1;
       text = "Control Center";
@@ -89,34 +97,30 @@ in {
         ];
       };
 
-      "menu#powermode-buttons" =
-        mkIf osConfig.services.power-profiles-daemon.enable {
-          label = "";
-          position = "left";
-          actions = [
-            {
-              label = "Performance";
-              active = true;
-              command = "powerprofilesctl set performance";
-              update-command = ''
-                sh -c "[[ $(powerprofilesctl get) == "performance" ]] && echo true || echo false"'';
-            }
-            {
-              label = "Balanced";
-              active = false;
-              command = "powerprofilesctl set balanced";
-              update-command = ''
-                sh -c "[[ $(powerprofilesctl get) == "balanced" ]] && echo true || echo false"'';
-            }
-            {
-              label = "Power-saver";
-              active = false;
-              command = "powerprofilesctl set power-saver";
-              update-command = ''
-                sh -c "[[ $(powerprofilesctl get) == "power-saver" ]] && echo true || echo false"'';
-            }
-          ];
-        };
+      "menu#powermode-buttons" = mkIf osConfig.services.power-profiles-daemon.enable {
+        label = "";
+        position = "left";
+        actions = [
+          {
+            label = "Performance";
+            active = true;
+            command = "powerprofilesctl set performance";
+            update-command = ''sh -c "[[ $(powerprofilesctl get) == "performance" ]] && echo true || echo false"'';
+          }
+          {
+            label = "Balanced";
+            active = false;
+            command = "powerprofilesctl set balanced";
+            update-command = ''sh -c "[[ $(powerprofilesctl get) == "balanced" ]] && echo true || echo false"'';
+          }
+          {
+            label = "Power-saver";
+            active = false;
+            command = "powerprofilesctl set power-saver";
+            update-command = ''sh -c "[[ $(powerprofilesctl get) == "power-saver" ]] && echo true || echo false"'';
+          }
+        ];
+      };
 
       "menu#screenshot-buttons" = {
         label = "";
@@ -142,8 +146,7 @@ in {
       actions = [
         {
           label = "";
-          command =
-            "${getExe' pkgs.networkmanagerapplet "nm-connection-editor"}";
+          command = "${getExe' pkgs.networkmanagerapplet "nm-connection-editor"}";
         }
         {
           label = "";

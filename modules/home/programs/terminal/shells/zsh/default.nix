@@ -1,10 +1,17 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkEnableOption mkIf;
   inherit (lib.strings) fileContents;
 
   cfg = config.${namespace}.programs.terminal.shell.zsh;
-in {
+in
+{
   options.${namespace}.programs.terminal.shell.zsh = {
     enable = mkEnableOption "Zsh";
   };
@@ -175,8 +182,7 @@ in {
           # }
           {
             name = "fast-syntax-highlighting";
-            file =
-              "share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh";
+            file = "share/zsh/site-functions/fast-syntax-highlighting.plugin.zsh";
             src = pkgs.zsh-fast-syntax-highlighting;
           }
           {

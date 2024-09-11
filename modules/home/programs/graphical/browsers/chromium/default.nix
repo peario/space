@@ -1,10 +1,16 @@
-{ config, lib, namespace, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.graphical.browsers.chromium;
-in {
+in
+{
   options.${namespace}.programs.graphical.browsers.chromium = {
     enable = mkBoolOpt false "Whether or not to enable chromium.";
   };

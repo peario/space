@@ -1,10 +1,17 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) getExe mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.terminal.tools.bat;
-in {
+in
+{
   options.${namespace}.programs.terminal.tools.bat = {
     enable = mkBoolOpt false "Enable bat.";
   };
@@ -13,7 +20,9 @@ in {
     programs.bat = {
       enable = true;
 
-      config = { style = "auto,header-filesize"; };
+      config = {
+        style = "auto,header-filesize";
+      };
 
       extraPackages = with pkgs.bat-extras; [
         # batdiff
@@ -25,6 +34,8 @@ in {
       ];
     };
 
-    home.shellAliases = { cat = "${getExe pkgs.bat} --style=plain"; };
+    home.shellAliases = {
+      cat = "${getExe pkgs.bat} --style=plain";
+    };
   };
 }

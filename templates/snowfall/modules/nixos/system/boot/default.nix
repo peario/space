@@ -1,11 +1,18 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt default-attrs;
 
   cfg = config.${namespace}.system.boot;
   themeCfg = config.${namespace}.theme;
-in {
+in
+{
   options.${namespace}.system.boot = {
     enable = mkBoolOpt false "Whether or not to enable booting.";
     plymouth = mkBoolOpt false "Whether or not to enable plymouth boot splash.";
@@ -14,12 +21,19 @@ in {
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs;
-      [ efibootmgr efitools efivar fwupd ]
+    environment.systemPackages =
+      with pkgs;
+      [
+        efibootmgr
+        efitools
+        efivar
+        fwupd
+      ]
       ++ lib.optionals cfg.secureBoot [ sbctl ];
 
     boot = {
-      kernelParams = lib.optionals cfg.plymouth [ "quiet" ]
+      kernelParams =
+        lib.optionals cfg.plymouth [ "quiet" ]
         ++ lib.optionals cfg.silentBoot [
           # tell the kernel to not be verbose
           "quiet"
@@ -64,8 +78,7 @@ in {
 
       plymouth = {
         enable = cfg.plymouth;
-        theme =
-          "${themeCfg.selectedTheme.name}-${themeCfg.selectedTheme.variant}";
+        theme = "${themeCfg.selectedTheme.name}-${themeCfg.selectedTheme.variant}";
         themePackages = [ pkgs.catppuccin-plymouth ];
       };
 

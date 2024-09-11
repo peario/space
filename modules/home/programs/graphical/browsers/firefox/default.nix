@@ -1,44 +1,51 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
-  inherit (lib) types mkIf mkMerge optionalAttrs;
+  inherit (lib)
+    types
+    mkIf
+    mkMerge
+    optionalAttrs
+    ;
   inherit (lib.${namespace}) mkBoolOpt mkOpt;
 
   cfg = config.${namespace}.programs.graphical.browsers.firefox;
 
-  firefoxPath = if pkgs.stdenv.isLinux then
-    ".mozilla/firefox/${config.${namespace}.user.name}"
-  else
-    "/Users/${
-      config.${namespace}.user.name
-    }/Library/Application Support/Firefox/Profiles/${
-      config.${namespace}.user.name
-    }";
-in {
+  firefoxPath =
+    if pkgs.stdenv.isLinux then
+      ".mozilla/firefox/${config.${namespace}.user.name}"
+    else
+      "/Users/${config.${namespace}.user.name}/Library/Application Support/Firefox/Profiles/${config.${namespace}.user.name}";
+in
+{
   options.${namespace}.programs.graphical.browsers.firefox = with types; {
     enable = mkBoolOpt false "Whether or not to enable Firefox.";
 
-    extensions = mkOpt (listOf package)
-      (with config.nur.repos.rycee.firefox-addons; [
-        angular-devtools
-        auto-tab-discard
-        bitwarden
-        # NOTE: annoying new page and permissions
-        # bypass-paywalls-clean
-        darkreader
-        firefox-color
-        firenvim
-        onepassword-password-manager
-        react-devtools
-        reduxdevtools
-        sidebery
-        sponsorblock
-        stylus
-        ublock-origin
-        user-agent-string-switcher
-      ]) "Extensions to install";
+    extensions = mkOpt (listOf package) (with config.nur.repos.rycee.firefox-addons; [
+      angular-devtools
+      auto-tab-discard
+      bitwarden
+      # NOTE: annoying new page and permissions
+      # bypass-paywalls-clean
+      darkreader
+      firefox-color
+      firenvim
+      onepassword-password-manager
+      react-devtools
+      reduxdevtools
+      sidebery
+      sponsorblock
+      stylus
+      ublock-origin
+      user-agent-string-switcher
+    ]) "Extensions to install";
 
-    extraConfig =
-      mkOpt str "" "Extra configuration for the user profile JS file.";
+    extraConfig = mkOpt str "" "Extra configuration for the user profile JS file.";
     gpuAcceleration = mkBoolOpt false "Enable GPU acceleration.";
     hardwareDecoding = mkBoolOpt false "Enable hardware video decoding.";
 
@@ -69,8 +76,7 @@ in {
 
         "frankerfacez@frankerfacez.com" = {
           installation_mode = "force_installed";
-          install_url =
-            "https://cdn.frankerfacez.com/script/frankerfacez-4.0-an+fx.xpi";
+          install_url = "https://cdn.frankerfacez.com/script/frankerfacez-4.0-an+fx.xpi";
         };
       };
       Preferences = { };
@@ -83,48 +89,47 @@ in {
 
       engines = {
         "Nix Packages" = {
-          urls = [{
-            template = "https://search.nixos.org/packages";
-            params = [
-              {
-                name = "type";
-                value = "packages";
-              }
-              {
-                name = "query";
-                value = "{searchTerms}";
-              }
-            ];
-          }];
-          icon =
-            "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+          urls = [
+            {
+              template = "https://search.nixos.org/packages";
+              params = [
+                {
+                  name = "type";
+                  value = "packages";
+                }
+                {
+                  name = "query";
+                  value = "{searchTerms}";
+                }
+              ];
+            }
+          ];
+          icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
           definedAliases = [ "@np" ];
         };
 
         "NixOs Options" = {
-          urls = [{
-            template = "https://search.nixos.org/options";
-            params = [
-              {
-                name = "channel";
-                value = "unstable";
-              }
-              {
-                name = "query";
-                value = "{searchTerms}";
-              }
-            ];
-          }];
-          icon =
-            "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+          urls = [
+            {
+              template = "https://search.nixos.org/options";
+              params = [
+                {
+                  name = "channel";
+                  value = "unstable";
+                }
+                {
+                  name = "query";
+                  value = "{searchTerms}";
+                }
+              ];
+            }
+          ];
+          icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
           definedAliases = [ "@no" ];
         };
 
         "NixOS Wiki" = {
-          urls = [{
-            template =
-              "https://wiki.nixos.org/w/index.php?search={searchTerms}";
-          }];
+          urls = [ { template = "https://wiki.nixos.org/w/index.php?search={searchTerms}"; } ];
           iconUpdateURL = "https://wiki.nixos.org/favicon.png";
           updateInterval = 24 * 60 * 60 * 1000;
           definedAliases = [ "@nw" ];
@@ -133,20 +138,20 @@ in {
     } "Search configuration";
 
     settings = mkOpt attrs { } "Settings to apply to the profile.";
-    userChrome =
-      mkOpt str "" "Extra configuration for the user chrome CSS file.";
+    userChrome = mkOpt str "" "Extra configuration for the user chrome CSS file.";
   };
 
   config = mkIf cfg.enable {
     home = {
-      file = mkMerge [{
-        "${firefoxPath}/chrome/img" = {
-          source =
-            lib.cleanSourceWith { src = lib.cleanSource ./chrome/img/.; };
+      file = mkMerge [
+        {
+          "${firefoxPath}/chrome/img" = {
+            source = lib.cleanSourceWith { src = lib.cleanSource ./chrome/img/.; };
 
-          recursive = true;
-        };
-      }];
+            recursive = true;
+          };
+        }
+      ];
     };
 
     programs.firefox = {
@@ -179,10 +184,8 @@ in {
               "browser.meta_refresh_when_inactive.disabled" = true;
               "browser.newtabpage.activity-stream.default.sites" = "";
               "browser.newtabpage.activity-stream.showSponsored" = false;
-              "browser.newtabpage.activity-stream.showSponsoredTopSites" =
-                false;
-              "browser.search.hiddenOneOffs" =
-                "Google,Amazon.com,Bing,DuckDuckGo,eBay,Wikipedia (en)";
+              "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+              "browser.search.hiddenOneOffs" = "Google,Amazon.com,Bing,DuckDuckGo,eBay,Wikipedia (en)";
               "browser.search.suggest.enabled" = false;
               "browser.sessionstore.warnOnQuit" = true;
               "browser.shell.checkDefaultBrowser" = false;
@@ -206,12 +209,10 @@ in {
               "geo.provider.use_gpsd" = false;
               "gfx.font_rendering.directwrite.bold_simulation" = 2;
               "gfx.font_rendering.cleartype_params.enhanced_contrast" = 25;
-              "gfx.font_rendering.cleartype_params.force_gdi_classic_for_families" =
-                "";
+              "gfx.font_rendering.cleartype_params.force_gdi_classic_for_families" = "";
               "intl.accept_languages" = "en-US,en";
               "media.eme.enabled" = true;
-              "media.videocontrols.picture-in-picture.video-toggle.enabled" =
-                false;
+              "media.videocontrols.picture-in-picture.video-toggle.enabled" = false;
               "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
               "font.name.monospace.x-western" = "MonaspiceKr Nerd Font";
               "font.name.sans-serif.x-western" = "MonaspiceNe Nerd Font";
@@ -233,9 +234,11 @@ in {
           ];
 
           # TODO: support alternative theme loading
-          userChrome = builtins.readFile ./chrome/userChrome.css + ''
-            ${cfg.userChrome}
-          '';
+          userChrome =
+            builtins.readFile ./chrome/userChrome.css
+            + ''
+              ${cfg.userChrome}
+            '';
         };
       };
     };

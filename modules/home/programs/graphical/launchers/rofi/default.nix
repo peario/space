@@ -1,13 +1,19 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.graphical.launchers.rofi;
-in {
+in
+{
   options.${namespace}.programs.graphical.launchers.rofi = {
-    enable =
-      mkBoolOpt false "Whether to enable Rofi in the desktop environment.";
+    enable = mkBoolOpt false "Whether to enable Rofi in the desktop environment.";
   };
 
   config = mkIf cfg.enable {
@@ -28,7 +34,11 @@ in {
         package = pkgs.rofi-pass-wayland;
       };
 
-      plugins = with pkgs; [ rofi-calc rofi-emoji rofi-top ];
+      plugins = with pkgs; [
+        rofi-calc
+        rofi-emoji
+        rofi-top
+      ];
     };
 
     xdg.configFile = {

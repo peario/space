@@ -1,10 +1,16 @@
-{ config, lib, namespace, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf mkForce;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.system.locale;
-in {
+in
+{
   options.${namespace}.system.locale = {
     enable = mkBoolOpt false "Whether or not to manage locale settings.";
   };

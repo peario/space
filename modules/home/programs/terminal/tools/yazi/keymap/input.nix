@@ -35,7 +35,11 @@ _: {
       }
       {
         on = [ "V" ];
-        run = [ "move -999" "visual" "move 999" ];
+        run = [
+          "move -999"
+          "visual"
+          "move 999"
+        ];
         desc = "Enter visual mode and select all";
       }
 
@@ -74,12 +78,18 @@ _: {
       }
       {
         on = [ "I" ];
-        run = [ "move -999" "insert" ];
+        run = [
+          "move -999"
+          "insert"
+        ];
         desc = "Move to the BOL, and enter insert mode";
       }
       {
         on = [ "A" ];
-        run = [ "move 999" "insert --append" ];
+        run = [
+          "move 999"
+          "insert --append"
+        ];
         desc = "Move to the EOL, and enter append mode";
       }
 
@@ -125,7 +135,10 @@ _: {
       }
       {
         on = [ "D" ];
-        run = [ "delete --cut" "move 999" ];
+        run = [
+          "delete --cut"
+          "move 999"
+        ];
         desc = "Cut until the EOL";
       }
       {
@@ -135,12 +148,18 @@ _: {
       }
       {
         on = [ "C" ];
-        run = [ "delete --cut --insert" "move 999" ];
+        run = [
+          "delete --cut --insert"
+          "move 999"
+        ];
         desc = "Cut until the EOL, and enter insert mode";
       }
       {
         on = [ "x" ];
-        run = [ "delete --cut" "move 1 --in-operating" ];
+        run = [
+          "delete --cut"
+          "move 1 --in-operating"
+        ];
         desc = "Cut the current character";
       }
 
@@ -174,7 +193,10 @@ _: {
       }
       {
         on = [ "D" ];
-        run = [ "delete --cut" "move 999" ];
+        run = [
+          "delete --cut"
+          "move 999"
+        ];
         desc = "Cut until the EOL";
       }
       {
@@ -184,12 +206,18 @@ _: {
       }
       {
         on = [ "C" ];
-        run = [ "delete --cut --insert" "move 999" ];
+        run = [
+          "delete --cut --insert"
+          "move 999"
+        ];
         desc = "Cut until the EOL and enter insert mode";
       }
       {
         on = [ "x" ];
-        run = [ "delete --cut" "move 1 --in-operating" ];
+        run = [
+          "delete --cut"
+          "move 1 --in-operating"
+        ];
         desc = "Cut the current character";
       }
       {

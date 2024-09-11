@@ -1,10 +1,17 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.terminal.tools.fzf;
-in {
+in
+{
   options.${namespace}.programs.terminal.tools.fzf = {
     enable = mkBoolOpt false "Enable fzf.";
   };
@@ -36,7 +43,9 @@ in {
       enableZshIntegration = false;
       enableFishIntegration = true;
 
-      tmux = { enableShellIntegration = true; };
+      tmux = {
+        enableShellIntegration = true;
+      };
     };
   };
 }

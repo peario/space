@@ -13,7 +13,10 @@ _: {
       }
       {
         on = [ "<Enter>" ];
-        run = [ "close --submit" "close_input --submit" ];
+        run = [
+          "close --submit"
+          "close_input --submit"
+        ];
         desc = "Submit the completion and input";
       }
 

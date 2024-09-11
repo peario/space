@@ -1,4 +1,10 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
@@ -10,7 +16,8 @@ let
     lt = "${lib.getExe pkgs.lsd} --tree";
     llt = "${lib.getExe pkgs.lsd} -l --tree";
   };
-in {
+in
+{
   options.${namespace}.programs.terminal.tools.lsd = {
     enable = mkBoolOpt false "Enable lsd.";
   };
@@ -20,7 +27,14 @@ in {
       enable = true;
 
       settings = {
-        blocks = [ "permission" "user" "group" "size" "date" "name" ];
+        blocks = [
+          "permission"
+          "user"
+          "group"
+          "size"
+          "date"
+          "name"
+        ];
         classic = false;
         date = "date";
         dereference = false;

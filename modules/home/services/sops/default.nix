@@ -1,10 +1,16 @@
-{ config, lib, namespace, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf types;
   inherit (lib.${namespace}) mkBoolOpt mkOpt;
 
   cfg = config.${namespace}.services.sops;
-in {
+in
+{
   options.${namespace}.services.sops = with types; {
     enable = mkBoolOpt false "Enable sops.";
     defaultSopsFile = mkOpt path null "Default sops file.";
@@ -19,8 +25,7 @@ in {
       age = {
         generateKey = true;
         keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
-        sshKeyPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ]
-          ++ cfg.sshKeyPaths;
+        sshKeyPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ] ++ cfg.sshKeyPaths;
       };
 
       secrets = {

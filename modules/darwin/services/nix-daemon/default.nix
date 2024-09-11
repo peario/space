@@ -1,10 +1,16 @@
-{ config, lib, namespace, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib) types mkIf;
   inherit (lib.${namespace}) mkOpt enabled;
 
   cfg = config.${namespace}.services.nix-daemon;
-in {
+in
+{
   options.${namespace}.services.nix-daemon = {
     enable = mkOpt types.bool true "Enable the Nix daemon.";
   };

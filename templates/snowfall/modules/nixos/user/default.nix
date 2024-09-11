@@ -1,23 +1,33 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) types;
   inherit (lib.${namespace}) mkOpt;
 
   cfg = config.${namespace}.user;
-in {
+in
+{
   options.${namespace}.user = with types; {
     email = mkOpt str "fredahl71@gmail.com" "The email of the user.";
     extraGroups = mkOpt (listOf str) [ ] "Groups for the user to be assigned.";
-    extraOptions = mkOpt attrs { }
-      "Extra options passed to <option>users.users.<name></option>.";
+    extraOptions = mkOpt attrs { } "Extra options passed to <option>users.users.<name></option>.";
     fullName = mkOpt str "Fredrik Dahlström" "The full name of the user.";
-    initialPassword = mkOpt str "password"
-      "The initial password to use when the user is first created.";
+    initialPassword =
+      mkOpt str "password"
+        "The initial password to use when the user is first created.";
     name = mkOpt str "peario" "The name to use for the user account.";
   };
 
   config = {
-    environment.systemPackages = with pkgs; [ fortune lolcat ];
+    environment.systemPackages = with pkgs; [
+      fortune
+      lolcat
+    ];
 
     environment.pathsToLink = [ "/share/zsh" ];
 

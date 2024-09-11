@@ -1,10 +1,17 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt enabled;
 
   cfg = config.${namespace}.suites.games;
-in {
+in
+{
   options.${namespace}.suites.games = {
     enable = mkBoolOpt false "Enable common games configuration.";
   };
@@ -21,6 +28,14 @@ in {
       protonup-qt
     ];
 
-    space = { programs = { terminal = { tools = { wine = enabled; }; }; }; };
+    space = {
+      programs = {
+        terminal = {
+          tools = {
+            wine = enabled;
+          };
+        };
+      };
+    };
   };
 }

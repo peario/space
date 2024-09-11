@@ -1,17 +1,21 @@
-{ config,
-# inputs,
-lib, pkgs,
-# system,
-namespace, ... }:
+{
+  config,
+  # inputs,
+  lib,
+  pkgs,
+  # system,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
   # inherit (inputs) wezterm;
 
   cfg = config.${namespace}.programs.terminal.emulators.wezterm;
-  catppuccin = import
-    (lib.snowfall.fs.get-file "modules/home/theme/catppuccin/colors.nix");
-in {
+  catppuccin = import (lib.snowfall.fs.get-file "modules/home/theme/catppuccin/colors.nix");
+in
+{
   options.${namespace}.programs.terminal.emulators.wezterm = {
     enable = mkBoolOpt false "Whether or not to enable wezterm.";
   };
