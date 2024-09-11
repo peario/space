@@ -1,17 +1,28 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) enabled;
 
   cfg = config.${namespace}.suites.common;
-in {
-  imports =
-    [ (lib.snowfall.fs.get-file "modules/shared/suites/common/default.nix") ];
+in
+{
+  imports = [ (lib.snowfall.fs.get-file "modules/shared/suites/common/default.nix") ];
 
   config = mkIf cfg.enable {
     programs.zsh.enable = true;
 
-    homebrew = { brews = [ "bashdb" "gnu-sed" ]; };
+    homebrew = {
+      brews = [
+        "bashdb"
+        "gnu-sed"
+      ];
+    };
 
     environment = {
       loginShell = pkgs.zsh;
@@ -49,7 +60,9 @@ in {
     space = {
       nix = enabled;
 
-      tools = { homebrew = enabled; };
+      tools = {
+        homebrew = enabled;
+      };
 
       system = {
         fonts = enabled;

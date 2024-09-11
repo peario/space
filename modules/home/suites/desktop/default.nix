@@ -1,16 +1,24 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.suites.desktop;
-in {
+in
+{
   options.${namespace}.suites.desktop = {
     enable = mkBoolOpt false "Enable common desktop applications.";
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs;
+    home.packages =
+      with pkgs;
       lib.optionals pkgs.stdenv.isLinux [
         appimage-run
         bitwarden
@@ -25,7 +33,7 @@ in {
         input-leap
         kdePackages.ark
         kdePackages.gwenview
-        pkgs.${namespace}.pocketcasts
+        # pkgs.${namespace}.pocketcasts
         realvnc-vnc-viewer
         # FIXME: broken nixpkgs
         # rustdesk

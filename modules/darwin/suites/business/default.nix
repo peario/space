@@ -1,10 +1,16 @@
-{ config, lib, namespace, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt enabled;
 
   cfg = config.${namespace}.suites.business;
-in {
+in
+{
   options.${namespace}.suites.business = {
     enable = mkBoolOpt false "Enable business configuration.";
   };
@@ -12,12 +18,10 @@ in {
   config = mkIf cfg.enable {
     homebrew = {
       casks = [
-        "bitwarden"
+        # "bitwarden"
         "calibre"
-        "libreoffice"
-        "meetingbar"
+        "microsoft-office"
         "obsidian"
-        "thunderbird"
       ];
 
       masApps = mkIf config.${namespace}.tools.homebrew.masEnable {
@@ -31,7 +35,13 @@ in {
     };
 
     space = {
-      programs = { graphical = { apps = { _1password = enabled; }; }; };
+      programs = {
+        graphical = {
+          apps = {
+            _1password = enabled;
+          };
+        };
+      };
     };
   };
 }

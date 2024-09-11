@@ -1,10 +1,16 @@
-{ config, lib, namespace, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.suites.social;
-in {
+in
+{
   options.${namespace}.suites.social = {
     enable = mkBoolOpt false "Enable social configuration.";
   };
@@ -12,12 +18,9 @@ in {
   config = mkIf cfg.enable {
     homebrew = {
       casks = [
-        # "betterdiscord-installer"
-        # "caprine"
-        "discord"
+        # NOTE: Currently I don't use any of these
         # "element"
         # "slack"
-        # "telegram"
       ];
     };
   };

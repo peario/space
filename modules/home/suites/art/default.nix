@@ -1,15 +1,25 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.suites.art;
-in {
+in
+{
   options.${namespace}.suites.art = {
     enable = mkBoolOpt false "Enable art configuration.";
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs; [ blender gimp inkscape-with-extensions ];
+    home.packages = with pkgs; [
+      gimp
+      inkscape-with-extensions
+    ];
   };
 }

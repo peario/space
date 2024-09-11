@@ -1,10 +1,16 @@
-{ config, lib, namespace, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.suites.desktop;
-in {
+in
+{
   options.${namespace}.suites.desktop = {
     enable = mkBoolOpt false "Enable common desktop configuration.";
   };
@@ -27,25 +33,30 @@ in {
     # };
 
     homebrew = {
-      brews = [ "blueutil" "fisher" "ical-buddy" "ifstat" "switchaudio-osx" ];
+      brews = [
+        "blueutil"
+        "fisher"
+        "ical-buddy"
+        "ifstat"
+        "switchaudio-osx"
+      ];
 
       casks = [
-        "alfred"
         "alt-tab"
         "appcleaner"
         "bartender"
-        "bitwarden"
-        "firefox@developer-edition"
+        # "firefox@developer-edition"
         "brave-browser"
         "gpg-suite"
-        "hammerspoon"
-        "kitty"
+        # "hammerspoon"
+        # "kitty"
         "launchcontrol"
         "monitorcontrol"
         "raycast"
+        "rectangle"
         "sf-symbols"
-        "stats"
-        "xquartz"
+        # "stats"
+        # "xquartz"
       ];
 
       taps = [
@@ -53,7 +64,7 @@ in {
         "bramstein/webfonttools"
         "felixkratz/homebrew-formulae"
         "khanhas/tap"
-        "romkatv/powerlevel10k"
+        # "romkatv/powerlevel10k"
         "teamookla/speedtest"
       ];
 

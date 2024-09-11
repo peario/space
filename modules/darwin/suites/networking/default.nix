@@ -1,19 +1,36 @@
-{ config, lib, namespace, ... }:
+{
+  config,
+  lib,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt enabled;
 
   cfg = config.${namespace}.suites.networking;
-in {
+in
+{
   options.${namespace}.suites.networking = {
     enable = mkBoolOpt false "Enable networking configuration.";
   };
 
   config = mkIf cfg.enable {
-    space = {
-      services = { tailscale = enabled; };
+    homebrew = {
+      casks = [
+        # TODO(vpn): See https://github.com/phirecc/wgnord, a Linux version of NordVPN?
+        "nordvpn"
+      ];
+    };
 
-      system = { networking = enabled; };
+    space = {
+      services = {
+        tailscale = enabled;
+      };
+
+      system = {
+        networking = enabled;
+      };
     };
   };
 }

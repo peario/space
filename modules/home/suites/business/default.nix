@@ -1,16 +1,24 @@
-{ config, lib, pkgs, namespace, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  namespace,
+  ...
+}:
 let
   inherit (lib) mkIf;
   inherit (lib.${namespace}) mkBoolOpt enabled;
 
   cfg = config.${namespace}.suites.business;
-in {
+in
+{
   options.${namespace}.suites.business = {
     enable = mkBoolOpt false "Enable business configuration.";
   };
 
   config = mkIf cfg.enable {
-    home.packages = with pkgs;
+    home.packages =
+      with pkgs;
       [
         calcurse
         # FIXME: package broken because of dependency textual being broken because of a dependency
@@ -22,10 +30,17 @@ in {
         # TODO: replace once https://github.com/NixOS/nixpkgs/pull/337868 is available
         # teams-for-linux
         pkgs.space.teams-for-linux
-      ] ++ lib.optionals stdenv.isLinux [ libreoffice ];
+      ]
+      ++ lib.optionals stdenv.isLinux [ libreoffice ];
 
     space = {
-      programs = { graphical = { apps = { _1password = enabled; }; }; };
+      programs = {
+        graphical = {
+          apps = {
+            _1password = enabled;
+          };
+        };
+      };
     };
   };
 }
