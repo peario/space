@@ -6,14 +6,13 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.programs.graphical.addons.wofi;
 in
 {
   options.${namespace}.programs.graphical.addons.wofi = {
-    enable = mkBoolOpt false "Whether to enable the Wofi in the desktop environment.";
+    enable = mkEnableOption "Wofi (desktop env)";
   };
 
   config = mkIf cfg.enable {

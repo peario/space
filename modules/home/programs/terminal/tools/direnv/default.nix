@@ -5,14 +5,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt enabled;
+  inherit (lib) mkIf mkEnableOption;
+  inherit (lib.${namespace}) enabled;
 
   cfg = config.${namespace}.programs.terminal.tools.direnv;
 in
 {
   options.${namespace}.programs.terminal.tools.direnv = {
-    enable = mkBoolOpt false "Enable direnv.";
+    enable = mkEnableOption "direnv";
   };
 
   config = mkIf cfg.enable {

@@ -7,8 +7,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
   inherit (inputs) spicetify-nix;
 
   cfg = config.${namespace}.programs.graphical.apps.spicetify;
@@ -17,7 +16,7 @@ let
 in
 {
   options.${namespace}.programs.graphical.apps.spicetify = {
-    enable = mkBoolOpt false "Whether or not to enable support for spicetify.";
+    enable = mkEnableOption "Support for Spicetify";
   };
 
   config = mkIf cfg.enable {

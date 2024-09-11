@@ -6,14 +6,13 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.programs.graphical.screenlockers.swaylock;
 in
 {
   options.${namespace}.programs.graphical.screenlockers.swaylock = {
-    enable = mkBoolOpt false "Whether to enable swaylock in the desktop environment.";
+    enable = mkEnableOption "Swaylock (desktop env)";
   };
 
   config = mkIf cfg.enable {

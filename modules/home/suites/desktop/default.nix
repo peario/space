@@ -6,14 +6,13 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.suites.desktop;
 in
 {
   options.${namespace}.suites.desktop = {
-    enable = mkBoolOpt false "Enable common desktop applications.";
+    enable = mkEnableOption "Common suite";
   };
 
   config = mkIf cfg.enable {

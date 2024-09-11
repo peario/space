@@ -12,7 +12,7 @@ let
 in
 {
   options.${namespace}.programs.graphical.apps.caprine = {
-    enable = mkEnableOption "caprine";
+    enable = mkEnableOption "Caprine";
   };
 
   config = mkIf cfg.enable {

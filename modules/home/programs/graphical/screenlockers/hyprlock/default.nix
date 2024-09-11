@@ -8,8 +8,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
   inherit (inputs) hyprlock;
 
   catppuccin = import (lib.snowfall.fs.get-file "modules/home/theme/catppuccin/colors.nix");
@@ -18,7 +17,7 @@ let
 in
 {
   options.${namespace}.programs.graphical.screenlockers.hyprlock = {
-    enable = mkBoolOpt false "Whether to enable hyprlock in the desktop environment.";
+    enable = mkEnableOption "Hyprlock (desktop env)";
   };
 
   config = mkIf cfg.enable {

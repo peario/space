@@ -6,21 +6,21 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt enabled;
+  inherit (lib) mkIf mkEnableOption;
+  inherit (lib.${namespace}) enabled;
 
   cfg = config.${namespace}.suites.development;
 in
 {
   options.${namespace}.suites.development = {
-    enable = mkBoolOpt false "Enable common development configuration.";
-    azureEnable = mkBoolOpt false "Enable azure development configuration.";
-    dockerEnable = mkBoolOpt false "Enable docker development configuration.";
-    gameEnable = mkBoolOpt false "Enable game development configuration.";
-    goEnable = mkBoolOpt false "Enable go development configuration.";
-    kubernetesEnable = mkBoolOpt false "Enable kubernetes development configuration.";
-    nixEnable = mkBoolOpt false "Enable nix development configuration.";
-    sqlEnable = mkBoolOpt false "Enable sql development configuration.";
+    enable = mkEnableOption "Common dev suite";
+    azure.enable = mkEnableOption "Azure development suite";
+    docker.enable = mkEnableOption "Docker development suite";
+    game.enable = mkEnableOption "Game development suite";
+    go.enable = mkEnableOption "Go development suite";
+    kubernetes.enable = mkEnableOption "Kubernetes development suite";
+    nix.enable = mkEnableOption "Nix development suite";
+    sql.enable = mkEnableOption "SQL development suite";
   };
 
   config = mkIf cfg.enable {
@@ -38,19 +38,19 @@ in
           github-desktop
           qtcreator
         ]
-        ++ lib.optionals cfg.nixEnable [
+        ++ lib.optionals cfg.nix.enable [
           nixpkgs-hammering
           nixpkgs-lint-community
           nixpkgs-review
           nix-update
         ]
-        ++ lib.optionals cfg.gameEnable [
+        ++ lib.optionals cfg.game.enable [
           godot_4
           # NOTE: removed from nixpkgs
           # ue4
           unityhub
         ]
-        ++ lib.optionals cfg.sqlEnable [
+        ++ lib.optionals cfg.sql.enable [
           dbeaver-bin
           mysql-workbench
         ];
@@ -116,11 +116,10 @@ in
           };
 
           tools = {
-            azure.enable = cfg.azureEnable;
+            azure.enable = cfg.azure.enable;
             git-crypt = enabled;
-            # go.enable = cfg.goEnable;
-            k9s.enable = cfg.kubernetesEnable;
-            lazydocker.enable = cfg.dockerEnable;
+            k9s.enable = cfg.kubernetes.enable;
+            lazydocker.enable = cfg.docker.enable;
             lazygit = enabled;
             # oh-my-posh = enabled;
             # FIXME: broken nixpkg

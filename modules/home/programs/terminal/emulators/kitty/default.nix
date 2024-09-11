@@ -6,15 +6,15 @@
   ...
 }:
 let
-  inherit (lib) types mkIf;
-  inherit (lib.${namespace}) mkBoolOpt mkOpt;
+  inherit (lib) mkIf mkEnableOption types;
+  inherit (lib.${namespace}) mkOpt;
 
   cfg = config.${namespace}.programs.terminal.emulators.kitty;
 in
 {
-  options.${namespace}.programs.terminal.emulators.kitty = with types; {
-    enable = mkBoolOpt false "Enable kitty.";
-    font = mkOpt str "Victor Mono" "Font to use for kitty.";
+  options.${namespace}.programs.terminal.emulators.kitty = {
+    enable = mkEnableOption "kitty";
+    font = mkOpt types.str "Victor Mono" "Font to use for kitty.";
   };
 
   config = mkIf cfg.enable {

@@ -9,6 +9,7 @@ let
   inherit (lib)
     mkIf
     mkOption
+    mkEnableOption
     mkPackageOption
     types
     lists
@@ -21,7 +22,7 @@ let
 in
 {
   options.${namespace}.programs.development.c = {
-    enable = mkBoolOpt false "Enable C/C++.";
+    enable = mkEnableOption "C/C++";
 
     package = mkPackageOption pkgs "clang" { };
 

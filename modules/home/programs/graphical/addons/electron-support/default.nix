@@ -5,14 +5,13 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.programs.graphical.addons.electron-support;
 in
 {
   options.${namespace}.programs.graphical.addons.electron-support = {
-    enable = mkBoolOpt false "Whether to enable wayland electron support in the desktop environment.";
+    enable = mkEnableOption "Wayland electron support (desktop env)";
   };
 
   config = mkIf cfg.enable {

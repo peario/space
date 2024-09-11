@@ -34,7 +34,7 @@ in
           };
         });
     };
-    wallpapers = mkOpt (types.listOf types.path) [ ] "Wallpapers to preload.";
+    wallpapers = mkOpt (with types; listOf path) [ ] "Wallpapers to preload.";
   };
 
   config = mkIf cfg.enable {

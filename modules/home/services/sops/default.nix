@@ -5,14 +5,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf types;
-  inherit (lib.${namespace}) mkBoolOpt mkOpt;
+  inherit (lib) mkIf mkEnableOption types;
+  inherit (lib.${namespace}) mkOpt;
 
   cfg = config.${namespace}.services.sops;
 in
 {
   options.${namespace}.services.sops = with types; {
-    enable = mkBoolOpt false "Enable sops.";
+    enable = mkEnableOption "SOPS";
     defaultSopsFile = mkOpt path null "Default sops file.";
     sshKeyPaths = mkOpt (listOf path) [ ] "SSH Key paths to use.";
   };

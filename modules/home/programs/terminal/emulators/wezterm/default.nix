@@ -8,8 +8,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
   # inherit (inputs) wezterm;
 
   cfg = config.${namespace}.programs.terminal.emulators.wezterm;
@@ -17,7 +16,7 @@ let
 in
 {
   options.${namespace}.programs.terminal.emulators.wezterm = {
-    enable = mkBoolOpt false "Whether or not to enable wezterm.";
+    enable = mkEnableOption "wezterm";
   };
 
   config = mkIf cfg.enable {

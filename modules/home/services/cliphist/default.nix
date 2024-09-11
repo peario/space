@@ -5,16 +5,21 @@
   ...
 }:
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    mkOption
+    types
+    ;
 
   cfg = config.${namespace}.services.cliphist;
 in
 {
   options.${namespace}.services.cliphist = {
-    enable = mkEnableOption "cliphist";
+    enable = mkEnableOption "cliphist service";
 
-    systemdTargets = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
+    systemdTargets = mkOption {
+      type = with types; listOf str;
       default = [ ];
       description = ''
         Systemd targets for cliphist
@@ -30,7 +35,9 @@ in
       };
     };
 
-    systemd.user.services.cliphist.Install.WantedBy = cfg.systemdTargets;
-    systemd.user.services.cliphist-images.Install.WantedBy = cfg.systemdTargets;
+    systemd.user.services = {
+      cliphist.Install.WantedBy = cfg.systemdTargets;
+      cliphist-images.Install.WantedBy = cfg.systemdTargets;
+    };
   };
 }

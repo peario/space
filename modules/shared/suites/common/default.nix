@@ -6,26 +6,29 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.suites.common;
 in
 {
   options.${namespace}.suites.common = {
-    enable = mkBoolOpt false "Enable common configuration.";
+    enable = mkEnableOption "common configuration.";
   };
 
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       coreutils
       curl
+      dt
       fd
       file
       findutils
+      fswatch
+      gdu
       killall
       lsof
       pciutils
+      pkgs.${namespace}.ikill
       tldr
       unzip
       wget

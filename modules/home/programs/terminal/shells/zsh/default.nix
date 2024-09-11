@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkIf mkEnableOption;
   inherit (lib.strings) fileContents;
 
   cfg = config.${namespace}.programs.terminal.shell.zsh;

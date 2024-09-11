@@ -5,14 +5,13 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.suites.development;
 in
 {
   options.${namespace}.suites.development = {
-    enable = mkBoolOpt false "Enable common development configuration.";
+    enable = mkEnableOption "Development suite";
   };
 
   config = mkIf cfg.enable {
@@ -25,10 +24,7 @@ in
         "visual-studio-code"
       ];
 
-      masApps = mkIf config.${namespace}.tools.homebrew.masEnable {
-        "Patterns" = 429449079;
-        "Xcode" = 497799835;
-      };
+      masApps = mkIf config.${namespace}.tools.homebrew.masEnable { "Xcode" = 497799835; };
     };
   };
 }

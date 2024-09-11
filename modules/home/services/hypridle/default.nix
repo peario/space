@@ -7,15 +7,19 @@
   ...
 }:
 let
-  inherit (lib) mkIf getExe getExe';
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib)
+    mkIf
+    getExe
+    getExe'
+    mkEnableOption
+    ;
   inherit (inputs) hypridle;
 
   cfg = config.${namespace}.services.hypridle;
 in
 {
   options.${namespace}.services.hypridle = {
-    enable = mkBoolOpt false "Whether to enable hypridle service.";
+    enable = mkEnableOption "Hypridle service.";
   };
 
   config = mkIf cfg.enable {

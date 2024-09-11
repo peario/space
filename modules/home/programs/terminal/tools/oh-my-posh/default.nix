@@ -6,15 +6,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.programs.terminal.tools.oh-my-posh;
 in
 {
   # TODO(oh-my-posh): Is this needed?
   options.${namespace}.programs.terminal.tools.oh-my-posh = {
-    enable = mkBoolOpt false "Enable oh-my-posh.";
+    enable = mkEnableOption "oh-my-posh";
   };
 
   config = mkIf cfg.enable {

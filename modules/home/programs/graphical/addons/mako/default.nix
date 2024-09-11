@@ -6,14 +6,18 @@
   ...
 }:
 let
-  inherit (lib) mkIf getExe getExe';
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    getExe
+    getExe'
+    ;
 
   cfg = config.${namespace}.programs.graphical.addons.mako;
 in
 {
   options.${namespace}.programs.graphical.addons.mako = {
-    enable = mkBoolOpt false "Whether to enable Mako in Sway.";
+    enable = mkEnableOption "Mako in Sway.";
   };
 
   config = mkIf cfg.enable {

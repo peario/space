@@ -6,14 +6,13 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.programs.terminal.tools.jq;
 in
 {
   options.${namespace}.programs.terminal.tools.jq = {
-    enable = mkBoolOpt false "Enable jq.";
+    enable = mkEnableOption "jq";
   };
 
   config = mkIf cfg.enable {

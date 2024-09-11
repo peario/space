@@ -11,7 +11,7 @@ let
 in
 {
   options.${namespace}.system.input = {
-    enable = mkEnableOption "macOS input";
+    enable = mkEnableOption "MacOS input";
   };
 
   config = mkIf cfg.enable (mkMerge [
