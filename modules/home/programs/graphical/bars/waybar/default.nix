@@ -11,12 +11,11 @@ let
   inherit (lib)
     mkIf
     mkForce
-    mkOpt
-    mkEnableOption
     getExe
     mkMerge
     types
     ;
+  inherit (lib.${namespace}) mkOpt mkBoolOpt;
   inherit (inputs) waybar;
 
   cfg = config.${namespace}.programs.graphical.bars.waybar;
@@ -108,14 +107,14 @@ let
 in
 {
   options.${namespace}.programs.graphical.bars.waybar = {
-    enable = mkEnableOption "Waybar (desktop env)";
-    debug = mkEnableOption "Debug mode";
-    fullSizeOutputs = mkOpt (
-      with types; listOf str
-    ) "Which outputs to use the full size waybar on." [ ];
-    condensedOutputs = mkOpt (
-      with types; listOf str
-    ) "Which outputs to use the smaller size waybar on." [ ];
+    enable = mkBoolOpt false "Whether to enable waybar in the desktop environment.";
+    debug = mkBoolOpt false "Whether to enable debug mode.";
+    fullSizeOutputs =
+      mkOpt (types.listOf types.str) "Which outputs to use the full size waybar on."
+        [ ];
+    condensedOutputs =
+      mkOpt (types.listOf types.str) "Which outputs to use the smaller size waybar on."
+        [ ];
   };
 
   config = mkIf cfg.enable {

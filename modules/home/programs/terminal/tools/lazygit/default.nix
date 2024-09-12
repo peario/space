@@ -5,13 +5,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.terminal.tools.lazygit;
 in
 {
   options.${namespace}.programs.terminal.tools.lazygit = {
-    enable = mkEnableOption "lazygit";
+    enable = mkBoolOpt false "Enable lazygit.";
   };
 
   config = mkIf cfg.enable {

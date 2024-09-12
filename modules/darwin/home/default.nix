@@ -6,12 +6,11 @@
   ...
 }:
 let
-  inherit (lib) types mkAliasDefinitions;
   inherit (lib.${namespace}) mkOpt;
 in
 {
 
-  options.${namespace}.home = with types; {
+  options.${namespace}.home = with lib.types; {
     file = mkOpt attrs { } "Files to be managed by home-manager's <option>home.file</option>.";
     configFile =
       mkOpt attrs { }
@@ -22,17 +21,13 @@ in
 
   config = {
     ${namespace}.home.extraOptions = {
-      home.file = mkAliasDefinitions options.${namespace}.home.file;
-
-      xdg = {
-        enable = true;
-
-        configFile = mkAliasDefinitions options.${namespace}.home.configFile;
-      };
+      home.file = lib.mkAliasDefinitions options.${namespace}.home.file;
+      xdg.enable = true;
+      xdg.configFile = lib.mkAliasDefinitions options.${namespace}.home.configFile;
     };
 
     snowfallorg.users.${config.${namespace}.user.name}.home.config =
-      mkAliasDefinitions
+      lib.mkAliasDefinitions
         options.${namespace}.home.extraOptions;
 
     home-manager = {

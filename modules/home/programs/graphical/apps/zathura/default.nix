@@ -11,7 +11,7 @@ let
 in
 {
   options.${namespace}.programs.graphical.apps.zathura = {
-    enable = mkEnableOption "Zathura";
+    enable = mkEnableOption "zathura";
   };
 
   config = mkIf cfg.enable {

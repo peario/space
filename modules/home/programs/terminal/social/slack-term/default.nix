@@ -6,13 +6,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.terminal.social.slack-term;
 in
 {
   options.${namespace}.programs.terminal.social.slack-term = {
-    enable = mkEnableOption "slack-term";
+    enable = mkBoolOpt false "Whether or not to enable slack-term.";
   };
 
   config = mkIf cfg.enable {

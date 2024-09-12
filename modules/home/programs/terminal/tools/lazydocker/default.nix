@@ -6,13 +6,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.terminal.tools.lazydocker;
 in
 {
   options.${namespace}.programs.terminal.tools.lazydocker = {
-    enable = mkEnableOption "lazydocker";
+    enable = mkBoolOpt false "Enable lazydocker.";
   };
 
   config = mkIf cfg.enable {

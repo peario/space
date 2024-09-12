@@ -6,13 +6,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.terminal.tools.azure;
 in
 {
   options.${namespace}.programs.terminal.tools.azure = {
-    enable = mkEnableOption "Azure utilities";
+    enable = mkBoolOpt false "Enable common Azure utilities.";
   };
 
   config = mkIf cfg.enable {

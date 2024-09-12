@@ -8,8 +8,7 @@
 let
   inherit (lib)
     mkIf
-    mkEnableOption
-    mkPackageOption
+    literalExpression
     mkOption
     types
     lists
@@ -22,9 +21,14 @@ let
 in
 {
   options.${namespace}.programs.development.lua = {
-    enable = mkEnableOption "Lua";
+    enable = mkBoolOpt false "Enable Lua.";
 
-    package = mkPackageOption luaPkgs "lua" { };
+    package = mkOption {
+      type = types.package;
+      default = luaPkgs.lua;
+      defaultText = literalExpression "pkgs.lua";
+      description = "The Lua package to use.";
+    };
 
     LSP = {
       enable = mkBoolOpt false "Enable LSP support for Lua.";
@@ -57,7 +61,7 @@ in
       enable = mkBoolOpt false "Enable other tooling for Lua.";
       packages = mkOption {
         type = with types; listOf (uniq package);
-        default = [
+        default = with pkgs; [
           luaPkgs.stdlib
           luaPkgs.luarocks
           luaPkgs.luafilesystem

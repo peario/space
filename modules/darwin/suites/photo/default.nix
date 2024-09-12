@@ -5,13 +5,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.suites.photo;
 in
 {
   options.${namespace}.suites.photo = {
-    enable = mkEnableOption "Photo suite";
+    enable = mkBoolOpt false "Enable photo configuration.";
   };
 
   config = mkIf cfg.enable {

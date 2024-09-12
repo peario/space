@@ -6,7 +6,8 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.terminal.tools.zellij;
 
@@ -24,7 +25,7 @@ in
 {
   # TODO(zellij): Research what this is
   options.${namespace}.programs.terminal.tools.zellij = {
-    enable = mkEnableOption "zellij";
+    enable = mkBoolOpt false "Enable zellij.";
   };
 
   config = mkIf cfg.enable {

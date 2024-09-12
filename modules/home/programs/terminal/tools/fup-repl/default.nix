@@ -6,7 +6,8 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption getExe';
+  inherit (lib) mkIf getExe';
+  inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.terminal.tools.fup-repl;
 
@@ -16,7 +17,7 @@ let
 in
 {
   options.${namespace}.programs.terminal.tools.fup-repl = {
-    enable = mkEnableOption "fup-repl";
+    enable = mkBoolOpt false "Enable fup-repl.";
   };
 
   config = mkIf cfg.enable { home.packages = [ fup-repl ]; };

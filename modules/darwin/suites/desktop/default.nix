@@ -5,13 +5,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.suites.desktop;
 in
 {
   options.${namespace}.suites.desktop = {
-    enable = mkEnableOption "Desktop suite";
+    enable = mkBoolOpt false "Enable common desktop configuration.";
   };
 
   config = mkIf cfg.enable {
@@ -34,21 +35,28 @@ in
     homebrew = {
       brews = [
         "blueutil"
+        "fisher"
+        "ical-buddy"
         "ifstat"
-        # "switchaudio-osx"
+        "switchaudio-osx"
       ];
 
       casks = [
         "alt-tab"
         "appcleaner"
         "bartender"
+        # "firefox@developer-edition"
         "brave-browser"
         "gpg-suite"
+        # "hammerspoon"
+        # "kitty"
         "launchcontrol"
         "monitorcontrol"
         "raycast"
         "rectangle"
         "sf-symbols"
+        # "stats"
+        # "xquartz"
       ];
 
       taps = [
@@ -56,13 +64,18 @@ in
         "bramstein/webfonttools"
         "felixkratz/homebrew-formulae"
         "khanhas/tap"
+        # "romkatv/powerlevel10k"
         "teamookla/speedtest"
       ];
 
       masApps = mkIf config.${namespace}.tools.homebrew.masEnable {
+        "AdGuard for Safari" = 1440147259;
+        "AmorphousMemoryMark" = 1495719766;
         "Amphetamine" = 937984704;
         "AutoMounter" = 1160435653;
+        "Dark Reader for Safari" = 1438243180;
         "Disk Speed Test" = 425264550;
+        "Microsoft Remote Desktop" = 1295203466;
         "PopClip" = 445189367;
         "TestFlight" = 899247664;
         "WiFi Explorer" = 494803304;

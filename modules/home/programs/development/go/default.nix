@@ -21,7 +21,7 @@ let
 in
 {
   options.${namespace}.programs.development.go = {
-    enable = mkEnableOption "Go";
+    enable = mkEnableOption "Enable Go.";
 
     package = mkPackageOption pkgs "go" { };
 

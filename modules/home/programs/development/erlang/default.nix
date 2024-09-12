@@ -8,9 +8,8 @@
 let
   inherit (lib)
     mkIf
+    literalExpression
     mkOption
-    mkPackageOption
-    mkEnableOption
     types
     lists
     ;
@@ -20,9 +19,14 @@ let
 in
 {
   options.${namespace}.programs.development.erlang = {
-    enable = mkEnableOption "Erlang";
+    enable = mkBoolOpt false "Enable Erlang.";
 
-    package = mkPackageOption pkgs "erlang_27" { };
+    package = mkOption {
+      type = types.package;
+      default = pkgs.erlang_27;
+      defaultText = literalExpression "pkgs.erlang_27";
+      description = "The Erlang package to use.";
+    };
 
     LSP = {
       enable = mkBoolOpt false "Enable LSP support for Erlang.";

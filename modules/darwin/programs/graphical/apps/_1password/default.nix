@@ -6,13 +6,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.graphical.apps._1password;
 in
 {
   options.${namespace}.programs.graphical.apps._1password = {
-    enable = mkEnableOption "1Password";
+    enable = mkBoolOpt false "Enable 1Password.";
   };
 
   config = mkIf cfg.enable {

@@ -6,26 +6,18 @@
   ...
 }:
 let
-  inherit (lib)
-    mkIf
-    mkEnableOption
-    mkPackageOption
-    getExe'
-    ;
+  inherit (lib) types mkIf getExe';
+  inherit (lib.${namespace}) mkBoolOpt mkOpt;
 
   cfg = config.${namespace}.programs.terminal.tools.prisma;
 in
 {
   # TODO(prisma): Is this needed? Anything needs adjusting?
-  options.${namespace}.programs.terminal.tools.prisma = {
-    enable = mkEnableOption "Prisma";
+  options.${namespace}.programs.terminal.tools.prisma = with types; {
+    enable = mkBoolOpt false "Install Prisma";
     pkgs = {
-      npm = mkPackageOption pkgs.nodePackages "prisma" {
-        extraDescription = "The NPM package to install";
-      };
-      engines = mkPackageOption pkgs "prisma-engines" {
-        extraDescription = "The package to get prisma engines from";
-      };
+      npm = mkOpt package pkgs.nodePackages.prisma "The NPM package to install";
+      engines = mkOpt package pkgs.prisma-engines "The package to get prisma engines from";
     };
   };
 

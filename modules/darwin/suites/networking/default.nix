@@ -5,14 +5,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
-  inherit (lib.${namespace}) enabled;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt enabled;
 
   cfg = config.${namespace}.suites.networking;
 in
 {
   options.${namespace}.suites.networking = {
-    enable = mkEnableOption "Networking suite";
+    enable = mkBoolOpt false "Enable networking configuration.";
   };
 
   config = mkIf cfg.enable {

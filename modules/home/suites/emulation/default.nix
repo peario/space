@@ -6,14 +6,15 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.suites.emulation;
 in
 {
   options.${namespace}.suites.emulation = {
-    enable = mkEnableOption "Emulation suite";
-    retroarch.enable = mkEnableOption "Emulation configuration";
+    enable = mkBoolOpt false "Enable emulation configuration.";
+    retroarchFull = mkBoolOpt false "Enable emulation configuration.";
   };
 
   config = mkIf cfg.enable {
@@ -37,13 +38,13 @@ in
         ryujinx
         xemu
       ]
-      ++ lib.optionals cfg.retroarch.enable [ retroarchFull ];
+      ++ lib.optionals cfg.retroarchFull [ retroarchFull ];
 
     space = {
       programs = {
         graphical = {
           apps = {
-            retroarch.enable = if cfg.retroarch.enable then false else true;
+            retroarch.enable = if cfg.retroarchFull then false else true;
           };
         };
       };

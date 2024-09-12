@@ -6,7 +6,8 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption getExe;
+  inherit (lib) mkIf getExe;
+  inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.graphical.bars.sketchybar;
 
@@ -17,7 +18,7 @@ let
 in
 {
   options.${namespace}.programs.graphical.bars.sketchybar = {
-    enable = mkEnableOption "Sketchybar (desktop env)";
+    enable = mkBoolOpt false "Whether to enable sketchybar in the desktop environment.";
   };
 
   config = mkIf cfg.enable {

@@ -9,9 +9,9 @@ let
   inherit (lib)
     mkIf
     mkPackageOption
-    mkEnableOption
     mkOption
     types
+    escapeShellArgs
     optionalAttrs
     optional
     ;
@@ -19,9 +19,9 @@ let
 
   cfg = config.${namespace}.programs.terminal.tools.eza;
 in
-{
+rec {
   options.${namespace}.programs.terminal.tools.eza = {
-    enable = mkEnableOption "eza";
+    enable = mkBoolOpt false "Enable eza.";
 
     enableIntegrations = mkBoolOpt true "Configures aliases for multiple shells.";
 

@@ -19,7 +19,7 @@ let
 in
 {
   options.${namespace}.programs.development.rust = {
-    enable = mkEnableOption "Rust (depends on C)";
+    enable = mkEnableOption "Enable Rust. Depends on C.";
 
     package = mkPackageOption pkgs "rustup" { };
 

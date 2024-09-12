@@ -11,7 +11,7 @@ let
 in
 {
   options.${namespace}.system.interface = {
-    enable = mkEnableOption "MacOS interface";
+    enable = mkEnableOption "macOS interface";
   };
 
   config = mkIf cfg.enable {

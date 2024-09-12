@@ -6,13 +6,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.terminal.tools.colorls;
 in
 {
   options.${namespace}.programs.terminal.tools.colorls = {
-    enable = mkEnableOption "colorls";
+    enable = mkBoolOpt false "Enable colorls.";
   };
 
   config = mkIf cfg.enable {
