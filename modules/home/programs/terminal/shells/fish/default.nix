@@ -7,13 +7,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.terminal.shell.fish;
 in
 {
   options.${namespace}.programs.terminal.shell.fish = {
-    enable = mkEnableOption "Fish";
+    enable = mkBoolOpt false "Enable fish.";
   };
 
   config = mkIf cfg.enable {

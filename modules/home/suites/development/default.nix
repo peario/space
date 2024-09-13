@@ -6,21 +6,20 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
-  inherit (lib.${namespace}) enabled;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt enabled;
 
   cfg = config.${namespace}.suites.development;
 in
 {
   options.${namespace}.suites.development = {
-    enable = mkEnableOption "Common dev suite";
-    azure.enable = mkEnableOption "Azure development suite";
-    docker.enable = mkEnableOption "Docker development suite";
-    game.enable = mkEnableOption "Game development suite";
-    go.enable = mkEnableOption "Go development suite";
-    kubernetes.enable = mkEnableOption "Kubernetes development suite";
-    nix.enable = mkEnableOption "Nix development suite";
-    sql.enable = mkEnableOption "SQL development suite";
+    enable = mkBoolOpt false "Enable common development configuration.";
+    azure.enable = mkBoolOpt false "Enable azure development configuration.";
+    docker.enable = mkBoolOpt false "Enable docker development configuration.";
+    game.enable = mkBoolOpt false "Enable game development configuration.";
+    kubernetes.enable = mkBoolOpt false "Enable kubernetes development configuration.";
+    nix.enable = mkBoolOpt false "Enable nix development configuration.";
+    sql.enable = mkBoolOpt false "Enable sql development configuration.";
   };
 
   config = mkIf cfg.enable {
@@ -77,7 +76,7 @@ in
           };
           go = enabled;
           lua = {
-            enable = true;
+            enable = false;
 
             other = enabled;
           };
@@ -88,7 +87,7 @@ in
             other = enabled;
           };
           python = {
-            enable = true;
+            enable = false;
 
             other = enabled;
           };
@@ -121,9 +120,6 @@ in
             k9s.enable = cfg.kubernetes.enable;
             lazydocker.enable = cfg.docker.enable;
             lazygit = enabled;
-            # oh-my-posh = enabled;
-            # FIXME: broken nixpkg
-            # prisma = enabled;
           };
         };
       };

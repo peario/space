@@ -6,13 +6,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.security.sops;
 in
 {
   options.${namespace}.security.sops = {
-    enable = mkEnableOption "SOPS";
+    enable = mkBoolOpt false "Enable sops.";
   };
 
   config = mkIf cfg.enable {

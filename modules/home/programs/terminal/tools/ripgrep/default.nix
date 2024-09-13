@@ -6,19 +6,15 @@
   ...
 }:
 let
-  inherit (lib)
-    mkIf
-    mkEnableOption
-    mkForce
-    getExe
-    ;
+  inherit (lib) getExe mkForce mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.terminal.tools.ripgrep;
 in
 {
   # TODO(ripgrep): Check if settings needs to be adjusted
   options.${namespace}.programs.terminal.tools.ripgrep = {
-    enable = mkEnableOption "ripgrep";
+    enable = mkBoolOpt false "Enable ripgrep.";
   };
 
   config = mkIf cfg.enable {

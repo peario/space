@@ -6,14 +6,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
-  inherit (lib.${namespace}) enabled;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt enabled;
 
   cfg = config.${namespace}.suites.wlroots;
 in
 {
   options.${namespace}.suites.wlroots = {
-    enable = mkEnableOption "wlroots suite";
+    enable = mkBoolOpt false "Enable common wlroots configuration.";
   };
 
   config = mkIf cfg.enable {

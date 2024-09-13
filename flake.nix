@@ -259,6 +259,7 @@
       };
 
       templates = {
+        rust.description = "Rust template";
         snowfall.description = "Snowfall-lib template";
       };
 

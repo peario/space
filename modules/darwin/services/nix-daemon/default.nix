@@ -5,14 +5,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt enabled;
+  inherit (lib) types mkIf;
+  inherit (lib.${namespace}) mkOpt enabled;
 
   cfg = config.${namespace}.services.nix-daemon;
 in
 {
   options.${namespace}.services.nix-daemon = {
-    enable = mkBoolOpt true "Enable the Nix daemon.";
+    enable = mkOpt types.bool true "Enable the Nix daemon.";
   };
 
   config = mkIf cfg.enable { services.nix-daemon = enabled; };

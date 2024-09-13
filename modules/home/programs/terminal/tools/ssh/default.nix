@@ -5,10 +5,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption types;
+  inherit (lib) types mkIf;
   inherit (lib.${namespace}) mkBoolOpt mkOpt;
 
   cfg = config.${namespace}.programs.terminal.tools.ssh;
+
+  # @TODO(jakehamilton): This is a hold-over from an earlier Snowfall Lib version which used
+  # the specialArg `name` to provide the host name.
+
 in
 # FIX(ssh): Find out what key should be here instead
 # default-key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJAZIwy7nkz8CZYR/ZTSNr+7lRBW2AYy1jw06b44zaID";
@@ -41,7 +45,7 @@ in
 {
   # TODO(ssh): Update config and integrate 1Password
   options.${namespace}.programs.terminal.tools.ssh = with types; {
-    enable = mkEnableOption "Configure SSH";
+    enable = mkBoolOpt false "Configure ssh support.";
     authorizedKeys = mkOpt (listOf str) [
       # default-key
     ] "The public keys to apply.";

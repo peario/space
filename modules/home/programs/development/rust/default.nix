@@ -10,7 +10,6 @@ let
     mkIf
     mkOption
     mkEnableOption
-    mkPackageOption
     types
     lists
     ;
@@ -19,9 +18,14 @@ let
 in
 {
   options.${namespace}.programs.development.rust = {
-    enable = mkEnableOption "Rust (depends on C)";
+    enable = mkEnableOption "Enable Rust (depends on C).";
 
-    package = mkPackageOption pkgs "rustup" { };
+    # package = mkPackageOption pkgs "rustup" { };
+    package = mkOption {
+      type = types.package;
+      default = pkgs.rustup;
+      description = "Package to use for Rust.";
+    };
 
     other = {
       enable = mkEnableOption "Enable other tooling for Rust.";

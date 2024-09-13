@@ -6,13 +6,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.graphical.apps.retroarch;
 in
 {
   options.${namespace}.programs.graphical.apps.retroarch = {
-    enable = mkEnableOption "RetroArch";
+    enable = mkBoolOpt false "Whether or not to enable retroarch.";
   };
 
   config = mkIf cfg.enable {

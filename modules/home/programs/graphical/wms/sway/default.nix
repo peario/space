@@ -6,13 +6,7 @@
   ...
 }:
 let
-  inherit (lib)
-    mkIf
-    mkOption
-    mkEnableOption
-    getExe
-    types
-    ;
+  inherit (lib) mkIf mkEnableOption getExe;
   inherit (lib.${namespace}) enabled;
 
   cfg = config.${namespace}.programs.graphical.wms.sway;
@@ -20,32 +14,32 @@ let
 in
 {
   options.${namespace}.programs.graphical.wms.sway = {
-    enable = mkEnableOption "Sway";
-    enableDebug = mkEnableOption "Debug mode";
-    appendConfig = mkOption {
-      type = types.lines;
+    enable = mkEnableOption "sway.";
+    enableDebug = mkEnableOption "Enable debug mode.";
+    appendConfig = lib.mkOption {
+      type = lib.types.lines;
       default = "";
       description = ''
         Extra configuration lines to add to bottom of `~/.config/hypr/sway.conf`.
       '';
     };
-    prependConfig = mkOption {
-      type = types.lines;
+    prependConfig = lib.mkOption {
+      type = lib.types.lines;
       default = "";
       description = ''
         Extra configuration lines to add to top of `~/.config/hypr/sway.conf`.
       '';
     };
-    extraSessionCommands = mkOption {
-      type = types.lines;
+    extraSessionCommands = lib.mkOption {
+      type = lib.types.lines;
       default = "";
       description = ''
         Extra shell commands to run at start of session.
       '';
     };
 
-    settings = mkOption {
-      type = types.attrs;
+    settings = lib.mkOption {
+      type = lib.types.attrs;
       default = { };
       description = ''
         Configuration to pass through to the main sway module.

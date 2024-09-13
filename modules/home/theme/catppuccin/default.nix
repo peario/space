@@ -52,7 +52,7 @@ let
 in
 {
   options.${namespace}.theme.catppuccin = {
-    enable = mkEnableOption "Catppuccin theme for applications.";
+    enable = mkEnableOption "Enable catppuccin theme for applications.";
 
     accent = mkOption {
       type = types.enum catppuccinAccents;

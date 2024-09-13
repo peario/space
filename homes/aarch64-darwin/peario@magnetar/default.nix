@@ -75,7 +75,7 @@ in
       development = {
         enable = true;
 
-        nixEnable = true;
+        nix.enable = true;
       };
       music = enabled;
       networking = enabled;

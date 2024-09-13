@@ -46,7 +46,6 @@ in
         mas
         moreutils
         ncdu
-        # oh-my-posh
         pigz
         rename
         spice-gtk

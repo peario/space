@@ -9,8 +9,6 @@ let
   inherit (lib)
     mkIf
     mkOption
-    mkEnableOption
-    mkPackageOption
     types
     lists
     ;
@@ -22,9 +20,14 @@ let
 in
 {
   options.${namespace}.programs.development.python = {
-    enable = mkEnableOption "Enable Python.";
+    enable = mkBoolOpt false "Enable Python (v3.12).";
 
-    package = mkPackageOption pyPkgs "python" { };
+    # package = mkPackageOption pkgs.python312Packages "python" { };
+    package = mkOption {
+      type = types.package;
+      default = pyPkgs.python;
+      description = "Package to use for Python.";
+    };
 
     LSP = {
       enable = mkBoolOpt false "Enable LSP support for Python.";

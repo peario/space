@@ -8,16 +8,17 @@
 }:
 let
   inherit (lib) mkIf getExe mkEnableOption;
+  inherit (lib.${namespace}) mkBoolOpt;
   inherit (inputs) home-manager;
 
   cfg = config.${namespace}.programs.graphical.apps.discord;
 in
 {
   options.${namespace}.programs.graphical.apps.discord = {
-    enable = mkEnableOption "Discord";
-    canary.enable = mkEnableOption "Discord Canary";
-    firefox.enable = mkEnableOption "Discord (Firefox)";
-    betterdiscord.enable = mkEnableOption "Better Discord";
+    enable = mkEnableOption "Enable Discord.";
+    canary.enable = mkBoolOpt false "Enable Discord Canary.";
+    firefox.enable = mkBoolOpt false "Enable the Firefox version of Discord.";
+    betterdiscord.enable = mkBoolOpt false "Enable Better Discord.";
   };
 
   config = mkIf cfg.enable {

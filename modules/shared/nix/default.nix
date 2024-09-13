@@ -98,7 +98,7 @@ in
 
           substituters = [
             "https://cache.nixos.org"
-            "https://space.cachix.org"
+            # "https://space.cachix.org"
             "https://nix-community.cachix.org"
             "https://nixpkgs-unfree.cachix.org"
             "https://numtide.cachix.org"
@@ -106,7 +106,7 @@ in
 
           trusted-public-keys = [
             "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
-            "space.cachix.org-1:3mthjI+T4B8dAu6Q2fn4/2Lqcywg4F0n12m9K2y3PlU="
+            # "space.cachix.org-1:3mthjI+T4B8dAu6Q2fn4/2Lqcywg4F0n12m9K2y3PlU="
             "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
             "nixpkgs-unfree.cachix.org-1:hqvoInulhbV4nJ9yJOEr+4wxhDV4xq2d1DK7S6Nj6rs="
             "numtide.cachix.org-1:2ps1kLBUWjxIneOy1Ik6cQjb41X0iXVXeHigGmycPPE="

@@ -5,13 +5,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.suites.music;
 in
 {
   options.${namespace}.suites.music = {
-    enable = mkEnableOption "Music suite";
+    enable = mkBoolOpt false "Enable music configuration.";
   };
 
   config = mkIf cfg.enable {
@@ -20,6 +21,8 @@ in
         "cumulus" # Soundcloud
         "spotify"
       ];
+
+      # masApps = mkIf config.${namespace}.tools.homebrew.masEnable { "GarageBand" = 682658836; };
     };
   };
 }

@@ -9,8 +9,6 @@ let
   inherit (lib)
     mkIf
     mkOption
-    mkEnableOption
-    mkPackageOption
     types
     lists
     ;
@@ -22,9 +20,14 @@ let
 in
 {
   options.${namespace}.programs.development.c = {
-    enable = mkEnableOption "C/C++";
+    enable = mkBoolOpt false "Enable C/C++.";
 
-    package = mkPackageOption pkgs "clang" { };
+    # package = mkPackageOption pkgs "clang" { };
+    package = mkOption {
+      type = types.package;
+      default = pkgs.clang;
+      description = "Package to use for C/C++.";
+    };
 
     LSP = {
       enable = mkBoolOpt false "Enable LSP (and formatter) support for C/C++.";

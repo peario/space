@@ -6,13 +6,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.terminal.tools.starship;
 in
 {
   options.${namespace}.programs.terminal.tools.starship = {
-    enable = mkEnableOption "starship";
+    enable = mkBoolOpt false "Enable starship.";
   };
 
   config = mkIf cfg.enable {

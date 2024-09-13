@@ -54,8 +54,8 @@ let
 in
 {
   options.${namespace}.security.gpg = {
-    enable = mkEnableOption "GPG";
-    agentTimeout = mkOpt types.int 5 "Amount of time to wait before continuing with shell init.";
+    enable = mkEnableOption "Enable GPG.";
+    agentTimeout = mkOpt types.int 5 "The amount of time to wait before continuing with shell init.";
   };
 
   config = mkIf cfg.enable {

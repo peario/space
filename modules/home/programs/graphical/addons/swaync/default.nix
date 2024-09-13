@@ -9,7 +9,8 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
   inherit (inputs) hyprland-contrib;
 
   cfg = config.${namespace}.programs.graphical.addons.swaync;
@@ -32,7 +33,7 @@ let
 in
 {
   options.${namespace}.programs.graphical.addons.swaync = {
-    enable = mkEnableOption "swaync (desktop env)";
+    enable = mkBoolOpt false "Whether to enable swaync in the desktop environment.";
   };
 
   config = mkIf cfg.enable {

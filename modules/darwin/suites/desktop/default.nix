@@ -5,13 +5,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.suites.desktop;
 in
 {
   options.${namespace}.suites.desktop = {
-    enable = mkEnableOption "Desktop suite";
+    enable = mkBoolOpt false "Enable common desktop configuration.";
   };
 
   config = mkIf cfg.enable {
@@ -35,7 +36,7 @@ in
       brews = [
         "blueutil"
         "ifstat"
-        # "switchaudio-osx"
+        "switchaudio-osx"
       ];
 
       casks = [

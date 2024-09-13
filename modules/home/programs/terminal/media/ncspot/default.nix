@@ -5,7 +5,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkEnableOption mkIf;
 
   cfg = config.${namespace}.programs.terminal.media.ncspot;
 in

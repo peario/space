@@ -9,7 +9,6 @@ let
   inherit (lib)
     types
     mkIf
-    mkEnableOption
     mkMerge
     optionalAttrs
     ;
@@ -25,7 +24,7 @@ let
 in
 {
   options.${namespace}.programs.graphical.browsers.firefox = with types; {
-    enable = mkEnableOption "Firefox";
+    enable = mkBoolOpt false "Whether or not to enable Firefox.";
 
     extensions = mkOpt (listOf package) (with config.nur.repos.rycee.firefox-addons; [
       angular-devtools

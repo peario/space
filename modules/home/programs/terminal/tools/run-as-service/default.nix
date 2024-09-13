@@ -6,7 +6,8 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
   inherit (lib.strings) optionalString concatStringsSep;
   inherit (lib.attrsets) mapAttrsToList;
 
@@ -42,7 +43,7 @@ in
 {
   # TODO(run-as-service): Figure out what this is.
   options.${namespace}.programs.terminal.tools.run-as-service = {
-    enable = mkEnableOption "Configure systemd-run";
+    enable = mkBoolOpt false "Configure systemd-run support.";
   };
 
   config = mkIf cfg.enable { home.packages = [ run-as-service ]; };

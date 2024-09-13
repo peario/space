@@ -6,13 +6,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.graphical.apps.thunderbird;
 in
 {
   options.${namespace}.programs.graphical.apps.thunderbird = {
-    enable = mkEnableOption "Thunderbird";
+    enable = mkBoolOpt false "Whether or not to enable thunderbird.";
   };
 
   config = mkIf cfg.enable {

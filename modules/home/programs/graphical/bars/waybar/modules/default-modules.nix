@@ -90,7 +90,7 @@ in
       <big>{:%Y %B}</big>
       <tt><small>{calendar}</small></tt>'';
     format = ''
-      󰃭 {:%a %d %b
+      󰃭 {:%a %d %b 
        󰅐 %I:%M %p}'';
     calendar = {
       mode = "year";

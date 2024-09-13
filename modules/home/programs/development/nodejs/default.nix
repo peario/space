@@ -9,8 +9,6 @@ let
   inherit (lib)
     mkIf
     mkOption
-    mkEnableOption
-    mkPackageOption
     types
     lists
     ;
@@ -20,9 +18,14 @@ let
 in
 {
   options.${namespace}.programs.development.nodejs = {
-    enable = mkEnableOption "NodeJS (JavaScript & TypeScript)";
+    enable = mkBoolOpt false "Enable NodeJS (javascript and typescript).";
 
-    package = mkPackageOption pkgs "nodejs_20" { };
+    # package = mkPackageOption pkgs "nodejs_20" { };
+    package = mkOption {
+      type = types.package;
+      default = pkgs.nodejs_20;
+      description = "Package to use for NodeJS.";
+    };
 
     LSP = {
       enable = mkBoolOpt false "Enable LSP support for NodeJS.";
