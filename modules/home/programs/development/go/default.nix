@@ -11,7 +11,6 @@ let
     literalExpression
     mkOption
     mkEnableOption
-    mkPackageOption
     types
     mapAttrsToList
     mkMerge
@@ -23,7 +22,12 @@ in
   options.${namespace}.programs.development.go = {
     enable = mkEnableOption "Enable Go.";
 
-    package = mkPackageOption pkgs "go" { };
+    # package = mkPackageOption pkgs "go" { };
+    package = mkOption {
+      type = types.package;
+      default = pkgs.go;
+      description = "Package to use for Go.";
+    };
 
     LSP = {
       enable = mkEnableOption "Enable LSP support for Go.";

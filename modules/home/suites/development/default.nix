@@ -14,13 +14,12 @@ in
 {
   options.${namespace}.suites.development = {
     enable = mkBoolOpt false "Enable common development configuration.";
-    azureEnable = mkBoolOpt false "Enable azure development configuration.";
-    dockerEnable = mkBoolOpt false "Enable docker development configuration.";
-    gameEnable = mkBoolOpt false "Enable game development configuration.";
-    goEnable = mkBoolOpt false "Enable go development configuration.";
-    kubernetesEnable = mkBoolOpt false "Enable kubernetes development configuration.";
-    nixEnable = mkBoolOpt false "Enable nix development configuration.";
-    sqlEnable = mkBoolOpt false "Enable sql development configuration.";
+    azure.enable = mkBoolOpt false "Enable azure development configuration.";
+    docker.enable = mkBoolOpt false "Enable docker development configuration.";
+    game.enable = mkBoolOpt false "Enable game development configuration.";
+    kubernetes.enable = mkBoolOpt false "Enable kubernetes development configuration.";
+    nix.enable = mkBoolOpt false "Enable nix development configuration.";
+    sql.enable = mkBoolOpt false "Enable sql development configuration.";
   };
 
   config = mkIf cfg.enable {
@@ -38,19 +37,19 @@ in
           github-desktop
           qtcreator
         ]
-        ++ lib.optionals cfg.nixEnable [
+        ++ lib.optionals cfg.nix.enable [
           nixpkgs-hammering
           nixpkgs-lint-community
           nixpkgs-review
           nix-update
         ]
-        ++ lib.optionals cfg.gameEnable [
+        ++ lib.optionals cfg.game.enable [
           godot_4
           # NOTE: removed from nixpkgs
           # ue4
           unityhub
         ]
-        ++ lib.optionals cfg.sqlEnable [
+        ++ lib.optionals cfg.sql.enable [
           dbeaver-bin
           mysql-workbench
         ];
@@ -77,7 +76,7 @@ in
           };
           go = enabled;
           lua = {
-            enable = true;
+            enable = false;
 
             other = enabled;
           };
@@ -88,7 +87,7 @@ in
             other = enabled;
           };
           python = {
-            enable = true;
+            enable = false;
 
             other = enabled;
           };
@@ -116,15 +115,11 @@ in
           };
 
           tools = {
-            azure.enable = cfg.azureEnable;
+            azure.enable = cfg.azure.enable;
             git-crypt = enabled;
-            # go.enable = cfg.goEnable;
-            k9s.enable = cfg.kubernetesEnable;
-            lazydocker.enable = cfg.dockerEnable;
+            k9s.enable = cfg.kubernetes.enable;
+            lazydocker.enable = cfg.docker.enable;
             lazygit = enabled;
-            # oh-my-posh = enabled;
-            # FIXME: broken nixpkg
-            # prisma = enabled;
           };
         };
       };

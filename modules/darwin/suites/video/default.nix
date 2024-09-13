@@ -19,11 +19,11 @@ in
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [ ffmpeg ];
 
-    homebrew = {
-      masApps = mkIf config.${namespace}.tools.homebrew.masEnable {
-        "Infuse" = 1136220934;
-        "iMovie" = 408981434;
-      };
-    };
+    # homebrew = {
+    #   masApps = mkIf config.${namespace}.tools.homebrew.masEnable {
+    #     "Infuse" = 1136220934;
+    #     "iMovie" = 408981434;
+    #   };
+    # };
   };
 }

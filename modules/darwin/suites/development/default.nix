@@ -20,8 +20,8 @@ in
       casks = [
         "cutter"
         "docker"
-        "electron"
-        "powershell"
+        # "electron"
+        # "powershell"
         "visual-studio-code"
       ];
 

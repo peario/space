@@ -8,7 +8,6 @@
 let
   inherit (lib)
     mkIf
-    literalExpression
     mkOption
     types
     lists
@@ -21,13 +20,13 @@ let
 in
 {
   options.${namespace}.programs.development.python = {
-    enable = mkBoolOpt false "Enable Python.";
+    enable = mkBoolOpt false "Enable Python (v3.12).";
 
+    # package = mkPackageOption pkgs.python312Packages "python" { };
     package = mkOption {
       type = types.package;
       default = pyPkgs.python;
-      defaultText = literalExpression "pkgs.python312Packages.python";
-      description = "The Python package to use.";
+      description = "Package to use for Python.";
     };
 
     LSP = {

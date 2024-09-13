@@ -25,12 +25,13 @@ in
     homebrew = {
       casks = [
         "blender"
+        "figma"
         "gimp"
         "inkscape"
         "mediainfo"
       ];
 
-      masApps = mkIf config.${namespace}.tools.homebrew.masEnable { "Pixelmator" = 407963104; };
+      # masApps = mkIf config.${namespace}.tools.homebrew.masEnable { "Pixelmator" = 407963104; };
     };
   };
 }

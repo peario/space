@@ -25,14 +25,28 @@ in
       ];
 
       masApps = mkIf config.${namespace}.tools.homebrew.masEnable {
-        "Brother iPrint&Scan" = 1193539993;
+        # "Brother iPrint&Scan" = 1193539993;
         "Keynote" = 409183694;
-        "Microsoft OneNote" = 784801555;
-        "Notability" = 360593530;
+        # "Microsoft OneNote" = 784801555;
+        # "Notability" = 360593530;
         "Numbers" = 409203825;
         "Pages" = 409201541;
       };
     };
+
+    # homebrew = {
+    #   casks = [
+    #     "calibre"
+    #     "microsoft-office"
+    #     "obsidian"
+    #   ];
+    #
+    #   masApps = mkIf config.${namespace}.tools.homebrew.masEnable {
+    #     "Keynote" = 409183694;
+    #     "Numbers" = 409203825;
+    #     "Pages" = 409201541;
+    #   };
+    # };
 
     space = {
       programs = {

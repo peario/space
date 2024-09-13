@@ -22,7 +22,7 @@ in
         "spotify"
       ];
 
-      masApps = mkIf config.${namespace}.tools.homebrew.masEnable { "GarageBand" = 682658836; };
+      # masApps = mkIf config.${namespace}.tools.homebrew.masEnable { "GarageBand" = 682658836; };
     };
   };
 }
