@@ -10,10 +10,11 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest]
-        arch: [x86_64-linux, aarch64-darwin]
-    if: github.ref == 'refs/heads/main'
+        arch: [x86_64-linux, aarch64-darwin, aarch64-linux]
+    if: ${{ github.ref == 'refs/heads/main' }}
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Check Nix flake inputs
         uses: DeterminateSystems/flake-checker-action@v9
     # - uses: cachix/install-nix-action@v23

@@ -16,7 +16,7 @@ Secrets:
 Systems:
   - changed-files:
       - any-glob-to-any-file: systems/**/*
-repo:
+Repository:
   - changed-files:
       - any-glob-to-any-file: "*"
 GitHub-Action:
