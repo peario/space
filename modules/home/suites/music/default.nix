@@ -35,10 +35,10 @@ in
 
     space = {
       programs.terminal = {
-        media = {
-          ncmpcpp = enabled;
-          ncspot = enabled;
-        };
+        # media = {
+        #   ncmpcpp = enabled;
+        #   ncspot = enabled;
+        # };
 
         tools = {
           cava = enabled;

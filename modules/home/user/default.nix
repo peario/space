@@ -87,6 +87,7 @@ in
         shellAliases = {
           # nix specific aliases
           cleanup = "sudo nix-collect-garbage --delete-older-than 3d && nix-collect-garbage -d";
+          optimise = "nix-store --optimise -vv";
           bloat = "nix path-info -Sh /run/current-system";
           curgen = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system";
           gc-check = ''nix-store --gc --print-roots | egrep -v "^(/nix/var|/run/w+-system|{memory|/proc)"'';
@@ -97,6 +98,30 @@ in
           nixre = "${lib.optionalString pkgs.stdenv.isLinux "sudo"} ${
             getExe snowfall-flake.packages.${system}.flake
           } switch";
+          reload = # bash
+            ''
+              echo "[i] This command will run the following commands: "
+              echo "[i]   1. 'nix-collect-garbage --delete-older-than 3d && nix-collect-garbage -d'"
+              echo "[i]   2. 'nix-store --verify --check-contents --repair'"
+              echo "[i]   3. 'nix-store --optimise -vv'"
+              echo "[i] Essentially, clean, repair and optimise nix-store."
+              echo ""
+              read -e -p "[?] Run commands? " choice
+              if [[ "$choice" == [yY]+ ]]; then
+                echo "[!] Running 'nix-collect-garbage --delete-older-than 3d && nix-collect-garbage-d'"
+                nix-collect-garbage --delete-older-than 3d && nix-collect-garbage -d
+
+                echo "[!] Running 'nix-store --verify --check-contents --repair'"
+                nix-store --verify --check-contents --repair
+
+                echo "[!] Running 'nix-store --optimise -vv'"
+                nix-store --optimise -vv
+
+                echo "[i] Done."
+              else
+                echo "[!] Aborted!"
+              fi
+            '';
 
           gsed = "${getExe pkgs.gnused}";
 
