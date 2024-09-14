@@ -87,7 +87,7 @@ in
             ripgrep = enabled;
             tmux = enabled;
             # topgrade = enabled;
-            yazi = enabled;
+            # yazi = enabled;
             # zellij = enabled;
             zoxide = enabled;
           };

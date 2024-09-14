@@ -7,10 +7,10 @@
     anyrun-nixos-options.url = "github:n3oney/anyrun-nixos-options";
 
     # Cachix agent for caching binaries
-    cachix-deploy-flake = {
-      url = "github:cachix/cachix-deploy-flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # cachix-deploy-flake = {
+    #   url = "github:cachix/cachix-deploy-flake";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     # Theme - Catppuccin
     catppuccin-cursors.url = "github:catppuccin/cursors";
@@ -137,16 +137,16 @@
       url = "github:nixos/nixpkgs/nixos-unstable";
     };
 
-    # NixPkgs (nixos-unstable)
-    nixpkgs-small = {
-      url = "github:nixos/nixpkgs/nixos-unstable-small";
+    # NixPkgs (nixpkgs-unstable)
+    nixpkgs-unstable = {
+      url = "github:nixos/nixpkgs/nixpkgs-unstable";
     };
 
     # Build system images and artifacts supported by nixos-generators.
-    nixos-generators = {
-      url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # nixos-generators = {
+    #   url = "github:nix-community/nixos-generators";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     # NixOS WSL Support
     nixos-wsl = {
@@ -254,7 +254,7 @@
 
       systems = {
         modules = {
-          nixos = with inputs; [ ];
+          nixos = [ ];
         };
       };
 

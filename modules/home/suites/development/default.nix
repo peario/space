@@ -42,6 +42,7 @@ in
           nixpkgs-lint-community
           nixpkgs-review
           nix-update
+          nix-init
         ]
         ++ lib.optionals cfg.game.enable [
           godot_4
