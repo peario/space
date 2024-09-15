@@ -5,15 +5,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.programs.terminal.tools.topgrade;
 in
 {
   # TODO(topgrade): Figure out what this is.
   options.${namespace}.programs.terminal.tools.topgrade = {
-    enable = mkBoolOpt false "Enable topgrade.";
+    enable = mkEnableOption "topgrade";
   };
 
   config = mkIf cfg.enable {

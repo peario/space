@@ -6,16 +6,16 @@
   ...
 }:
 let
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.programs.terminal.social.twitch-tui;
 in
 {
   options.${namespace}.programs.terminal.social.twitch-tui = {
-    enable = mkBoolOpt false "Enable twitch-tui.";
+    enable = mkEnableOption "twitch-tui";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     home.packages = [ pkgs.twitch-tui ];
 
     # sops.secrets = {

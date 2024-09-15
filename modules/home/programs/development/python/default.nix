@@ -8,11 +8,11 @@
 let
   inherit (lib)
     mkIf
+    mkEnableOption
     mkOption
     types
     lists
     ;
-  inherit (lib.${namespace}) mkBoolOpt;
 
   pyPkgs = pkgs.python312Packages;
 
@@ -20,9 +20,8 @@ let
 in
 {
   options.${namespace}.programs.development.python = {
-    enable = mkBoolOpt false "Enable Python (v3.12).";
+    enable = mkEnableOption "Python (v3.12)";
 
-    # package = mkPackageOption pkgs.python312Packages "python" { };
     package = mkOption {
       type = types.package;
       default = pyPkgs.python;
@@ -30,11 +29,11 @@ in
     };
 
     LSP = {
-      enable = mkBoolOpt false "Enable LSP support for Python.";
+      enable = mkEnableOption "LSP for Python";
       packages = mkOption {
         type = with types; listOf (uniq package);
         default = with pkgs; [
-          ruff
+          ruff # ruff is both formatter and linter
           pyright
         ];
         description = "Package for Python LSP.";
@@ -42,7 +41,7 @@ in
     };
 
     other = {
-      enable = mkBoolOpt false "Enable other tooling for Python.";
+      enable = mkEnableOption "Other tooling for Python";
       packages = mkOption {
         type = with types; listOf (uniq package);
         default =

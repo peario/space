@@ -8,7 +8,13 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption getExe;
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    mkOption
+    types
+    getExe
+    ;
   inherit (lib.${namespace}) enabled;
   inherit (inputs) hyprland;
 
@@ -30,17 +36,17 @@ let
 in
 {
   options.${namespace}.programs.graphical.wms.hyprland = {
-    enable = mkEnableOption "Hyprland.";
-    enableDebug = mkEnableOption "Enable debug mode.";
-    appendConfig = lib.mkOption {
-      type = lib.types.lines;
+    enable = mkEnableOption "Hyprland";
+    enableDebug = mkEnableOption "Debug mode";
+    appendConfig = mkOption {
+      type = types.lines;
       default = "";
       description = ''
         Extra configuration lines to add to bottom of `~/.config/hypr/hyprland.conf`.
       '';
     };
-    prependConfig = lib.mkOption {
-      type = lib.types.lines;
+    prependConfig = mkOption {
+      type = types.lines;
       default = "";
       description = ''
         Extra configuration lines to add to top of `~/.config/hypr/hyprland.conf`.

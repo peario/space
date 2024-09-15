@@ -9,15 +9,15 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) compileSCSS mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
+  inherit (lib.${namespace}) compileSCSS;
   inherit (inputs) anyrun anyrun-nixos-options;
 
   cfg = config.${namespace}.programs.graphical.launchers.anyrun;
 in
 {
   options.${namespace}.programs.graphical.launchers.anyrun = {
-    enable = mkBoolOpt false "Whether to enable anyrun in the desktop environment.";
+    enable = mkEnableOption "anyrun (desktop env)";
   };
 
   config = mkIf cfg.enable {
@@ -122,7 +122,7 @@ in
         "websearch.ron".text = ''
           Config(
             prefix: "?",
-            engines: [DuckDuckGo] 
+            engines: [DuckDuckGo]
           )
         '';
       };

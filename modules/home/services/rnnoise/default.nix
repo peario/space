@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (lib) mkEnableOption;
+  inherit (lib) mkIf mkEnableOption;
 
   json = pkgs.formats.json { };
 
@@ -56,7 +56,7 @@ in
     };
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     xdg.configFile."pipewire/pipewire.conf.d/99-input-denoising.conf" = {
       source = json.generate "99-input-denoising.conf" pw_rnnoise_config;
     };

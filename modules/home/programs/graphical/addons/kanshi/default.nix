@@ -6,8 +6,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf getExe;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption getExe;
   inherit (config.${namespace}) user;
   inherit (config.users.users.${user.name}) home;
 
@@ -15,7 +14,7 @@ let
 in
 {
   options.${namespace}.programs.graphical.addons.kanshi = {
-    enable = mkBoolOpt false "Whether to enable Kanshi in the desktop environment.";
+    enable = mkEnableOption "Kanshi (desktop env)";
   };
 
   config = mkIf cfg.enable {

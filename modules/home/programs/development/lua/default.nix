@@ -8,11 +8,11 @@
 let
   inherit (lib)
     mkIf
+    mkEnableOption
     mkOption
     types
     lists
     ;
-  inherit (lib.${namespace}) mkBoolOpt;
 
   luaPkgs = pkgs.lua51Packages;
 
@@ -20,9 +20,8 @@ let
 in
 {
   options.${namespace}.programs.development.lua = {
-    enable = mkBoolOpt false "Enable Lua.";
+    enable = mkEnableOption "Lua";
 
-    # package = mkPackageOption pkgs.lua51Packages "lua" { };
     package = mkOption {
       type = types.package;
       default = luaPkgs.lua;
@@ -30,7 +29,7 @@ in
     };
 
     LSP = {
-      enable = mkBoolOpt false "Enable LSP support for Lua.";
+      enable = mkEnableOption "LSP for Lua";
       packages = mkOption {
         type = types.package;
         default = pkgs.lua-language-server;
@@ -39,7 +38,7 @@ in
     };
 
     formatter = {
-      enable = mkBoolOpt false "Enable formatters for Lua.";
+      enable = mkEnableOption "Formatters for Lua";
       packages = mkOption {
         type = types.package;
         default = pkgs.stylua;
@@ -48,7 +47,7 @@ in
     };
 
     linter = {
-      enable = mkBoolOpt false "Enable linters for Lua.";
+      enable = mkEnableOption "Linters for Lua";
       packages = mkOption {
         type = types.package;
         default = pkgs.selene;
@@ -57,7 +56,7 @@ in
     };
 
     other = {
-      enable = mkBoolOpt false "Enable other tooling for Lua.";
+      enable = mkEnableOption "Other tooling for Lua";
       packages = mkOption {
         type = with types; listOf (uniq package);
         default = with luaPkgs; [

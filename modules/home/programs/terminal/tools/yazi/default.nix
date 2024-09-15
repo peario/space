@@ -6,8 +6,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   completion = import ./keymap/completion.nix { };
   help = import ./keymap/help.nix { };
@@ -22,7 +21,7 @@ in
   imports = lib.snowfall.fs.get-non-default-nix-files ./configs/plugins;
 
   options.${namespace}.programs.terminal.tools.yazi = {
-    enable = mkBoolOpt false "Enable yazi.";
+    enable = mkEnableOption "yazi";
   };
 
   config = mkIf cfg.enable {

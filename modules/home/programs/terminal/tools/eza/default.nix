@@ -8,22 +8,22 @@
 let
   inherit (lib)
     mkIf
+    mkEnableOption
     mkPackageOption
     mkOption
     types
-    escapeShellArgs
     optionalAttrs
     optional
     ;
-  inherit (lib.${namespace}) mkBoolOpt mkOpt;
+  inherit (lib.${namespace}) mkOpt;
 
   cfg = config.${namespace}.programs.terminal.tools.eza;
 in
-rec {
+{
   options.${namespace}.programs.terminal.tools.eza = {
-    enable = mkBoolOpt false "Enable eza.";
+    enable = mkEnableOption "eza";
 
-    enableIntegrations = mkBoolOpt true "Configures aliases for multiple shells.";
+    enableIntegrations = mkEnableOption "Configures aliases for multiple shells";
 
     # shells = mkOption {
     #   type = types.listOf types.str;
@@ -40,7 +40,7 @@ rec {
     } "Aliases to configure.";
 
     extraOptions = mkOption {
-      type = types.listOf types.str;
+      type = with types; listOf str;
       default = [ ];
       example = [
         "--group-directories-first"

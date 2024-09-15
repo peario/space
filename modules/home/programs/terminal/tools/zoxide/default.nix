@@ -6,14 +6,13 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.programs.terminal.tools.zoxide;
 in
 {
   options.${namespace}.programs.terminal.tools.zoxide = {
-    enable = mkBoolOpt false "Enable zoxide.";
+    enable = mkEnableOption "zoxide";
   };
 
   config = mkIf cfg.enable {

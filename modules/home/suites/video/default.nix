@@ -6,14 +6,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt enabled;
+  inherit (lib) mkIf mkEnableOption;
+  inherit (lib.${namespace}) enabled;
 
   cfg = config.${namespace}.suites.video;
 in
 {
   options.${namespace}.suites.video = {
-    enable = mkBoolOpt false "Enable video configuration.";
+    enable = mkEnableOption "Video suite";
   };
 
   config = mkIf cfg.enable {

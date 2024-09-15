@@ -8,15 +8,16 @@
 }:
 let
   inherit (lib) mkEnableOption mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.terminal.editors.neovim;
 in
 {
   options.${namespace}.programs.terminal.editors.neovim = {
-    enable = mkEnableOption "Enable neovim";
-    defaultEditor = mkBoolOpt true "Set neovim as the session ${lib.env}`EDITOR`.";
-    defaultVisual = mkBoolOpt true "Set neovim as the session ${lib.env}`VISUAL`.";
+    enable = mkEnableOption "neovim";
+    default = {
+      editor = mkEnableOption "Set neovim as the session ${lib.env}`EDITOR`.";
+      visual = mkEnableOption "Set neovim as the session ${lib.env}`VISUAL`.";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -24,8 +25,8 @@ in
       # file = mkIf pkgs.stdenv.isDarwin { "Library/Preferences/glow/glow.yml".text = config; };
 
       sessionVariables = {
-        EDITOR = mkIf cfg.defaultEditor "nvim";
-        VISUAL = mkIf cfg.defaultVisual "nvim";
+        EDITOR = mkIf cfg.default.editor "nvim";
+        VISUAL = mkIf cfg.default.visual "nvim";
       };
       packages = [
         inputs.neovim-nightly-overlay.packages.${pkgs.system}.default

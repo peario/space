@@ -6,14 +6,15 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption types;
+  inherit (lib.${namespace}) mkOpt;
 
   cfg = config.${namespace}.programs.terminal.emulators.foot;
 in
 {
-  options.${namespace}.programs.terminal.emulators.foot = {
-    enable = mkBoolOpt false "Whether or not to enable foot.";
+  options.${namespace}.programs.terminal.emulators.foot = with types; {
+    enable = mkEnableOption "foot";
+    font = mkOpt str "Victor Mono" "Font to use in kitty.";
   };
 
   config = mkIf cfg.enable {
@@ -41,8 +42,8 @@ in
 
           # font and font rendering
           dpi-aware = false; # this looks more readable on a laptop, but it's unreasonably large
-          font = "MonaspiceKr Nerd Font:size=13";
-          font-bold = "MonaspiceKr Nerd Font:size=13";
+          font = "${cfg.font}:size=13";
+          font-bold = "${cfg.font}:size=13";
           vertical-letter-offset = "-0.90";
         };
 

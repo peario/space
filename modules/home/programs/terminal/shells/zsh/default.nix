@@ -13,7 +13,7 @@ let
 in
 {
   options.${namespace}.programs.terminal.shell.zsh = {
-    enable = mkEnableOption "Zsh";
+    enable = mkEnableOption "zsh";
   };
 
   config = mkIf cfg.enable {

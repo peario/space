@@ -6,8 +6,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   identityAgent =
     if pkgs.stdenv.isLinux then
@@ -25,7 +24,7 @@ let
 in
 {
   options.${namespace}.programs.graphical.apps._1password = {
-    enable = mkBoolOpt false "Enable 1password.";
+    enable = mkEnableOption "1Password";
   };
 
   config = mkIf cfg.enable {

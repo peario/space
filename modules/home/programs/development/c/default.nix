@@ -8,11 +8,11 @@
 let
   inherit (lib)
     mkIf
+    mkEnableOption
     mkOption
     types
     lists
     ;
-  inherit (lib.${namespace}) mkBoolOpt;
 
   llvmPkgs = pkgs.llvmPackages_12;
 
@@ -20,9 +20,8 @@ let
 in
 {
   options.${namespace}.programs.development.c = {
-    enable = mkBoolOpt false "Enable C/C++.";
+    enable = mkEnableOption "C/C++";
 
-    # package = mkPackageOption pkgs "clang" { };
     package = mkOption {
       type = types.package;
       default = pkgs.clang;
@@ -30,7 +29,7 @@ in
     };
 
     LSP = {
-      enable = mkBoolOpt false "Enable LSP (and formatter) support for C/C++.";
+      enable = mkEnableOption "LSP (and formatter) for C/C++";
       packages = mkOption {
         type = types.package;
         default = llvmPkgs.libstdcxxClang;
@@ -39,7 +38,7 @@ in
     };
 
     linter = {
-      enable = mkBoolOpt false "Enable linters for C/C++.";
+      enable = mkEnableOption "Linters for C/C++";
       packages = mkOption {
         type = with types; listOf (uniq package);
         default = with pkgs; [
@@ -51,7 +50,7 @@ in
     };
 
     DAP = {
-      enable = mkBoolOpt false "Enable DAP for C/C++.";
+      enable = mkEnableOption "DAP for C/C++";
       packages = mkOption {
         type = types.package;
         default = llvmPkgs.lldb;
@@ -60,7 +59,7 @@ in
     };
 
     other = {
-      enable = mkBoolOpt false "Enable other tooling for C/C++.";
+      enable = mkEnableOption "Other tooling for C/C++";
       packages = mkOption {
         type = with types; listOf (uniq package);
         default = with pkgs; [

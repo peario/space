@@ -6,7 +6,7 @@
   ...
 }:
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.programs.terminal.editors.helix;
 in
@@ -15,6 +15,10 @@ in
 
   options.${namespace}.programs.terminal.editors.helix = {
     enable = mkEnableOption "Helix";
+    default = {
+      editor = mkEnableOption "Set Helix as the session ${lib.env}`EDITOR`.";
+      visual = mkEnableOption "Set Helix as the session ${lib.env}`VISUAL`.";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -124,6 +128,11 @@ in
           W = ":set whitespace.render none";
         };
       };
+    };
+
+    home.sessionVariables = {
+      EDITOR = mkIf cfg.default.editor "hx";
+      VISUAL = mkIf cfg.default.visual "hx";
     };
   };
 }

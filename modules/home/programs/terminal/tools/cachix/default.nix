@@ -12,7 +12,7 @@ let
 in
 {
   options.${namespace}.programs.terminal.tools.cachix = {
-    enable = mkEnableOption "Enable Cachix.";
+    enable = mkEnableOption "Cachix";
   };
 
   config = mkIf cfg.enable {

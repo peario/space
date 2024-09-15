@@ -6,14 +6,13 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.programs.terminal.tools.comma;
 in
 {
   options.${namespace}.programs.terminal.tools.comma = {
-    enable = mkBoolOpt false "Enable comma.";
+    enable = mkEnableOption "comma";
   };
 
   config = mkIf cfg.enable {

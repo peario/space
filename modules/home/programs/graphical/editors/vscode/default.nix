@@ -6,15 +6,14 @@
   ...
 }:
 let
-  inherit (lib) mkEnableOption mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.programs.graphical.editors.vscode;
 in
 {
   options.${namespace}.programs.graphical.editors.vscode = {
-    enable = mkEnableOption "Whether or not to enable vscode.";
-    declarativeConfig = mkBoolOpt false "Whether or not to enable vscode.";
+    enable = mkEnableOption "VS Code";
+    declarativeConfig = mkEnableOption "Use declarative config for VS Code";
   };
 
   config = mkIf cfg.enable {

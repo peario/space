@@ -5,15 +5,17 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.programs.terminal.editors.micro;
 in
 {
   options.${namespace}.programs.terminal.editors.micro = {
-    enable = mkBoolOpt false "Whether or not to enable micro.";
-    default = mkBoolOpt false "Whether to set micro as the session EDITOR";
+    enable = mkEnableOption "micro";
+    default = {
+      editor = mkEnableOption "Set micro as the session ${lib.env}`EDITOR`.";
+      visual = mkEnableOption "Set micro as the session ${lib.env}`VISUAL`.";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -32,7 +34,8 @@ in
     };
 
     home.sessionVariables = {
-      EDITOR = mkIf cfg.default "micro";
+      EDITOR = mkIf cfg.default.editor "micro";
+      VISUAL = mkIf cfg.default.visual "micro";
     };
 
     xdg.configFile."micro/colorschemes" = {

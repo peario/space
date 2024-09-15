@@ -6,15 +6,15 @@
   ...
 }:
 let
-  inherit (lib) types mkIf;
-  inherit (lib.${namespace}) mkBoolOpt mkOpt;
+  inherit (lib) mkIf mkEnableOption types;
+  inherit (lib.${namespace}) mkOpt;
 
   cfg = config.${namespace}.programs.terminal.emulators.alacritty;
 in
 {
   options.${namespace}.programs.terminal.emulators.alacritty = with types; {
-    enable = mkBoolOpt false "Whether to enable alacritty.";
-    font = mkOpt str "MonaspiceKr Nerd Font" "Font to use for alacritty.";
+    enable = mkEnableOption "Alacritty";
+    font = mkOpt str "Victor Mono" "Font to use in alacritty.";
   };
 
   config = mkIf cfg.enable {
