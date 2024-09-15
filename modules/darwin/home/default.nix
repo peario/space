@@ -9,7 +9,6 @@ let
   inherit (lib.${namespace}) mkOpt;
 in
 {
-
   options.${namespace}.home = with lib.types; {
     file = mkOpt attrs { } "Files to be managed by home-manager's <option>home.file</option>.";
     configFile =

@@ -100,27 +100,14 @@ in
           } switch";
           reload = # bash
             ''
-              echo "[i] This command will run the following commands: "
-              echo "[i]   1. 'nix-collect-garbage --delete-older-than 3d && nix-collect-garbage -d'"
-              echo "[i]   2. 'nix-store --verify --check-contents --repair'"
-              echo "[i]   3. 'nix-store --optimise -vv'"
-              echo "[i] Essentially, clean, repair and optimise nix-store."
-              echo ""
-              read -e -p "[?] Run commands? " choice
-              if [[ "$choice" == [yY]+ ]]; then
-                echo "[!] Running 'nix-collect-garbage --delete-older-than 3d && nix-collect-garbage-d'"
-                nix-collect-garbage --delete-older-than 3d && nix-collect-garbage -d
+              echo "[1] 'nix-collect-garbage --delete-older-than 3d && nix-collect-garbage-d'"
+              nix-collect-garbage --delete-older-than 3d && nix-collect-garbage -d
 
-                echo "[!] Running 'nix-store --verify --check-contents --repair'"
-                nix-store --verify --check-contents --repair
+              echo "[2] 'nix-store --verify --check-contents --repair'"
+              nix-store --verify --check-contents --repair
 
-                echo "[!] Running 'nix-store --optimise -vv'"
-                nix-store --optimise -vv
-
-                echo "[i] Done."
-              else
-                echo "[!] Aborted!"
-              fi
+              echo "[3] 'nix-store --optimise -vv'"
+              nix-store --optimise -vv
             '';
 
           gsed = "${getExe pkgs.gnused}";

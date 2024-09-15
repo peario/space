@@ -5,14 +5,13 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.system.networking;
 in
 {
   options.${namespace}.system.networking = {
-    enable = mkBoolOpt false "Enable networking support.";
+    enable = mkEnableOption "macOS networking";
   };
 
   config = mkIf cfg.enable {

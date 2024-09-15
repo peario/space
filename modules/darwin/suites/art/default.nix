@@ -6,14 +6,13 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.suites.art;
 in
 {
   options.${namespace}.suites.art = {
-    enable = mkBoolOpt false "Enable art configuration.";
+    enable = mkEnableOption "Art suite";
   };
 
   config = mkIf cfg.enable {
@@ -30,8 +29,6 @@ in
         "inkscape"
         "mediainfo"
       ];
-
-      # masApps = mkIf config.${namespace}.tools.homebrew.masEnable { "Pixelmator" = 407963104; };
     };
   };
 }

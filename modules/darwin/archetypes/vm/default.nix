@@ -5,13 +5,14 @@
   ...
 }:
 let
-  inherit (lib.${namespace}) mkBoolOpt enabled;
+  inherit (lib) mkEnableOption;
+  inherit (lib.${namespace}) enabled;
 
   cfg = config.${namespace}.archetypes.vm;
 in
 {
   options.${namespace}.archetypes.vm = {
-    enable = mkBoolOpt false "Enable the vm archetype.";
+    enable = mkEnableOption "VM archetype";
   };
 
   config = lib.mkIf cfg.enable {
