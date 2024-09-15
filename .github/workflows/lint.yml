@@ -21,7 +21,7 @@ jobs:
       - name: Set up Cachix for lint cache
         uses: cachix/cachix-action@v15
         with:
-          name: linter
+          name: space
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
           extraPullNames: nix-community
       - name: Lint nix code
