@@ -1,0 +1,20 @@
+--2024-09-15 18:13:28--  https://github.com/khaneliman/khanelinix/blob/main/modules/nixos/programs/graphical/wms/hyprland/hypr/assets/diamond.png?raw=true
+Resolving github.com (github.com)... 140.82.121.4
+Connecting to github.com (github.com)|140.82.121.4|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://github.com/khaneliman/khanelinix/raw/main/modules/nixos/programs/graphical/wms/hyprland/hypr/assets/diamond.png [following]
+--2024-09-15 18:13:28--  https://github.com/khaneliman/khanelinix/raw/main/modules/nixos/programs/graphical/wms/hyprland/hypr/assets/diamond.png
+Reusing existing connection to github.com:443.
+HTTP request sent, awaiting response... 302 Found
+Location: https://raw.githubusercontent.com/khaneliman/khanelinix/main/modules/nixos/programs/graphical/wms/hyprland/hypr/assets/diamond.png [following]
+--2024-09-15 18:13:28--  https://raw.githubusercontent.com/khaneliman/khanelinix/main/modules/nixos/programs/graphical/wms/hyprland/hypr/assets/diamond.png
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.108.133, 185.199.111.133, 185.199.109.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.108.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 32454 (32K) [image/png]
+Saving to: ‘diamond.png?raw=true’
+
+     0K .......... .......... .......... .                    100% 18.7M=0.002s
+
+2024-09-15 18:13:29 (18.7 MB/s) - ‘diamond.png?raw=true’ saved [32454/32454]
+
