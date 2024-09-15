@@ -62,14 +62,15 @@ in
             direnv = enabled;
             eza = {
               enable = true;
+              enableIntegrations = true;
+
+              git = true;
+              icons = true;
 
               extraOptions = [
                 "--group-directories-first"
                 "--color=always"
               ];
-
-              git = true;
-              icons = true;
             };
             starship = enabled;
             # fastfetch = enabled;
