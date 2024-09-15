@@ -6,14 +6,14 @@
   ...
 }:
 let
-  inherit (lib) types mkIf;
-  inherit (lib.${namespace}) mkOpt;
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.services.tailscale;
 in
 {
   options.${namespace}.services.tailscale = {
-    enable = mkOpt types.bool true "Enable Tailscale.";
+    enable = mkBoolOpt true "Enable Tailscale.";
   };
 
   config = mkIf cfg.enable {

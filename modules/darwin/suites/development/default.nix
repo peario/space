@@ -5,14 +5,13 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.suites.development;
 in
 {
   options.${namespace}.suites.development = {
-    enable = mkBoolOpt false "Enable common development configuration.";
+    enable = mkEnableOption "Development suite";
   };
 
   config = mkIf cfg.enable {
@@ -20,8 +19,6 @@ in
       casks = [
         "cutter"
         "docker"
-        # "electron"
-        # "powershell"
         "visual-studio-code"
       ];
 

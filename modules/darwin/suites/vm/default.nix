@@ -6,14 +6,13 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.suites.vm;
 in
 {
   options.${namespace}.suites.vm = {
-    enable = mkBoolOpt false "Enable vm.";
+    enable = mkEnableOption "VM suite";
   };
 
   config = mkIf cfg.enable {

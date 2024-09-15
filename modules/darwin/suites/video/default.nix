@@ -6,24 +6,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.suites.video;
 in
 {
   options.${namespace}.suites.video = {
-    enable = mkBoolOpt false "Enable video configuration.";
+    enable = mkEnableOption "Video suite";
   };
 
-  config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [ ffmpeg ];
-
-    # homebrew = {
-    #   masApps = mkIf config.${namespace}.tools.homebrew.masEnable {
-    #     "Infuse" = 1136220934;
-    #     "iMovie" = 408981434;
-    #   };
-    # };
-  };
+  config = mkIf cfg.enable { environment.systemPackages = with pkgs; [ ffmpeg ]; };
 }
