@@ -32,6 +32,7 @@ in
           onefetch
           postman
           vscode
+          act
         ]
         ++ lib.optionals pkgs.stdenv.isLinux [
           github-desktop

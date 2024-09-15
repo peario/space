@@ -10,5 +10,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@main
+        # uses: DeterminateSystems/nix-installer-action@main
+        uses: cachix/install-nix-action@V28
+        with:
+          install_url: https://nixos.org/nix/install
+          extra_nix_config: |
+            auto-optimise-store = true
+            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+            experimental-features = nix-command flakes
+      - name: Set up Cachix for formatter cache
+        uses: cachix/cachix-action@v15
+        with:
+          name: formatter
+          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+          extraPullNames: nix-community
       - run: nix run nixpkgs#nixfmt-rfc-style -- .
