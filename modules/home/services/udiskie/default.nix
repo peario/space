@@ -11,7 +11,7 @@ let
 in
 {
   options.${namespace}.services.udiskie = {
-    enable = mkEnableOption "udiskie";
+    enable = mkEnableOption "udiskie service";
   };
 
   config = mkIf cfg.enable {

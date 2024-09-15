@@ -6,14 +6,13 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.programs.graphical.addons.swappy;
 in
 {
   options.${namespace}.programs.graphical.addons.swappy = {
-    enable = mkBoolOpt false "Whether to enable Swappy in the desktop environment.";
+    enable = mkEnableOption "Swappy (desktop env)";
   };
 
   config = mkIf cfg.enable {

@@ -6,14 +6,13 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.programs.graphical.addons.wlogout;
 in
 {
   options.${namespace}.programs.graphical.addons.wlogout = {
-    enable = mkBoolOpt false "Whether to enable wlogout in the desktop environment.";
+    enable = mkEnableOption "wlogout (desktop env)";
   };
 
   config = mkIf cfg.enable {

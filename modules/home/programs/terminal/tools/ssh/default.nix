@@ -5,8 +5,8 @@
   ...
 }:
 let
-  inherit (lib) types mkIf;
-  inherit (lib.${namespace}) mkBoolOpt mkOpt;
+  inherit (lib) mkIf mkEnableOption types;
+  inherit (lib.${namespace}) mkOpt;
 
   cfg = config.${namespace}.programs.terminal.tools.ssh;
 
@@ -45,13 +45,13 @@ in
 {
   # TODO(ssh): Update config and integrate 1Password
   options.${namespace}.programs.terminal.tools.ssh = with types; {
-    enable = mkBoolOpt false "Configure ssh support.";
+    enable = mkEnableOption "SSH";
     authorizedKeys = mkOpt (listOf str) [
       # default-key
     ] "The public keys to apply.";
     extraConfig = mkOpt str "" "Extra configuration to apply.";
     port = mkOpt port 2222 "The port to listen on (in addition to 22).";
-    sshAgent = mkBoolOpt false "Start the ssh agent, also stops the old agent if running.";
+    sshAgent = mkEnableOption "Start the ssh agent, also stops the old agent if running.";
   };
 
   config = mkIf cfg.enable {

@@ -20,9 +20,8 @@ let
 in
 {
   options.${namespace}.programs.development.go = {
-    enable = mkEnableOption "Enable Go.";
+    enable = mkEnableOption "Go";
 
-    # package = mkPackageOption pkgs "go" { };
     package = mkOption {
       type = types.package;
       default = pkgs.go;
@@ -30,7 +29,7 @@ in
     };
 
     LSP = {
-      enable = mkEnableOption "Enable LSP support for Go.";
+      enable = mkEnableOption "LSP for Go";
       packages = mkOption {
         type = with types; listOf (uniq package);
         default = with pkgs; [ gopls ];
@@ -39,7 +38,7 @@ in
     };
 
     formatter = {
-      enable = mkEnableOption "Enable formatters for Go.";
+      enable = mkEnableOption "Formatters for Go";
       packages = mkOption {
         type = with types; listOf (uniq package);
         # NOTE(golang): goimports is included in gotools, maybe extract it into it's own package?
@@ -52,7 +51,7 @@ in
     };
 
     linter = {
-      enable = mkEnableOption "Enable linters for Go.";
+      enable = mkEnableOption "Linters for Go";
       packages = mkOption {
         type = with types; listOf (uniq package);
         default = with pkgs; [ revive ];
@@ -61,7 +60,7 @@ in
     };
 
     DAP = {
-      enable = mkEnableOption "Enable DAP for Go.";
+      enable = mkEnableOption "DAP for Go";
       packages = mkOption {
         type = with types; listOf (uniq package);
         default = with pkgs; [ delve ];
@@ -70,7 +69,7 @@ in
     };
 
     others = {
-      enable = mkEnableOption "Add other tooling for Go.";
+      enable = mkEnableOption "Other tooling for Go";
       packages = mkOption {
         type = with types; listOf (uniq package);
         default = with pkgs; [

@@ -6,14 +6,19 @@
   ...
 }:
 let
-  inherit (lib) types mkDefault mkIf;
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    mkDefault
+    types
+    ;
   inherit (lib.${namespace}) mkBoolOpt mkOpt;
 
   cfg = config.${namespace}.theme.qt;
 in
 {
   options.${namespace}.theme.qt = with types; {
-    enable = mkBoolOpt false "Customize qt and apply themes.";
+    enable = mkEnableOption "Customize qt and apply themes";
 
     theme = {
       name = mkOpt str "Catppuccin-Macchiato-Blue" "The name of the kvantum theme to apply.";

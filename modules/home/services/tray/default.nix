@@ -11,7 +11,7 @@ let
 in
 {
   options.${namespace}.services.tray = {
-    enable = mkEnableOption "tray";
+    enable = mkEnableOption "tray service";
   };
 
   config = mkIf cfg.enable {

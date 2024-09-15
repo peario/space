@@ -5,14 +5,13 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.programs.terminal.shell.bash;
 in
 {
   options.${namespace}.programs.terminal.shell.bash = {
-    enable = mkBoolOpt false "Enable bash.";
+    enable = mkEnableOption "bash";
   };
 
   config = mkIf cfg.enable {

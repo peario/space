@@ -8,54 +8,53 @@
 let
   inherit (lib)
     mkIf
+    mkEnableOption
     mkOption
     types
     lists
     ;
-  inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.development.nodejs;
 in
 {
   options.${namespace}.programs.development.nodejs = {
-    enable = mkBoolOpt false "Enable NodeJS (javascript and typescript).";
+    enable = mkEnableOption "Node.js (JS and TS)";
 
-    # package = mkPackageOption pkgs "nodejs_20" { };
     package = mkOption {
       type = types.package;
       default = pkgs.nodejs_20;
-      description = "Package to use for NodeJS.";
+      description = "Package to use for Node.js.";
     };
 
     LSP = {
-      enable = mkBoolOpt false "Enable LSP support for NodeJS.";
+      enable = mkEnableOption "LSP for Node.js";
       packages = mkOption {
         type = types.package;
         default = pkgs.typescript;
-        description = "Package for NodeJS LSP.";
+        description = "Package for Node.js LSP.";
       };
     };
 
     formatter = {
-      enable = mkBoolOpt false "Enable formatters for NodeJS.";
+      enable = mkEnableOption "Formatters for Node.js";
       packages = mkOption {
         type = types.package;
         default = pkgs.nodePackages.prettier;
-        description = "Packages for NodeJS formatting.";
+        description = "Packages for Node.js formatting.";
       };
     };
 
     linter = {
-      enable = mkBoolOpt false "Enable linters for NodeJS.";
+      enable = mkEnableOption "Linters for Node.js";
       packages = mkOption {
         type = types.package;
         default = pkgs.nodePackages.eslint;
-        description = "Packages for NodeJS linting.";
+        description = "Packages for Node.js linting.";
       };
     };
 
     other = {
-      enable = mkBoolOpt false "Enable other tooling for NodeJS.";
+      enable = mkEnableOption "Other tooling for Node.js";
       packages = mkOption {
         type = with types; listOf (uniq package);
         default = with pkgs; [
@@ -63,10 +62,11 @@ in
           yarn
           nodePackages.ts-node
         ];
-        description = "Other packages for NodeJS.";
+        description = "Other packages for Node.js.";
       };
     };
 
+    # TODO(node.js): Setup automatic install via NPM for npm-packages.
     installPackages = mkOption {
       type = with types; listOf (uniq str);
       default = [ ];

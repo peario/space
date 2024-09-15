@@ -11,6 +11,7 @@ let
   inherit (lib)
     types
     mkIf
+    mkEnableOption
     mkDefault
     mkMerge
     getExe
@@ -48,11 +49,11 @@ let
 in
 {
   options.${namespace}.user = {
-    enable = mkOpt types.bool false "Whether to configure the user account.";
-    email = mkOpt types.str "fredahl71@gmail.com" "The email of the user.";
-    fullName = mkOpt types.str "Fredrik Dahlström" "The full name of the user.";
-    home = mkOpt (types.nullOr types.str) home-directory "The user's home directory.";
-    icon = mkOpt (types.nullOr types.package) defaultIcon "The profile picture to use for the user.";
+    enable = mkEnableOption "Configure user account";
+    email = mkOpt types.str "fredahl71@gmail.com" "Email of user account.";
+    fullName = mkOpt types.str "Fredrik Dahlström" "Full name of user account.";
+    home = mkOpt (types.nullOr types.str) home-directory "User's home directory.";
+    icon = mkOpt (types.nullOr types.package) defaultIcon "User account's profile picture.";
     name = mkOpt (types.nullOr types.str) config.snowfallorg.user.name "The user account.";
   };
 

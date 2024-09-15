@@ -159,7 +159,7 @@ let
 in
 {
   options.${namespace}.system.xdg = {
-    enable = mkEnableOption "xdg";
+    enable = mkEnableOption "XDG";
   };
 
   config = mkIf cfg.enable {

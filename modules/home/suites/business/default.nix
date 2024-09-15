@@ -6,14 +6,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt enabled;
+  inherit (lib) mkIf mkEnableOption;
+  inherit (lib.${namespace}) enabled;
 
   cfg = config.${namespace}.suites.business;
 in
 {
   options.${namespace}.suites.business = {
-    enable = mkBoolOpt false "Enable business configuration.";
+    enable = mkEnableOption "Business suite";
   };
 
   config = mkIf cfg.enable {
@@ -29,7 +29,7 @@ in
         np
         # TODO: replace once https://github.com/NixOS/nixpkgs/pull/337868 is available
         # teams-for-linux
-        pkgs.space.teams-for-linux
+        pkgs.${namespace}.teams-for-linux
       ]
       ++ lib.optionals stdenv.isLinux [ libreoffice ];
 

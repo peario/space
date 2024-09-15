@@ -6,14 +6,13 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.programs.terminal.tools.fastfetch;
 in
 {
   options.${namespace}.programs.terminal.tools.fastfetch = {
-    enable = mkBoolOpt false "Enable fastfetch.";
+    enable = mkEnableOption "fastfetch";
   };
 
   config = mkIf cfg.enable {

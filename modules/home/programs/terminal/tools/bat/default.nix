@@ -6,14 +6,13 @@
   ...
 }:
 let
-  inherit (lib) getExe mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption getExe;
 
   cfg = config.${namespace}.programs.terminal.tools.bat;
 in
 {
   options.${namespace}.programs.terminal.tools.bat = {
-    enable = mkBoolOpt false "Enable bat.";
+    enable = mkEnableOption "bat";
   };
 
   config = mkIf cfg.enable {

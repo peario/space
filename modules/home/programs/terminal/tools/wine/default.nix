@@ -6,14 +6,13 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.programs.terminal.tools.wine;
 in
 {
   options.${namespace}.programs.terminal.tools.wine = {
-    enable = mkBoolOpt false "Enable Wine.";
+    enable = mkEnableOption "Wine";
   };
 
   config = mkIf cfg.enable {

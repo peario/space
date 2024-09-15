@@ -9,10 +9,11 @@ let
   inherit (lib)
     types
     mkIf
+    mkEnableOption
     mkMerge
     optionalAttrs
     ;
-  inherit (lib.${namespace}) mkBoolOpt mkOpt;
+  inherit (lib.${namespace}) mkOpt;
 
   cfg = config.${namespace}.programs.graphical.browsers.firefox;
 
@@ -24,7 +25,7 @@ let
 in
 {
   options.${namespace}.programs.graphical.browsers.firefox = with types; {
-    enable = mkBoolOpt false "Whether or not to enable Firefox.";
+    enable = mkEnableOption "Firefox";
 
     extensions = mkOpt (listOf package) (with config.nur.repos.rycee.firefox-addons; [
       angular-devtools
@@ -46,8 +47,8 @@ in
     ]) "Extensions to install";
 
     extraConfig = mkOpt str "" "Extra configuration for the user profile JS file.";
-    gpuAcceleration = mkBoolOpt false "Enable GPU acceleration.";
-    hardwareDecoding = mkBoolOpt false "Enable hardware video decoding.";
+    gpuAcceleration = mkEnableOption "GPU acceleration";
+    hardwareDecoding = mkEnableOption "Hardware video decoding";
 
     policies = mkOpt attrs {
       CaptivePortal = false;

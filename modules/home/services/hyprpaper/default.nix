@@ -21,7 +21,7 @@ let
 in
 {
   options.${namespace}.services.hyprpaper = {
-    enable = mkEnableOption "Hyprpaper";
+    enable = mkEnableOption "hyprpaper";
     enableSocketWatch = mkEnableOption "hypr-socket-watch";
     monitors = mkOption {
       description = "Monitors and their wallpapers";
@@ -34,7 +34,7 @@ in
           };
         });
     };
-    wallpapers = mkOpt (types.listOf types.path) [ ] "Wallpapers to preload.";
+    wallpapers = mkOpt (with types; listOf path) [ ] "Wallpapers to preload.";
   };
 
   config = mkIf cfg.enable {

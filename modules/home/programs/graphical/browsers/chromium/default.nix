@@ -5,14 +5,13 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.programs.graphical.browsers.chromium;
 in
 {
   options.${namespace}.programs.graphical.browsers.chromium = {
-    enable = mkBoolOpt false "Whether or not to enable chromium.";
+    enable = mkEnableOption "chromium";
   };
 
   config = mkIf cfg.enable {

@@ -6,20 +6,20 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.suites.photo;
 in
 {
   options.${namespace}.suites.photo = {
-    enable = mkBoolOpt false "Enable photo configuration.";
+    enable = mkEnableOption "Photo suite";
   };
 
   config = mkIf cfg.enable {
     home.packages =
       with pkgs;
-      lib.optionals stdenv.isLinux [
+      [ chafa ]
+      ++ lib.optionals stdenv.isLinux [
         darktable
         digikam
         exiftool

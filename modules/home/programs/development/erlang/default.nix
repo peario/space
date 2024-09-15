@@ -8,19 +8,18 @@
 let
   inherit (lib)
     mkIf
+    mkEnableOption
     mkOption
     types
     lists
     ;
-  inherit (lib.${namespace}) mkBoolOpt;
 
   cfg = config.${namespace}.programs.development.erlang;
 in
 {
   options.${namespace}.programs.development.erlang = {
-    enable = mkBoolOpt false "Enable Erlang.";
+    enable = mkEnableOption "Erlang";
 
-    # package = mkPackageOption pkgs "erlang_27" { };
     package = mkOption {
       type = types.package;
       default = pkgs.erlang_27;
@@ -28,7 +27,7 @@ in
     };
 
     LSP = {
-      enable = mkBoolOpt false "Enable LSP support for Erlang.";
+      enable = mkEnableOption "LSP for Erlang";
       packages = mkOption {
         type = with types; listOf (uniq package);
         default = with pkgs; [ erlang-ls ];
@@ -37,7 +36,7 @@ in
     };
 
     formatter = {
-      enable = mkBoolOpt false "Enable formatters for Erlang.";
+      enable = mkEnableOption "Formatters for Erlang";
       packages = mkOption {
         type = with types; listOf (uniq package);
         default = with pkgs; [ erlfmt ];
@@ -46,7 +45,7 @@ in
     };
 
     other = {
-      enable = mkBoolOpt false "Enable other tooling for Erlang.";
+      enable = mkEnableOption "Other tooling for Erlang";
       packages = mkOption {
         type = with types; listOf (uniq package);
         default = with pkgs; [ rebar3 ];

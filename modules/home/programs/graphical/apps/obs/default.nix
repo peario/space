@@ -6,16 +6,16 @@
   ...
 }:
 let
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.programs.graphical.apps.obs;
 in
 {
   options.${namespace}.programs.graphical.apps.obs = {
-    enable = mkBoolOpt false "Whether or not to enable support for OBS.";
+    enable = mkEnableOption "OBS";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     programs.obs-studio = {
       enable = true;
       package = pkgs.obs-studio;

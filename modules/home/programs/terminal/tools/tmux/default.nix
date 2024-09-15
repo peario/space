@@ -6,8 +6,7 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.programs.terminal.tools.tmux;
   configFiles = lib.snowfall.fs.get-files ./config;
@@ -36,7 +35,7 @@ in
 {
   # TODO(tmux): Update config
   options.${namespace}.programs.terminal.tools.tmux = {
-    enable = mkBoolOpt false "Enable tmux.";
+    enable = mkEnableOption "tmux";
   };
 
   config = mkIf cfg.enable {

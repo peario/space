@@ -18,9 +18,8 @@ let
 in
 {
   options.${namespace}.programs.development.rust = {
-    enable = mkEnableOption "Enable Rust (depends on C).";
+    enable = mkEnableOption "Rust (depends on C)";
 
-    # package = mkPackageOption pkgs "rustup" { };
     package = mkOption {
       type = types.package;
       default = pkgs.rustup;
@@ -28,7 +27,7 @@ in
     };
 
     other = {
-      enable = mkEnableOption "Enable other tooling for Rust.";
+      enable = mkEnableOption "Other tooling for Rust";
       packages = mkOption {
         type = with types; listOf package;
         default = with pkgs; [

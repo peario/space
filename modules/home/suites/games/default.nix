@@ -6,14 +6,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt enabled;
+  inherit (lib) mkIf mkEnableOption;
+  inherit (lib.${namespace}) enabled;
 
   cfg = config.${namespace}.suites.games;
 in
 {
   options.${namespace}.suites.games = {
-    enable = mkBoolOpt false "Enable common games configuration.";
+    enable = mkEnableOption "Games suite";
   };
 
   config = mkIf cfg.enable {

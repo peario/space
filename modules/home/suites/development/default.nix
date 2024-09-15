@@ -6,20 +6,20 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt enabled;
+  inherit (lib) mkIf mkEnableOption;
+  inherit (lib.${namespace}) enabled;
 
   cfg = config.${namespace}.suites.development;
 in
 {
   options.${namespace}.suites.development = {
-    enable = mkBoolOpt false "Enable common development configuration.";
-    azure.enable = mkBoolOpt false "Enable azure development configuration.";
-    docker.enable = mkBoolOpt false "Enable docker development configuration.";
-    game.enable = mkBoolOpt false "Enable game development configuration.";
-    kubernetes.enable = mkBoolOpt false "Enable kubernetes development configuration.";
-    nix.enable = mkBoolOpt false "Enable nix development configuration.";
-    sql.enable = mkBoolOpt false "Enable sql development configuration.";
+    enable = mkEnableOption "Development suite";
+    azure.enable = mkEnableOption "Azure development suite";
+    docker.enable = mkEnableOption "Docker development suite";
+    game.enable = mkEnableOption "Game development suite";
+    kubernetes.enable = mkEnableOption "Kubernetes development suite";
+    nix.enable = mkEnableOption "Nix development suite";
+    sql.enable = mkEnableOption "SQL development suite";
   };
 
   config = mkIf cfg.enable {
@@ -111,8 +111,10 @@ in
             # helix = enabled;
             neovim = {
               enable = true;
-              defaultEditor = true;
-              defaultVisual = true;
+              default = {
+                editor = true;
+                visual = true;
+              };
             };
           };
 

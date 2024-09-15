@@ -6,18 +6,16 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.programs.graphical.launchers.rofi;
 in
 {
   options.${namespace}.programs.graphical.launchers.rofi = {
-    enable = mkBoolOpt false "Whether to enable Rofi in the desktop environment.";
+    enable = mkEnableOption "Rofi (desktop env)";
   };
 
   config = mkIf cfg.enable {
-
     home.packages = with pkgs; [ wtype ];
 
     programs.rofi = {

@@ -6,19 +6,14 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.programs.terminal.emulators.warp;
-
 in
 {
   options.${namespace}.programs.terminal.emulators.warp = {
-    enable = mkBoolOpt false "Whether or not to enable warp.";
+    enable = mkEnableOption "Warp";
   };
 
-  config = mkIf cfg.enable {
-    home.packages = with pkgs; [ warp-terminal ];
-
-  };
+  config = mkIf cfg.enable { home.packages = with pkgs; [ warp-terminal ]; };
 }
