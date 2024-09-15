@@ -46,11 +46,11 @@ in
 
     nix =
       let
-        # mappedRegistry = lib.pipe inputs [
-        #   (lib.filterAttrs (_: lib.isType "flake"))
-        #   (lib.mapAttrs (_: flake: { inherit flake; }))
-        #   (x: x // { nixpkgs.flake = inputs.nixpkgs; })
-        # ];
+        mappedRegistry = lib.pipe inputs [
+          (lib.filterAttrs (_: lib.isType "flake"))
+          (lib.mapAttrs (_: flake: { inherit flake; }))
+          (x: x // (lib.mkIf pkgs.stdenv.isLinux { nixpkgs.flake = inputs.nixpkgs; }))
+        ];
 
         users = [
           "root"
@@ -75,14 +75,7 @@ in
 
         # pin the registry to avoid downloading and evaluating a new nixpkgs version every time
         # this will add each flake input as a registry to make nix3 commands consistent with your flake
-        # registry = mappedRegistry;
-        registry = {
-          nixpkgs = {
-            to = {
-              path = lib.mkForce inputs.nixpkgs;
-            };
-          };
-        };
+        registry = mappedRegistry;
 
         settings = {
           allowed-users = users;
