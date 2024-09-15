@@ -6,12 +6,6 @@
     anyrun.url = "github:anyrun-org/anyrun";
     anyrun-nixos-options.url = "github:n3oney/anyrun-nixos-options";
 
-    # Cachix agent for caching binaries
-    # cachix-deploy-flake = {
-    #   url = "github:cachix/cachix-deploy-flake";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
-
     # Theme - Catppuccin
     catppuccin-cursors.url = "github:catppuccin/cursors";
     catppuccin.url = "github:catppuccin/nix";
@@ -124,6 +118,12 @@
     # Neovim Nightly (overlay)
     neovim-nightly-overlay = {
       url = "github:nix-community/neovim-nightly-overlay";
+    };
+
+    # Secure boot
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.4.1";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     # Weekly updating nix-index database
@@ -254,7 +254,10 @@
 
       systems = {
         modules = {
-          nixos = [ ];
+          nixos = with inputs; [
+            lanzaboote.nixosModules.lanzaboote
+            sops-nix.nixosModules.sops
+          ];
         };
       };
 

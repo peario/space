@@ -1,0 +1,20 @@
+--2024-09-15 18:12:42--  https://github.com/khaneliman/khanelinix/blob/main/modules/nixos/programs/graphical/wms/hyprland/hypr/assets/square.png?raw=true
+Resolving github.com (github.com)... 140.82.121.3
+Connecting to github.com (github.com)|140.82.121.3|:443... connected.
+HTTP request sent, awaiting response... 302 Found
+Location: https://github.com/khaneliman/khanelinix/raw/main/modules/nixos/programs/graphical/wms/hyprland/hypr/assets/square.png [following]
+--2024-09-15 18:12:43--  https://github.com/khaneliman/khanelinix/raw/main/modules/nixos/programs/graphical/wms/hyprland/hypr/assets/square.png
+Reusing existing connection to github.com:443.
+HTTP request sent, awaiting response... 302 Found
+Location: https://raw.githubusercontent.com/khaneliman/khanelinix/main/modules/nixos/programs/graphical/wms/hyprland/hypr/assets/square.png [following]
+--2024-09-15 18:12:43--  https://raw.githubusercontent.com/khaneliman/khanelinix/main/modules/nixos/programs/graphical/wms/hyprland/hypr/assets/square.png
+Resolving raw.githubusercontent.com (raw.githubusercontent.com)... 185.199.108.133, 185.199.111.133, 185.199.109.133, ...
+Connecting to raw.githubusercontent.com (raw.githubusercontent.com)|185.199.108.133|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 17783 (17K) [image/png]
+Saving to: ‘square.png?raw=true’
+
+     0K .......... .......                                    100% 17.8M=0.001s
+
+2024-09-15 18:12:43 (17.8 MB/s) - ‘square.png?raw=true’ saved [17783/17783]
+
