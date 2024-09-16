@@ -1,11 +1,18 @@
 keys:
   - &magnetar age1zgflvqktlgujsaenam2jpmy96n45cpanxv6rz4gpuwhmw7j6ucvsh55q20
+  # TODO: Implement blitzar
+  # - &blitzar
 creation_rules:
   - path_regex: secrets/shared/[^/]+\.(yaml|json|env|ini)$
     key_groups:
       - age:
           - *magnetar
+          # - *bliztar
   - path_regex: secrets/magnetar/[^/]+\.(yaml|json|env|ini)$
     key_groups:
       - age:
           - *magnetar
+  # - path_regex: secrets/blitzar/[^/]+\.(yaml|json|env|ini)$
+  #   key_groups:
+  #     - age:
+  #         - *bliztar
