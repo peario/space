@@ -31,8 +31,7 @@ in
           git = {
             enable = true;
             wslAgentBridge = true;
-            # FIX: REPLACE %USERNAME%!!!!
-            wslGitCredentialManagerPath = ''/mnt/c/Users/%USERNAME%/AppData/Local/Programs/Git/mingw64/bin/git-credential-manager.exe'';
+            wslGitCredentialManagerPath = ''/mnt/c/Users/freda/AppData/Local/Programs/Git/mingw64/bin/git-credential-manager.exe'';
             includes = [
               {
                 condition = "gitdir:/mnt/c/";
@@ -49,7 +48,7 @@ in
     services = {
       sops = {
         enable = true;
-        defaultSopsFile = lib.snowfall.fs.get-file "secrets/blitzar/nixos/default.yaml";
+        defaultSopsFile = lib.snowfall.fs.get-file "secrets/quasar/nixos/default.yaml";
         sshKeyPaths = [ "${config.home.homeDirectory}/.ssh/id_ed25519" ];
       };
     };
