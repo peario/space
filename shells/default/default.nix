@@ -19,6 +19,8 @@ mkShell {
     fd
     fzf
     silicon
+    node2nix
+    treefmt2
 
     # Security
     age
@@ -47,6 +49,24 @@ mkShell {
 
     # Adds all the packages required for the pre-commit checks
     inputs.self.checks.${system}.pre-commit-hooks.enabledPackages
+
+    # Formatters used in `treefmt.toml`
+    # - cbfmt, clang-format, deadnix, fixjson, gofumpt, goimports-reviser, stylua, markdownlint-cli2,
+    # nixfmt-rfc-style, prettierd, ruff, rustfmt, taplo, yamlfmt
+    cbfmt
+    # clang-format is part of a larger collection of tools
+    deadnix
+    nodePackages.fixjson
+    gofumpt
+    goimports-reviser
+    stylua
+    markdownlint-cli2
+    nixfmt-rfc-style
+    prettierd
+    ruff
+    rustfmt
+    taplo
+    yamlfmt
   ];
 
   shellHook = # zsh

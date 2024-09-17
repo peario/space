@@ -73,10 +73,6 @@ in
           libpkgconf
           pkg-config
 
-          # WARN: Installing openssl will cause errors to be shown in build and may cause issues to Homebrew
-          # openssl
-          # cacert
-
           # TODO(sqlite): Create a separate "dev"-module for datastores (with caches like redis-ish included?)
           sqlite
 

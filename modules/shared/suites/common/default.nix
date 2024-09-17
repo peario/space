@@ -6,30 +6,34 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) mkBoolOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.suites.common;
 in
 {
   options.${namespace}.suites.common = {
-    enable = mkBoolOpt false "Enable common configuration.";
+    enable = mkEnableOption "Common suite";
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
-      coreutils
-      curl
-      fd
-      file
-      findutils
-      killall
-      lsof
-      pciutils
-      tldr
-      unzip
-      wget
-      xclip
-    ];
+    environment.systemPackages =
+      with pkgs;
+      [
+        coreutils
+        fd
+        file
+        findutils
+        killall
+        lsof
+        pciutils
+        tldr
+        unzip
+        wget
+        xclip
+      ]
+      ++ lib.optionals pkgs.stdenv.isLinux [
+        # installing curl on MacOS causes issues with Homebrew
+        curl
+      ];
   };
 }
