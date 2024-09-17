@@ -913,11 +913,13 @@
         ]
       },
       "locked": {
+
         "lastModified": 1726574148,
         "narHash": "sha256-y5CF2Z+1lx8+tGZvL4jYobfRZDFmD9pP1if9jsMTzm8=",
         "ref": "refs/heads/main",
         "rev": "581f6659f8541476da82ebd819a564780b3a969e",
         "revCount": 5226,
+
         "submodules": true,
         "type": "git",
         "url": "https://github.com/hyprwm/Hyprland"
@@ -1466,6 +1468,7 @@
         "owner": "nix-community",
         "repo": "neovim-nightly-overlay",
         "rev": "90aaa1e9e6ff67b29840d357413f822056212c08",
+
         "type": "github"
       },
       "original": {
