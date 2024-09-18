@@ -97,7 +97,7 @@ in
       reload-yubikey
     ];
 
-    khanelinix = {
+    space = {
       home.file = {
         ".gnupg/yubikey-guide.md".source = guide;
         ".gnupg/yubikey-guide.html".source = guideHTML;

@@ -22,6 +22,11 @@ in
         "visual-studio-code"
       ];
 
+      brews = [
+        "mas"
+        "whalebrew"
+      ];
+
       masApps = mkIf config.${namespace}.tools.homebrew.masEnable {
         "Patterns" = 429449079;
         "Xcode" = 497799835;

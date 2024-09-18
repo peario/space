@@ -9,22 +9,25 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Install Nix
-        # uses: DeterminateSystems/nix-installer-action@main
-        uses: cachix/install-nix-action@V28
-        with:
-          install_url: https://nixos.org/nix/install
-          extra_nix_config: |
-            auto-optimise-store = true
-            access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
-            experimental-features = nix-command flakes
-      - name: Set up Cachix for dead code cache
-        uses: cachix/cachix-action@v15
-        with:
-          name: space
-          authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
-          extraPullNames: nix-community
-      - name: Find and delete dead nix code
-        uses: astro/deadnix-action@main
-        with:
-          commit_message: "chore: Remove dead code"
+      # TODO: Figure out how to exclude directories
+      # - name: Install Nix
+      #   # uses: DeterminateSystems/nix-installer-action@main
+      #   uses: cachix/install-nix-action@V28
+      #   with:
+      #     install_url: https://nixos.org/nix/install
+      #     extra_nix_config: |
+      #       auto-optimise-store = true
+      #       access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+      #       experimental-features = nix-command flakes
+      # - name: Set up Cachix for dead code cache
+      #   uses: cachix/cachix-action@v15
+      #   with:
+      #     name: space
+      #     authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
+      #     extraPullNames: nix-community
+      # - name: Find and delete dead nix code
+      #   uses: astro/deadnix-action@main
+      #   with:
+      #     # By defaults modifies the code
+      #     flags: ""
+      #     commit_message: "chore: remove dead code"

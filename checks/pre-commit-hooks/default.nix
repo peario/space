@@ -32,12 +32,14 @@ pre-commit-hooks.lib.${pkgs.system}.run {
         enable = true;
 
         settings = {
-          edit = true;
+          # yes alert about unused vars, don't modify them
+          edit = false;
         };
       };
 
+      # FIX: currently doesn't work
       eslint = {
-        enable = true;
+        enable = false;
         package = pkgs.eslint_d;
       };
 

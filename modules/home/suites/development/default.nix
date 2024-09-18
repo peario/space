@@ -44,6 +44,7 @@ in
           nixpkgs-review
           nix-update
           nix-init
+          treefmt2
         ]
         ++ lib.optionals cfg.game.enable [
           godot_4
@@ -87,6 +88,11 @@ in
 
             LSP = enabled;
             other = enabled;
+            npmPackages = [
+              "lite-server"
+              "rimraf"
+              "nodemon"
+            ];
           };
           python = {
             enable = false;

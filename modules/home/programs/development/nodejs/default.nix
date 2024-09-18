@@ -13,6 +13,11 @@ let
     types
     lists
     ;
+  inherit (lib.strings) concatStringsSep;
+
+  npmrcConf = ''
+    prefix=~/.npm-packages
+  '';
 
   cfg = config.${namespace}.programs.development.nodejs;
 in
@@ -61,13 +66,14 @@ in
           bun
           yarn
           nodePackages.ts-node
+          # pkgs.${namespace}.lite-server
         ];
         description = "Other packages for Node.js.";
       };
     };
 
     # TODO(node.js): Setup automatic install via NPM for npm-packages.
-    installPackages = mkOption {
+    npmPackages = mkOption {
       type = with types; listOf (uniq str);
       default = [ ];
       example = [
@@ -79,12 +85,88 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages =
-      [ cfg.package ]
-      ++ lists.optional cfg.LSP.enable cfg.LSP.packages
-      ++ lists.optional cfg.formatter.enable cfg.formatter.packages
-      ++ lists.optional cfg.linter.enable cfg.linter.packages
-      ++ lists.optionals cfg.other.enable cfg.other.packages;
-    # ++ lists.optional ((builtins.length cfg.installPackages) > 0) cfg.installPackages;
+    home = {
+      packages =
+        [ cfg.package ]
+        ++ lists.optional cfg.LSP.enable cfg.LSP.packages
+        ++ lists.optional cfg.formatter.enable cfg.formatter.packages
+        ++ lists.optional cfg.linter.enable cfg.linter.packages
+        ++ lists.optionals cfg.other.enable cfg.other.packages;
+
+      file = {
+        ".npmrc".text = npmrcConf;
+      };
+    };
+
+    programs = mkIf ((builtins.length cfg.npmPackages) > 0) {
+      # TODO: Check if this script works
+      bash.initExtra = # bash
+        ''
+          # Add npm packages to path
+          export PATH="$HOME/.npm-packages/bin:$PATH"
+
+          # Array to hold missing commands
+          missing_commands=()
+
+          # Loop through commands array
+          for cmd in ${concatStringsSep " " cfg.npmPackages}; do
+            if ! command -v "$cmd" &> /dev/null; then
+              # If command doesn't exist, add to missing_commands
+              missing_commands+=("$cmd")
+            fi
+          done
+
+          # Print missing commands
+          if [ ''${#missing_commands[@]} -gt 0 ]; then
+              npm i -g "''${missing_commands[@]}" >/dev/null
+          fi
+        '';
+      # TODO: Check if this script works
+      fish.shellInit = # fish
+        ''
+          # Add npm packages to path
+          fish_add_path -g $HOME/.npm-packages/bin
+
+          # Array of commands to check
+          set commands ${concatStringsSep " " cfg.npmPackages}
+
+          # Array to hold missing commands
+          set missing_commands
+
+          # Loop through commands array
+          for cmd in $commands
+              if not command -v $cmd > /dev/null
+                  # If command doesn't exist, add to missing_commands
+                  set missing_commands $missing_commands $cmd
+              end
+          end
+
+          # Print missing commands
+          if test (count $missing_commands) -gt 0
+              npm i -g $missing_commands &>/dev/null
+          end
+        '';
+      zsh.initExtra = # bash
+        ''
+          # Add npm packages to path
+          export PATH="$HOME/.npm-packages/bin:$PATH"
+
+          # Array to hold missing commands
+          declare -a missing_commands=()
+
+          # Loop through commands array
+          for cmd in ${concatStringsSep " " cfg.npmPackages}; do
+            if ! command -v "$cmd" &> /dev/null; then
+              # If command doesn't exist, add to missing_commands
+              missing_commands+=("$cmd")
+            fi
+          done
+
+          # Print missing commands
+          if [ ''${#missing_commands[@]} -gt 0 ]; then
+            npm i -g "''${missing_commands[@]}" >/dev/null
+          fi
+        '';
+    };
   };
 }

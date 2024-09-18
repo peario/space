@@ -79,8 +79,8 @@ in
       sessionVariables = {
         CARGO_HOME = "${config.home.homeDirectory}/${cfg.cargoHome}";
         PATH = builtins.concatStringsSep ":" [
-          "$PATH"
           "${config.home.homeDirectory}/${cfg.cargoHome}/bin"
+          "$PATH"
         ];
         RUST_SRC_PATH = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
         # Add precompiled library to rustc search path

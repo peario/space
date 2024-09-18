@@ -1,0 +1,91 @@
+# One CLI to format the code tree - https://git.numtide.com/numtide/treefmt
+
+# Currently required executables:
+# - cbfmt, clang-format, deadnix, fixjson, gofumpt, goimports-reviser, stylua, markdownlint-cli2,
+# nixfmt-rfc-style, prettierd, ruff, rustfmt, taplo, yamlfmt
+
+# Owns the file in root of dir `./.cbfmt.toml`
+[formatter.cbfmt]
+command = "cbfmt"
+options = ["-w"]
+includes = ["*.md"]
+priority = 0        # basically means that cbfmt runs after markdownlint-cli2
+
+# FIX: A part of a larger collection of C/C++ tools, somehow extract it
+# [formatter.clang-foramt]
+# command = "clang-format"
+# includes = ["*.c", "*.cpp", "*.cu"]
+
+# Removes unused variables in nix
+[formatter.deadnix]
+command = "deadnix"
+includes = ["*.nix"]
+excludes = ["packages/lite-server"]
+
+[formatter.fixjson]
+command = "fixjson"
+options = ["--write"]
+includes = ["*.json", "*.json5"]
+
+[formatter.gofumpt]
+command = "gofumpt"
+options = ["-w"]
+includes = ["*.go"]
+priority = 0
+
+[formatter.goimports-reviser]
+command = "goimports-reviser"
+options = ["-rm-unused -set-alias -format"]
+includes = ["*.go"]
+priority = 1
+
+# Owns the file in root of dir `./stylua.toml`
+[formatter.stylua]
+command = "stylua"
+includes = ["*.lua", "*.luau"]
+
+[formatter.markdownlint-cli2]
+command = "markdownlint-cli2"
+options = ["--fix"]
+includes = ["*.md"]
+priority = 1
+
+# Formats nix
+[formatter.nixfmt-rfc-style]
+command = "nixfmt"
+includes = ["*.nix"]
+
+[formatter.prettierd]
+command = "prettierd"
+includes = [
+  "*.css",
+  "*.graphql",
+  "*.html",
+  "*.jsx",
+  "*.js",
+  "*.less",
+  "*.scss",
+  "*.ts",
+  "*.tsx",
+  "*.vue",
+]
+priority = 0 # means to run prettierd before other formatters of same filetype
+
+[formatter.ruff]
+command = "ruff"
+options = ["format"]
+includes = ["*.py"]
+
+[formatter.rustfmt]
+command = "rustfmt"
+options = ["--edition", "2021"]
+includes = ["*.rs"]
+
+[formatter.taplo]
+command = "taplo"
+options = ["fmt"]
+includes = ["*.toml"]
+
+[formatter.yamlfmt]
+command = "yamlfmt"
+includes = ["*.yaml", "*.yml"]
