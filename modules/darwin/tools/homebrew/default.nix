@@ -34,6 +34,12 @@ in
         "homebrew/bundle"
         "homebrew/services"
       ];
+
+      brews = [
+        "curl"
+        "ca-certificates"
+        "openssl"
+      ];
     };
   };
 }
