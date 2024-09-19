@@ -33,7 +33,7 @@ in
 
     LSP = {
       enable = mkEnableOption "LSP for Node.js";
-      packages = mkOption {
+      package = mkOption {
         type = types.package;
         default = pkgs.typescript;
         description = "Package for Node.js LSP.";
@@ -42,7 +42,7 @@ in
 
     formatter = {
       enable = mkEnableOption "Formatters for Node.js";
-      packages = mkOption {
+      package = mkOption {
         type = types.package;
         default = pkgs.nodePackages.prettier;
         description = "Packages for Node.js formatting.";
@@ -51,7 +51,7 @@ in
 
     linter = {
       enable = mkEnableOption "Linters for Node.js";
-      packages = mkOption {
+      package = mkOption {
         type = types.package;
         default = pkgs.nodePackages.eslint;
         description = "Packages for Node.js linting.";
@@ -66,13 +66,11 @@ in
           bun
           yarn
           nodePackages.ts-node
-          # pkgs.${namespace}.lite-server
         ];
         description = "Other packages for Node.js.";
       };
     };
 
-    # TODO(node.js): Setup automatic install via NPM for npm-packages.
     npmPackages = mkOption {
       type = with types; listOf (uniq str);
       default = [ ];
@@ -88,15 +86,15 @@ in
     home = {
       packages =
         [ cfg.package ]
-        ++ lists.optional cfg.LSP.enable cfg.LSP.packages
-        ++ lists.optional cfg.formatter.enable cfg.formatter.packages
-        ++ lists.optional cfg.linter.enable cfg.linter.packages
+        ++ lists.optional cfg.LSP.enable cfg.LSP.package
+        ++ lists.optional cfg.formatter.enable cfg.formatter.package
+        ++ lists.optional cfg.linter.enable cfg.linter.package
         ++ lists.optionals cfg.other.enable cfg.other.packages;
 
-      file = {
-        ".npmrc".text = npmrcConf;
-      };
+      file = mkIf pkgs.stdenv.isDarwin { ".npmrc".text = npmrcConf; };
     };
+
+    xdg.configFile = mkIf pkgs.stdenv.isLinux { ".npmrc".text = npmrcConf; };
 
     programs = mkIf ((builtins.length cfg.npmPackages) > 0) {
       # TODO: Check if this script works
@@ -118,7 +116,9 @@ in
 
           # Print missing commands
           if [ ''${#missing_commands[@]} -gt 0 ]; then
-              npm i -g "''${missing_commands[@]}" >/dev/null
+            # INFO: This installs the missing packages, hides output, pushes errors to a log file
+            # and runs it all as a background process
+            (npm i -g "''${missing_commands[@]}" >/dev/null 2> ~/.npm-packages/install-errors.log &)
           fi
         '';
       # TODO: Check if this script works
@@ -143,7 +143,9 @@ in
 
           # Print missing commands
           if test (count $missing_commands) -gt 0
-              npm i -g $missing_commands &>/dev/null
+            # INFO: This installs the missing packages, hides output, pushes errors to a log file
+            # and runs it all as a background process
+              npm i -g $missing_commands >/dev/null 2> ~/.npm-install-errors.log &
           end
         '';
       zsh.initExtra = # bash
@@ -164,7 +166,9 @@ in
 
           # Print missing commands
           if [ ''${#missing_commands[@]} -gt 0 ]; then
-            npm i -g "''${missing_commands[@]}" >/dev/null
+            # INFO: This installs the missing packages, hides output, pushes errors to a log file
+            # and runs it all as a background process
+            (npm i -g "''${missing_commands[@]}" >/dev/null 2> ~/.npm-packages/install-errors.log &)
           fi
         '';
     };

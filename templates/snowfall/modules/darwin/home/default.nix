@@ -21,8 +21,11 @@ in
   config = {
     ${namespace}.home.extraOptions = {
       home.file = lib.mkAliasDefinitions options.${namespace}.home.file;
-      xdg.enable = true;
-      xdg.configFile = lib.mkAliasDefinitions options.${namespace}.home.configFile;
+
+      xdg = {
+        enable = true;
+        configFile = lib.mkAliasDefinitions options.${namespace}.home.configFile;
+      };
     };
 
     snowfallorg.users.${config.${namespace}.user.name}.home.config =

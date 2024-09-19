@@ -126,6 +126,7 @@ in
 
           tools = {
             azure.enable = cfg.azure.enable;
+            commitizen = enabled;
             git-crypt = enabled;
             k9s.enable = cfg.kubernetes.enable;
             lazydocker.enable = cfg.docker.enable;
