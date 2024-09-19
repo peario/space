@@ -112,7 +112,7 @@ in
       traceroute
     ];
 
-    khanelinix.user.extraGroups = [
+    space.user.extraGroups = [
       "network"
       "wireshark"
     ];

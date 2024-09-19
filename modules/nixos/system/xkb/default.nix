@@ -5,13 +5,13 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOpt;
+  inherit (lib) mkIf mkEnableOption;
 
   cfg = config.${namespace}.system.xkb;
 in
 {
   options.${namespace}.system.xkb = {
-    enable = mkEnableOpt "Configure XKB";
+    enable = mkEnableOption "Configure XKB";
   };
 
   config = mkIf cfg.enable {
