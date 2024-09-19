@@ -7,6 +7,7 @@
 }:
 let
   inherit (lib) mkIf;
+
   cfg = config.${namespace}.programs.terminal.tools.yazi;
 in
 {

@@ -9,7 +9,7 @@
 let
   inherit (lib)
     mkIf
-    mkenableOption
+    mkEnableOption
     types
     getExe
     getExe'
@@ -70,7 +70,7 @@ let
 in
 {
   options.${namespace}.security.gpg = with types; {
-    enable = mkenableOption "GPG";
+    enable = mkEnableOption "GPG";
     agentTimeout = mkOpt int 5 "Amount of time to wait before continuing with shell init.";
   };
 

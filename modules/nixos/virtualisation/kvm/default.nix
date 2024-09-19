@@ -91,7 +91,7 @@ in
       spiceUSBRedirection.enable = true;
     };
 
-    khanelinix = {
+    space = {
       user = {
         extraGroups = [
           "disk"

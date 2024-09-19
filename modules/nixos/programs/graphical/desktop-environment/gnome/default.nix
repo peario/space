@@ -88,7 +88,7 @@ in
       ];
     };
 
-    khanelinix = {
+    space = {
       # TODO: gnome equivalent on home-manager
       # desktop.addons = {
       # electron-support = enabled;

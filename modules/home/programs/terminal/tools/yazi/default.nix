@@ -18,7 +18,17 @@ let
   cfg = config.${namespace}.programs.terminal.tools.yazi;
 in
 {
-  imports = lib.snowfall.fs.get-non-default-nix-files ./configs/plugins;
+  imports = [
+    # (lib.snowfall.fs.get-non-default-nix-files ./configs/plugins)
+    (import ./configs/plugins/glow.nix {
+      inherit
+        config
+        lib
+        pkgs
+        namespace
+        ;
+    })
+  ];
 
   options.${namespace}.programs.terminal.tools.yazi = {
     enable = mkEnableOption "yazi";
@@ -28,7 +38,7 @@ in
     home.packages = with pkgs; [
       miller
       ouch
-      config.programs.ripgrep.package
+      config.${namespace}.programs.ripgrep.package
       xdragon
       zoxide
     ];

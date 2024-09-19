@@ -16,7 +16,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    khanelinix = {
+    space = {
       programs = {
         graphical = {
           apps = {

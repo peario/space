@@ -27,7 +27,7 @@ in
       podman-desktop
     ];
 
-    khanelinix = {
+    space = {
       user = {
         extraGroups = [
           "docker"

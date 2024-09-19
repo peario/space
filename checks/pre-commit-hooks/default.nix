@@ -34,7 +34,7 @@ pre-commit-hooks.lib.${pkgs.system}.run {
       actionlint.enable = true;
 
       # Make sure .editorconfig is respected
-      editroconfig-checker.enable = true;
+      editorconfig-checker.enable = true;
 
       # Warns about submodules in commits
       forbid-new-submodules.enable = true;
@@ -45,6 +45,7 @@ pre-commit-hooks.lib.${pkgs.system}.run {
         inherit excludes fail_fast verbose;
 
         always_run = true;
+        name = "git-cliff";
         description = "pre-push hook for git-cliff";
         entry = "${lib.getExe pkgs.${namespace}.git-cliff}";
         language = "system";

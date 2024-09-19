@@ -16,7 +16,7 @@ in
   };
 
   config = mkIf cfg.enable {
-    khanelinix = {
+    space = {
       suites = {
         common = enabled;
         desktop = enabled;
