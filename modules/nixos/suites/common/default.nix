@@ -19,7 +19,6 @@ in
       defaultPackages = lib.mkForce [ ];
 
       systemPackages = with pkgs; [
-        # curl
         dnsutils
         lshw
         pciutils

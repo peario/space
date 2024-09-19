@@ -6,8 +6,9 @@
   ...
 }:
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkIf mkEnableOption;
   inherit (lib.strings) fileContents;
+  inherit (lib.${namespace}) enabled;
 
   cfg = config.${namespace}.programs.terminal.shell.zsh;
 in
@@ -23,7 +24,7 @@ in
         package = pkgs.zsh;
 
         autocd = true;
-        autosuggestion.enable = true;
+        autosuggestion = enabled;
 
         completionInit = # bash
           ''

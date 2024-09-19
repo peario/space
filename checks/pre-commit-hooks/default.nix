@@ -83,6 +83,7 @@ pre-commit-hooks.lib.${pkgs.system}.run {
         settings = {
           # yes alert about unused vars, don't modify them
           edit = false;
+          exclude = [ "packages/lite-server" ];
         };
       };
 
@@ -130,6 +131,8 @@ pre-commit-hooks.lib.${pkgs.system}.run {
         description = "pre-commit hook for prettier";
         settings = {
           binPath = "${lib.getExe pkgs.prettierd}";
+          single-attribute-per-line = true;
+          trailing-comma = "es5";
           write = true;
         };
       };
