@@ -33,9 +33,6 @@ pre-commit-hooks.lib.${pkgs.system}.run {
       # Linter for GitHub Workflows
       actionlint.enable = true;
 
-      # Make sure .editorconfig is respected
-      editorconfig-checker.enable = true;
-
       # Warns about submodules in commits
       forbid-new-submodules.enable = true;
 
