@@ -149,7 +149,16 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     {
-      home.packages = [ cfg.package ];
+      home.packages =
+        [ cfg.package ]
+        ++ lib.optionals pkgs.stdenv.isLinux [ pkgs.jetbrains.goland ]
+        ++ lib.optionals pkgs.stdenv.isDarwin (
+          with pkgs;
+          [
+            darwin.apple_sdk.frameworks.CoreFoundation
+            darwin.apple_sdk.frameworks.CoreServices
+          ]
+        );
 
       home.file =
         let
@@ -169,6 +178,21 @@ in
 
     (mkIf (cfg.goBin != null) {
       home.sessionVariables.GOBIN = "${config.home.homeDirectory}/${cfg.goBin}";
+
+      programs = {
+        bash.initExtra = # bash
+          ''
+            export PATH="${config.home.homeDirectory}/${cfg.goBin}:$PATH"
+          '';
+        fish.shellInit = # fish
+          ''
+            fish_add_path -p "${config.home.homeDirectory}/${cfg.goBin}"
+          '';
+        zsh.initExtra = # bash
+          ''
+            export PATH="${config.home.homeDirectory}/${cfg.goBin}:$PATH"
+          '';
+      };
     })
 
     (mkIf (cfg.goPrivate != [ ]) {

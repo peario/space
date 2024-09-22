@@ -89,7 +89,14 @@ in
         ++ lists.optional cfg.LSP.enable cfg.LSP.package
         ++ lists.optional cfg.formatter.enable cfg.formatter.package
         ++ lists.optional cfg.linter.enable cfg.linter.package
-        ++ lists.optionals cfg.other.enable cfg.other.packages;
+        ++ lists.optionals cfg.other.enable cfg.other.packages
+        ++ lists.optionals pkgs.stdenv.isLinux (
+          with pkgs.jetbrains;
+          [
+            webstorm
+            phpstorm
+          ]
+        );
 
       file = mkIf pkgs.stdenv.isDarwin { ".npmrc".text = npmrcConf; };
     };

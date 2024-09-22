@@ -25,7 +25,7 @@ node_modules
 
 # ==> NixOS <==
 
-.direnv/*
+**/.direnv/*
 result
 .ccls-cache
 flake

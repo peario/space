@@ -67,6 +67,7 @@ in
     home.packages =
       [ cfg.package ]
       ++ lists.optionals cfg.LSP.enable cfg.LSP.packages
-      ++ lists.optionals cfg.other.enable cfg.other.packages;
+      ++ lists.optionals cfg.other.enable cfg.other.packages
+      ++ lists.optionals pkgs.stdenv.isLinux (with pkgs; [ jetbrains.pycharm-community ]);
   };
 }

@@ -40,6 +40,7 @@ in
           wasm-pack
           wasm-tools
           wasm-bindgen-cli
+          rustPlatform.bindgenHook
           trunk
           silicon
         ];
@@ -61,6 +62,7 @@ in
       packages =
         [ cfg.package ]
         ++ lists.optionals cfg.other.enable cfg.other.packages
+        ++ lists.optionals pkgs.stdenv.isLinux (with pkgs; [ jetbrains.rust-rover ])
         ++ lists.optionals pkgs.stdenv.isDarwin (
           with pkgs.darwin.apple_sdk.frameworks;
           [
