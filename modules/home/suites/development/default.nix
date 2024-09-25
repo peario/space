@@ -33,6 +33,7 @@ in
           postman
           vscode
           act
+          tree-sitter
         ]
         ++ lib.optionals pkgs.stdenv.isLinux [
           github-desktop
@@ -83,7 +84,7 @@ in
           };
           go = enabled;
           lua = {
-            enable = false;
+            enable = true;
 
             other = enabled;
           };
@@ -99,7 +100,7 @@ in
             ];
           };
           python = {
-            enable = false;
+            enable = true;
 
             other = enabled;
           };

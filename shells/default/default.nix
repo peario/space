@@ -29,7 +29,8 @@ mkShell {
     sops
 
     # Neovim
-    inputs.neovim-nightly-overlay.packages.${pkgs.system}.default
+    pkgs.neovim
+    # inputs.neovim-nightly-overlay.packages.${pkgs.system}.default
 
     # Nix related tools
     hydra-check

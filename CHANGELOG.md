@@ -720,6 +720,7 @@ Signed-off-by: Fredrik Dahlström <fredahl71@gmail.com>
 Signed-off-by: Fredrik Dahlström <fredahl71@gmail.com>
 
 #### Fixes
+- Fix(git): remove part of template
 - Fix: automatic npm package install, commitizen cli, remove configs, update pre-commit hook
 - Fix: automatic npm package install, commitizen cli, remove configs, update pre-commit hook
 - Fix(lite-server): update
