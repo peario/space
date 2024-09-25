@@ -40,6 +40,7 @@ in
           fonts = [
             "FiraCode"
             "Monaspace"
+            "JetBrainsMono"
             "NerdFontsSymbolsOnly"
           ];
         })

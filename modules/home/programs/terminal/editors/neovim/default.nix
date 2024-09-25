@@ -3,7 +3,6 @@
   lib,
   pkgs,
   namespace,
-  inputs,
   ...
 }:
 let
@@ -28,8 +27,9 @@ in
         EDITOR = mkIf cfg.default.editor "nvim";
         VISUAL = mkIf cfg.default.visual "nvim";
       };
+
       packages = [
-        inputs.neovim-nightly-overlay.packages.${pkgs.system}.default
+        pkgs.neovim
         # NOTE: https://github.com/khaneliman/khanelinix/blob/52ec6f4044344e5f0d96e7bb1ae6723891f4e25e/modules/home/programs/terminal/editors/neovim/default.nix#L29
         # khanelivim.packages.${system}.default
       ];

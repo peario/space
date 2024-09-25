@@ -116,8 +116,14 @@
     };
 
     # Neovim Nightly (overlay)
-    neovim-nightly-overlay = {
-      url = "github:nix-community/neovim-nightly-overlay";
+    # neovim-nightly-overlay = {
+    #   url = "github:nix-community/neovim-nightly-overlay";
+    # };
+
+    # Neovim source code (for overlay)
+    neovim-src = {
+      url = "github:neovim/neovim";
+      flake = false;
     };
 
     # Secure boot

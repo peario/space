@@ -33,10 +33,13 @@ in
           postman
           vscode
           act
+          tree-sitter
         ]
         ++ lib.optionals pkgs.stdenv.isLinux [
           github-desktop
           qtcreator
+          jetbrains-toolbox
+          jetbrains.datagrip
         ]
         ++ lib.optionals cfg.nix.enable [
           nixpkgs-hammering
@@ -70,6 +73,8 @@ in
 
             LSP = enabled;
             # DAP = enabled;
+            docs = enabled;
+            buildTools = enabled;
             other = enabled;
           };
           erlang = {
@@ -79,7 +84,7 @@ in
           };
           go = enabled;
           lua = {
-            enable = false;
+            enable = true;
 
             other = enabled;
           };
@@ -95,7 +100,7 @@ in
             ];
           };
           python = {
-            enable = false;
+            enable = true;
 
             other = enabled;
           };

@@ -20,6 +20,7 @@ in
         "cutter"
         "docker"
         "visual-studio-code"
+        "jetbrains-toolbox"
       ];
 
       brews = [

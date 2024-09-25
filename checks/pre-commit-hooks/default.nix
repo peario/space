@@ -1,7 +1,6 @@
 {
   inputs,
   lib,
-  namespace,
   pkgs,
   ...
 }:
@@ -33,24 +32,8 @@ pre-commit-hooks.lib.${pkgs.system}.run {
       # Linter for GitHub Workflows
       actionlint.enable = true;
 
-      # Make sure .editorconfig is respected
-      editorconfig-checker.enable = true;
-
       # Warns about submodules in commits
       forbid-new-submodules.enable = true;
-
-      # customizable changelog generator
-      git-cliff = {
-        enable = true;
-        inherit excludes fail_fast verbose;
-
-        always_run = true;
-        name = "git-cliff";
-        description = "pre-push hook for git-cliff";
-        entry = "${lib.getExe pkgs.${namespace}.git-cliff}";
-        language = "system";
-        stages = [ "pre-push" ];
-      };
 
       # Make sure unencrypted files aren't accidentally commited that are related to sops
       pre-commit-hook-ensure-sops.enable = true;

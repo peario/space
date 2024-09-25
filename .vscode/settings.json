@@ -1,0 +1,42 @@
+{
+  "files.watcherExclude": {
+    "**/_build": true,
+    "**/.classpath": true,
+    "**/.dart_tool": true,
+    "**/.factorypath": true,
+    "**/.flatpak-builder": true,
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/.idea": true,
+    "**/.project": true,
+    "**/.scannerwork": true,
+    "**/.settings": true,
+    "**/.direnv": true,
+    "**/.venv": true,
+    "**/node_modules": true,
+    "**/target": true
+  },
+  "rust-analyzer.files.excludeDirs": [
+    "_build",
+    ".dart_tool",
+    ".flatpak-builder",
+    ".git",
+    ".gitlab",
+    ".gitlab-ci",
+    ".gradle",
+    ".idea",
+    ".next",
+    ".project",
+    ".scannerwork",
+    ".settings",
+    ".direnv",
+    ".venv",
+    "archetype-resources",
+    "bin",
+    "hooks",
+    "node_modules",
+    "po",
+    "screenshots",
+    "target"
+  ]
+}
