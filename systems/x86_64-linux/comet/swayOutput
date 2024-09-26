@@ -1,0 +1,8 @@
+set $monitor-left DP-2
+set $monitor-right DP-3
+
+# for wallpapers:
+#output $<monitor> bg <file> fill
+
+output $monitor-left resolution 1920x1080 position 0,0
+output $monitor-right resolution 1920x1080 position 1920,0
