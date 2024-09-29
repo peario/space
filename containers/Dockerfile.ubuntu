@@ -1,0 +1,27 @@
+# Use the Official Ubuntu image as the base
+# While 24.04 (and 24.10) are the latest major version, 22.04 is the default version on WSL2 and
+# makes the testing of script more cross-platform (I hope).
+FROM ubuntu:22.04
+
+# Set up environment
+ENV DEBIAN_FRONTEND=noninteractive
+
+# Install required tools: git, curl, and bash
+RUN apt-get update && apt-get install -y \
+  git \
+  curl \
+  bash \
+  && rm -rf /var/lib/apt/lists/*
+
+# Create a working directory
+WORKDIR /root
+
+# Copy the installer script into the container
+COPY install.sh /root/install.sh
+
+# Make the installer executable
+RUN chmod +x /root/install.sh
+
+# Set the default command to run the installer script
+CMD ["/root/install.sh"]
+

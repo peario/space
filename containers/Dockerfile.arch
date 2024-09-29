@@ -1,0 +1,26 @@
+# Use the official Arch Linux image as the base
+# Since Arch Linux uses a rolling-release distribution, keep as latest.
+# If the install.sh doesn't work, test on other Dockerfiles before debugging.
+FROM archlinux:latest
+
+# Update the package database and install required tools: git, curl, and bash
+RUN pacman -Syu --noconfirm && \
+  pacman -S --noconfirm \
+  git \
+  curl \
+  wget \
+  bash && \
+  pacman -Scc --noconfirm
+
+# Create a working directory
+WORKDIR /root
+
+# Copy the installer script into the container
+COPY install.sh /root/install.sh
+
+# Make the installer executable
+RUN chmod +x /root/install.sh
+
+# Set the default command to run the installer script
+CMD ["/root/install.sh"]
+

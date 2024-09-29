@@ -1,0 +1,24 @@
+# Use the official Debian 12 (Bookworm) image as the base
+FROM debian:bookworm
+
+# Update the package database and install required tools: git, curl, and bash
+RUN apt-get update && \
+  apt-get install -y \
+  git \
+  curl \
+  bash && \
+  apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
+
+# Create a working directory
+WORKDIR /root
+
+# Copy the installer script into the container
+COPY install.sh /root/install.sh
+
+# Make the installer executable
+RUN chmod +x /root/install.sh
+
+# Set the default command to run the installer script
+CMD ["/root/install.sh"]
+
