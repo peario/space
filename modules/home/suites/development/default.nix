@@ -27,13 +27,15 @@ in
       packages =
         with pkgs;
         [
+          act
+          fzf
           jqp
           neovide
           onefetch
           postman
-          vscode
-          act
+          silicon
           tree-sitter
+          vscode
         ]
         ++ lib.optionals pkgs.stdenv.isLinux [
           github-desktop
@@ -47,6 +49,7 @@ in
           nixpkgs-review
           nix-update
           nix-init
+          node2nix
           treefmt2
         ]
         ++ lib.optionals cfg.game.enable [
