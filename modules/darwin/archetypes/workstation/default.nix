@@ -23,7 +23,12 @@ in
         business = enabled;
         common = enabled;
         desktop = enabled;
-        development = enabled;
+        development = {
+          enable = true;
+
+          docker.enable = true;
+          podman.enable = true;
+        };
       };
     };
   };

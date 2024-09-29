@@ -1,0 +1,22 @@
+# Use the official Alpine image as the base
+FROM alpine:3.20.3
+
+# Update the package database and install required tools: git, curl, and bash
+RUN apk update && \
+  apk add --no-cache \
+  git \
+  curl \
+  bash
+
+# Create a working directory
+WORKDIR /root
+
+# Copy the installer script into the container
+COPY install.sh /root/install.sh
+
+# Make the installer executable
+RUN chmod +x /root/install.sh
+
+# Set the default command to run the installer script
+CMD ["/root/install.sh"]
+

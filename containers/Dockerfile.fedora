@@ -1,0 +1,24 @@
+# Use the official Fedora image as the base
+# While dockerhub shows 42 as latest release, the website shows 40.
+FROM fedora:40
+
+# Update the package database and install required tools: git, curl, and bash
+RUN dnf update -y && \
+  dnf install -y \
+  git \
+  curl \
+  bash && \
+  dnf clean all
+
+# Create a working directory
+WORKDIR /root
+
+# Copy the installer script into the container
+COPY install.sh /root/install.sh
+
+# Make the installer executable
+RUN chmod +x /root/install.sh
+
+# Set the default command to run the installer script
+CMD ["/root/install.sh"]
+
