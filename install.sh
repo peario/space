@@ -1,11 +1,5 @@
 #!/bin/bash
 
-# Purpose of this bootstrapping-script.
-#  1. Verify that required tooling is accessible, including
-#    - git
-#  2. clone/download the git repository
-#  3. cd into it
-
 # We don't need return codes for "$(command)", only stdout is needed.
 # Allow `[[ -n "$(command)" ]]`, `func "$(command)"`, pipes, etc.
 # shellcheck disable=SC2312
