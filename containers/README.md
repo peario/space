@@ -20,15 +20,16 @@ to test if `install.sh` works aside from on a Windows machine.
 
 ## Installation
 
-The Dockerfiles are supposed to only pre-install (before running the install-script)
-the required programs to run `install.sh`. The script itself is intended to install
-those programs required to kick-start the Nix config.
+The Dockerfiles are supposed to only pre-install the required programs to run `install.sh`.
+The script itself is intended to install those programs required to kick-start
+the Nix config.
 
 ## Usage
 
 There's a couple steps to running the containers. These instructions assume you're
-running from the project root. If you're running from within `./containers`, simply
-remove `containers/` from each instruction when running them.
+running from the project root. If you're running from within `./containers` or somewhere
+else, simply remove `containers/` or adjust the path according to your environment
+for each instruction when running them.
 
 > [!TIP]
 > When running `Dockerfile.arch` on macOS for example, it might terminate early.
@@ -42,20 +43,25 @@ remove `containers/` from each instruction when running them.
 >   -t space-installer-arch .
 > ```
 
-Firstly to build the container use the following where `arch` can be replaced with
-whichever Dockerfile and distro is used.
+Firstly to build the container use the following command where `arch` (in `space-arch`)
+can be replaced with whichever distro of Dockerfile is available.
 
 ```bash
 docker build -f containers/Dockerfile.arch -t space-arch .
 ```
 
-Then to run the container run the following where, like above, `arch` can be replaced
-with whichever Dockerfile and distro is appropriate. This command will delete the
-container once done (due to the `--rm` flag).
+Then to start the container run the following command where, like above, `arch`
+can be replaced with whichever distro of Dockerfile is available. This command will
+delete the container once done (due to the `--rm` flag).
 
 ```bash
 docker run --rm space-arch /bin/bash
 ```
+
+> [!TIP]
+> Try following the syntax of `Dockerfile.[distro]` and `space-[distro]`, where `[distro]`
+> is any of the available Dockerfiles. This makes it easier to figure out which unix
+> distro the container is. Just an idea though.
 
 ### Quick run
 
@@ -63,17 +69,16 @@ docker run --rm space-arch /bin/bash
 > For the following two codeblocks where the `-it` (interactive) flag is present
 > at `docker run`, the command wont trigger the run of `./install.sh`.
 >
-> So for `docker run` you'll have to run `/root/install.sh` manually.
+> So you'll have to run `./install.sh` manually.
 
 I personally use the following command for a quick, interactive and temporary testing
 environment of `install.sh`. Notice the use of `SPACE_DISTRO="arch"`, the contents
-of `SPACE_DISTRO="..."` can be changed to whichever Dockerfile is available
+of `SPACE_DISTRO="..."` can be changed to whichever distro of Dockerfile is available
 within `./containers`.
 
 ```bash
 SPACE_DISTRO="arch" && \
-  docker build -f containers/Dockerfile.${SPACE_DISTRO} -t \
-  space-${SPACE_DISTRO} . && \
+  docker build -f containers/Dockerfile.${SPACE_DISTRO} -t space-${SPACE_DISTRO} . && \
   docker run -it --rm space-${SPACE_DISTRO} /bin/bash
 ```
 
