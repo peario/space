@@ -42,6 +42,7 @@ in
             # alacritty = enabled;
             foot.enable = pkgs.stdenv.isLinux;
             kitty = enabled;
+            rio = enabled;
             # warp = enabled;
             # wezterm = enabled;
           };
