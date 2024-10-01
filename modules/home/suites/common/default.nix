@@ -48,8 +48,9 @@ in
 
           shell = {
             bash = enabled;
-            fish = enabled;
+            # fish = enabled;
             zsh = enabled;
+            nushell = enabled;
           };
 
           tools = {

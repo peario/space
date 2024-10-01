@@ -6,7 +6,8 @@
   ...
 }:
 let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkIf mkEnableOption;
+  inherit (config.lib.file) mkOutOfStoreSymlink;
 
   cfg = config.${namespace}.programs.terminal.editors.neovim;
 in
@@ -21,7 +22,14 @@ in
 
   config = mkIf cfg.enable {
     home = {
-      # file = mkIf pkgs.stdenv.isDarwin { "Library/Preferences/glow/glow.yml".text = config; };
+      file = {
+        # NOTE: Attempt to symlink more complex programs dotfiles config.
+        # ".config/nvim" = {
+        #   # source = mkOutOfStoreSymlink config.home.homeDirectory + "/" + namespace + "/.config/nvim";
+        #   source = config.home.homeDirectory + "/" + namespace + "/.config/nvim";
+        #   recursive = true;
+        # };
+      };
 
       sessionVariables = {
         EDITOR = mkIf cfg.default.editor "nvim";
@@ -29,9 +37,8 @@ in
       };
 
       packages = [
+        # It's version is v0.10.1 and set within `overlays/neovim/default.nix`
         pkgs.neovim
-        # NOTE: https://github.com/khaneliman/khanelinix/blob/52ec6f4044344e5f0d96e7bb1ae6723891f4e25e/modules/home/programs/terminal/editors/neovim/default.nix#L29
-        # khanelivim.packages.${system}.default
       ];
     };
 
@@ -42,6 +49,12 @@ in
     #   };
     # };
 
-    # xdg.configFile = mkIf pkgs.stdenv.isLinux { "glow/glow.yml".text = config; };
+    xdg.configFile = {
+      neovim = {
+        enable = true;
+        source = mkOutOfStoreSymlink "${config.home.homeDirectory}/${namespace}/.config/nvim";
+        target = "nvim";
+      };
+    };
   };
 }
