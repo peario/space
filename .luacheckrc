@@ -34,3 +34,14 @@ files["**/yazi/**"] = {
     "512",
   },
 }
+
+files[".config/nvim/**"] = {
+  globals = {
+    "vim",
+    "fmta",
+    "s",
+    "i",
+    "c",
+    "t",
+  },
+}

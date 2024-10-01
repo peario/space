@@ -49,16 +49,6 @@ pre-commit-hooks.lib.${pkgs.system}.run {
       # formatter
       stylua.enable = true;
 
-      # linter
-      selene = {
-        enable = true;
-
-        name = "Selene";
-        # files = "\\.(lua)$";
-        types = [ "lua" ];
-        entry = "${lib.getExe pkgs.selene}";
-      };
-
       # ==> Nix <==
       # remove unused vars
       deadnix = {
@@ -67,7 +57,6 @@ pre-commit-hooks.lib.${pkgs.system}.run {
         settings = {
           # yes alert about unused vars, don't modify them
           edit = false;
-          exclude = [ "packages/lite-server" ];
         };
       };
 
