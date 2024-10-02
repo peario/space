@@ -23,8 +23,6 @@ in
       settings = {
         confirm-before-quit = false;
 
-        line-height = 1.2;
-
         editor = {
           program = "nvim";
           args = [ ];
@@ -76,6 +74,46 @@ in
           opacity = 0.9;
           blur = true;
           decorations = "disabled";
+        };
+
+        colors = {
+          # Regular colors
+          background = "#252623";
+          foreground = "#f1e9d2";
+
+          black = "#1c1e1b";
+          red = "#e75a7c";
+          green = "#8fb573";
+          yellow = "#dbb651";
+          blue = "#57a5e5";
+          magenta = "#aaaaff";
+          cyan = "#70c2be";
+          white = "#f1e9d2";
+
+          # Light colors
+          light-black = "#5b5e5a";
+          light-red = "#e75a7c";
+          light-green = "#8fb573";
+          light-yellow = "#dbb651";
+          light-blue = "#57a5e5";
+          light-magenta = "#aaaaff";
+          light-cyan = "#70c2be";
+          light-white = "#fff8f0";
+          light-foreground = "#f1e9d2";
+
+          # Cursor
+          cursor = "#fff8f0";
+          vi-cursor = "#fff8f0";
+
+          # Selection
+          selection-foreground = "#f1e9d2";
+          selection-background = "#5b5e5a";
+
+          # Search
+          search-match-background = "#70c2be";
+          search-match-foreground = "#f1e9d2";
+          search-focused-match-background = "#dbb651";
+          search-focused-match-foreground = "#f1e9d2";
         };
       };
     };
