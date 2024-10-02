@@ -65,12 +65,12 @@ in
         };
 
         character = {
-          success_symbol = "[ ](green)";
-          error_symbol = "[ ](red)";
-          vimcmd_symbol = "[ ](green)";
-          vimcmd_replace_one_symbol = "[ ](magenta)";
-          vimcmd_replace_symbol = "[ ](magenta)";
-          vimcmd_visual_symbol = "[ ](yellow)";
+          success_symbol = "[\\$](green)";
+          error_symbol = "[\\$](red)";
+          vimcmd_symbol = "[\\$](green)";
+          vimcmd_replace_one_symbol = "[\\$](magenta)";
+          vimcmd_replace_symbol = "[\\$](magenta)";
+          vimcmd_visual_symbol = "[\\$](yellow)";
         };
 
         directory = {
