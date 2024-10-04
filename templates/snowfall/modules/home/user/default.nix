@@ -1,9 +1,7 @@
 {
   config,
-  inputs,
   lib,
   pkgs,
-  system,
   namespace,
   ...
 }:
@@ -17,7 +15,6 @@ let
     getExe'
     ;
   inherit (lib.${namespace}) mkOpt enabled;
-  inherit (inputs) snowfall-flake;
 
   cfg = config.${namespace}.user;
 
@@ -87,6 +84,7 @@ in
         shellAliases = {
           # nix specific aliases
           cleanup = "sudo nix-collect-garbage --delete-older-than 3d && nix-collect-garbage -d";
+          optimise = "nix-store --optimise -vv";
           bloat = "nix path-info -Sh /run/current-system";
           curgen = "sudo nix-env --list-generations --profile /nix/var/nix/profiles/system";
           gc-check = ''nix-store --gc --print-roots | egrep -v "^(/nix/var|/run/w+-system|{memory|/proc)"'';
@@ -94,9 +92,7 @@ in
           run = "nix run";
           search = "nix search";
           shell = "nix shell";
-          nixre = "${lib.optionalString pkgs.stdenv.isLinux "sudo"} ${
-            getExe snowfall-flake.packages.${system}.flake
-          } switch";
+          nixre = "${lib.optionalString pkgs.stdenv.isLinux "sudo"} flake switch";
 
           gsed = "${getExe pkgs.gnused}";
 
@@ -109,12 +105,7 @@ in
 
           # Navigation shortcuts
           home = "cd ~";
-          dots = "cd $DOTS_DIR";
-          ".." = "cd ..";
-          "..." = "cd ../..";
-          "...." = "cd ../../..";
-          "....." = "cd ../../../..";
-          "......" = "cd ../../../../..";
+          conf = "cd ~/${namespace}";
 
           # Colorize output
           dir = "${getExe' pkgs.coreutils "dir"} --color=auto";
@@ -124,13 +115,15 @@ in
           vdir = "${getExe' pkgs.coreutils "vdir"} --color=auto";
 
           # Misc
-          clear = "clear && ${getExe config.programs.fastfetch.package}";
-          clr = "clear";
+          cls = "clear";
           pls = "sudo";
           usage = "${getExe' pkgs.coreutils "du"} -ah -d1 | sort -rn 2>/dev/null";
+          emacs = "${
+            if pkgs.stdenv.isDarwin then (getExe' pkgs.emacs29-pgtk "emacs") else (getExe' pkgs.emacs "emacs")
+          }";
 
           # Cryptography
-          genpass = "${getExe pkgs.openssl} rand - base64 20"; # Generate a random, 20-charactered password
+          genpass = "${getExe pkgs.openssl} rand - base64 20"; # Generate a random, 20-character password
           sha = "shasum -a 256"; # Test checksum
           sshperm = # bash
             ''${getExe' pkgs.findutils "find"} .ssh/ -type f -exec chmod 600 {} \;; ${getExe' pkgs.findutils "find"} .ssh/ -type d -exec chmod 700 {} \;; ${getExe' pkgs.findutils "find"} .ssh/ -type f -name "*.pub" -exec chmod 644 {} \;'';

@@ -22,15 +22,6 @@ in
 
   config = mkIf cfg.enable {
     home = {
-      file = {
-        # NOTE: Attempt to symlink more complex programs dotfiles config.
-        # ".config/nvim" = {
-        #   # source = mkOutOfStoreSymlink config.home.homeDirectory + "/" + namespace + "/.config/nvim";
-        #   source = config.home.homeDirectory + "/" + namespace + "/.config/nvim";
-        #   recursive = true;
-        # };
-      };
-
       sessionVariables = {
         EDITOR = mkIf cfg.default.editor "nvim";
         VISUAL = mkIf cfg.default.visual "nvim";
@@ -52,7 +43,7 @@ in
     xdg.configFile = {
       neovim = {
         enable = true;
-        source = mkOutOfStoreSymlink "${config.home.homeDirectory}/${namespace}/.config/nvim";
+        source = mkOutOfStoreSymlink "${config.home.homeDirectory}/${namespace}/configs/nvim";
         target = "nvim";
       };
     };
