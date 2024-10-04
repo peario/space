@@ -1,9 +1,7 @@
 {
   config,
-  inputs,
   lib,
   pkgs,
-  system,
   namespace,
   ...
 }:
@@ -18,7 +16,6 @@ let
     getExe'
     ;
   inherit (lib.${namespace}) mkOpt enabled;
-  inherit (inputs) snowfall-flake;
 
   cfg = config.${namespace}.user;
 
@@ -96,9 +93,8 @@ in
           run = "nix run";
           search = "nix search";
           shell = "nix shell";
-          nixre = "${lib.optionalString pkgs.stdenv.isLinux "sudo"} ${
-            getExe snowfall-flake.packages.${system}.flake
-          } switch";
+          nixre = "${lib.optionalString pkgs.stdenv.isLinux "sudo"} flake switch";
+
           reload = # bash
             ''
               echo "[1] 'nix-collect-garbage --delete-older-than 3d && nix-collect-garbage-d'"
@@ -122,6 +118,7 @@ in
 
           # Navigation shortcuts
           home = "cd ~";
+          conf = "cd ~/${namespace}";
 
           # Colorize output
           dir = "${getExe' pkgs.coreutils "dir"} --color=auto";
@@ -131,10 +128,15 @@ in
           vdir = "${getExe' pkgs.coreutils "vdir"} --color=auto";
 
           # Misc
-          # clear = "clear && ${getExe config.programs.fastfetch.package}";
           cls = "clear";
           pls = "sudo";
           usage = "${getExe' pkgs.coreutils "du"} -ah -d1 | sort -rn 2>/dev/null";
+          # If macOS, then use emacs29-pgtk (with patches), otherwise default emacs.
+          emacs =
+            mkIf (!config.${namespace}.programs.terminal.editors.emacs.daemon.enable)
+              "${
+                if pkgs.stdenv.isDarwin then (getExe' pkgs.emacs29-pgtk "emacs") else (getExe' pkgs.emacs "emacs")
+              }";
 
           # Cryptography
           genpass = "${getExe pkgs.openssl} rand - base64 20"; # Generate a random, 20-charactered password

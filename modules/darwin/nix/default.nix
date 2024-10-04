@@ -5,15 +5,24 @@
   ...
 }:
 let
+  inherit (lib) mkIf;
+  inherit (lib.${namespace}) enabled;
+
   cfg = config.${namespace}.nix;
 in
 {
   imports = [ (lib.snowfall.fs.get-file "modules/shared/nix/default.nix") ];
 
-  config = lib.mkIf cfg.enable {
+  config = mkIf cfg.enable {
     nix = {
+      # INFO: Build binaries or libraries for GNU/Linux systems
+      linux-builder = enabled;
+
       # Options that aren't supported through nix-darwin
       extraOptions = ''
+        # Run `softwareupdate --install-rosetta --agree-to-license` to uncomment line below
+        extra-platforms = x86_64-darwin aarch64-darwin
+
         # bail early on missing cache hits
         connect-timeout = 5
         keep-going = true

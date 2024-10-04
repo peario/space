@@ -125,6 +125,14 @@ in
             # helix = enabled;
             neovim = {
               enable = true;
+              # default = {
+              #   editor = true;
+              #   visual = true;
+              # };
+            };
+            emacs = {
+              enable = true;
+              daemon = enabled;
               default = {
                 editor = true;
                 visual = true;
