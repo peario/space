@@ -1,24 +1,55 @@
-Modules:
+---
+checks:
   - changed-files:
-      - any-glob-to-any-file: modules/**/*
-Library:
+      - any-glob-to-any-file: checks/**/*
+configs:
+  - changed-files:
+      - any-glob-to-any-file: configs/**/*
+containers:
+  - changed-files:
+      - any-glob-to-any-file: containers/**/*
+homes:
+  - changed-files:
+      - any-glob-to-any-file: homes/**/*
+library:
   - changed-files:
       - any-glob-to-any-file: lib/**/*
-Overlays:
+modules:
+  - changed-files:
+      - any-glob-to-any-file: modules/**/*
+modules/darwin:
+  - changed-files:
+      - any-glob-to-any-file: modules/darwin/**/*
+modules/home:
+  - changed-files:
+      - any-glob-to-any-file: modules/home/**/*
+modules/nixos:
+  - changed-files:
+      - any-glob-to-any-file: modules/nixos/**/*
+modules/shared:
+  - changed-files:
+      - any-glob-to-any-file: modules/shared/**/*
+overlays:
   - changed-files:
       - any-glob-to-any-file: overlays/**/*
-Packages:
+packages:
   - changed-files:
       - any-glob-to-any-file: packages/**/*
-Secrets:
+secrets:
   - changed-files:
       - any-glob-to-any-file: secrets/**/*
-Systems:
+shells:
+  - changed-files:
+      - any-glob-to-any-file: shells/**/*
+systems:
   - changed-files:
       - any-glob-to-any-file: systems/**/*
-Repository:
+templates:
+  - changed-files:
+      - any-glob-to-any-file: templates/**/*
+repository:
   - changed-files:
       - any-glob-to-any-file: "*"
-GitHub-Action:
+github-action:
   - changed-files:
       - any-glob-to-any-file: .github/workflows/*
