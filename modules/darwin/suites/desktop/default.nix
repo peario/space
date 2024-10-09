@@ -43,6 +43,7 @@ in
         "appcleaner"
         "bartender"
         "brave-browser"
+        "firefox@developer-edition"
         "gpg-suite"
         "launchcontrol"
         "monitorcontrol"

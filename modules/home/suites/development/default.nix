@@ -35,6 +35,7 @@ in
           postman
           silicon
           tree-sitter
+          ttyper
           vscode
         ]
         ++ lib.optionals pkgs.stdenv.isLinux [
