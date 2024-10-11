@@ -28,20 +28,15 @@ in
     enable = mkEnableOption "Firefox";
 
     extensions = mkOpt (listOf package) (with config.nur.repos.rycee.firefox-addons; [
-      angular-devtools
       auto-tab-discard
       bitwarden
-      # NOTE: annoying new page and permissions
-      # bypass-paywalls-clean
       darkreader
       firefox-color
-      firenvim
+      # NOTE: Do more research about this
+      # firenvim
       onepassword-password-manager
       react-devtools
       reduxdevtools
-      sidebery
-      sponsorblock
-      stylus
       ublock-origin
       user-agent-string-switcher
     ]) "Extensions to install";
@@ -56,7 +51,7 @@ in
       DisableFormHistory = true;
       DisablePocket = true;
       DisableTelemetry = true;
-      DisplayBookmarksToolbar = true;
+      DisplayBookmarksToolbar = false;
       DontCheckDefaultBrowser = true;
       FirefoxHome = {
         Pocket = false;
@@ -75,10 +70,11 @@ in
         "ddg@search.mozilla.org".installation_mode = "blocked";
         "wikipedia@search.mozilla.org".installation_mode = "blocked";
 
-        "frankerfacez@frankerfacez.com" = {
-          installation_mode = "force_installed";
-          install_url = "https://cdn.frankerfacez.com/script/frankerfacez-4.0-an+fx.xpi";
-        };
+        # TODO: Research what this is
+        # "frankerfacez@frankerfacez.com" = {
+        #   installation_mode = "force_installed";
+        #   install_url = "https://cdn.frankerfacez.com/script/frankerfacez-4.0-an+fx.xpi";
+        # };
       };
       Preferences = { };
     } "Policies to apply to firefox";
@@ -109,7 +105,7 @@ in
           definedAliases = [ "@np" ];
         };
 
-        "NixOs Options" = {
+        "NixOS Options" = {
           urls = [
             {
               template = "https://search.nixos.org/options";
@@ -134,6 +130,14 @@ in
           iconUpdateURL = "https://wiki.nixos.org/favicon.png";
           updateInterval = 24 * 60 * 60 * 1000;
           definedAliases = [ "@nw" ];
+        };
+
+        "MDN Web Docs" = {
+          urls = [ { template = "https://developer.mozilla.org/en-US/search?q={searchTerms}"; } ];
+          # TODO: Figure out either dynamic update of icon or fixed url to icon.
+          iconUpdateURL = "https://developer.mozilla.org/favicon-48x48.bc390275e955dacb2e65.png";
+          updateInterval = 24 * 60 * 60 * 1000;
+          definedAliases = [ "@mdn" ];
         };
       };
     } "Search configuration";
@@ -187,7 +191,8 @@ in
               "browser.newtabpage.activity-stream.showSponsored" = false;
               "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
               "browser.search.hiddenOneOffs" = "Google,Amazon.com,Bing,DuckDuckGo,eBay,Wikipedia (en)";
-              "browser.search.suggest.enabled" = false;
+              # TODO: Look at what kind of suggestions
+              # "browser.search.suggest.enabled" = false;
               "browser.sessionstore.warnOnQuit" = true;
               "browser.shell.checkDefaultBrowser" = false;
               "browser.ssb.enabled" = true;
@@ -204,20 +209,22 @@ in
               "extensions.formautofill.creditCards.enabled" = false;
               "general.autoScroll" = false;
               "general.smoothScroll.msdPhysics.enabled" = true;
-              "geo.enabled" = false;
-              "geo.provider.use_corelocation" = false;
-              "geo.provider.use_geoclue" = false;
-              "geo.provider.use_gpsd" = false;
+              # TODO: When shopping it's reasonable to keep this off, otherwise on. Not sure which is better as a "permanent" option.
+              # "geo.enabled" = false;
+              # "geo.provider.use_corelocation" = false;
+              # "geo.provider.use_geoclue" = false;
+              # "geo.provider.use_gpsd" = false;
               "gfx.font_rendering.directwrite.bold_simulation" = 2;
               "gfx.font_rendering.cleartype_params.enhanced_contrast" = 25;
               "gfx.font_rendering.cleartype_params.force_gdi_classic_for_families" = "";
-              "intl.accept_languages" = "en-US,en";
+              "intl.accept_languages" = "en-us,en,sv-se,sv";
               "media.eme.enabled" = true;
               "media.videocontrols.picture-in-picture.video-toggle.enabled" = false;
               "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
-              "font.name.monospace.x-western" = "MonaspiceKr Nerd Font";
-              "font.name.sans-serif.x-western" = "MonaspiceNe Nerd Font";
-              "font.name.serif.x-western" = "MonaspiceNe Nerd Font";
+              # NOTE: Use default font
+              # "font.name.monospace.x-western" = "MonaspiceKr Nerd Font";
+              # "font.name.sans-serif.x-western" = "MonaspiceNe Nerd Font";
+              # "font.name.serif.x-western" = "MonaspiceNe Nerd Font";
               "signon.autofillForms" = false;
               "xpinstall.signatures.required" = false;
             }
@@ -235,11 +242,11 @@ in
           ];
 
           # TODO: support alternative theme loading
-          userChrome =
-            builtins.readFile ./chrome/userChrome.css
-            + ''
-              ${cfg.userChrome}
-            '';
+          # userChrome =
+          #   builtins.readFile ./chrome/userChrome.css
+          #   + ''
+          #     ${cfg.userChrome}
+          #   '';
         };
       };
     };
