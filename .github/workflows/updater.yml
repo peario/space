@@ -10,7 +10,7 @@ name: Updater
 
 jobs:
   updater:
-    name: Update flake.lock
+    name: Update dependencies
     permissions:
       contents: write
       pull-requests: write
@@ -38,11 +38,18 @@ jobs:
       - name: Check flake
         uses: DeterminateSystems/flake-checker-action@main
 
-        # Update lazy-lock.json (for LazyVim, NeoVim)
-      - name: Update lazy-lock.json
-        run: type nvim >/dev/null 2>&1 && nvim --headless "+Lazy! sync" +qa
+      - name: Setup neovim
+        uses: MunifTanjim/setup-neovim-action@v1
+        with:
+          tag: stable
 
-        # Update flake.lock (for nix config)
+      # Update lazy-lock.json (for LazyVim, NeoVim)
+      - name: Update lazy-lock.json
+        shell: bash
+        run: |
+          type nvim >/dev/null 2>&1 && nvim --headless "+Lazy! sync" +qa
+
+      # Update flake.lock (for nix config)
       - name: Update flake.lock
         uses: DeterminateSystems/update-flake-lock@main
         with:
