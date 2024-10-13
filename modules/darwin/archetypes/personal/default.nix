@@ -20,6 +20,10 @@ in
       suites = {
         art = enabled;
         common = enabled;
+        games = {
+          enable = true;
+          steam = enabled;
+        };
         music = enabled;
         photo = enabled;
         social = enabled;
