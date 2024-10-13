@@ -1,9 +1,12 @@
+---
 name: Updater
 
-on:
-  workflow_dispatch: # Allow manual trigger
+"on":
+  # Allow manual trigger
+  workflow_dispatch:
   schedule:
-    - cron: "0 0 * * *" # Run every day at 00:00, see https://crontab.guru/#0_0_*_*_*
+    # Run every day at 00:00, see https://crontab.guru/#0_0_*_*_*
+    - cron: "0 0 * * *"
 
 jobs:
   update_flakes:
@@ -16,7 +19,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Install Nix
-        # uses: DeterminateSystems/nix-installer-action@main
         uses: cachix/install-nix-action@v30
         with:
           install_url: https://nixos.org/nix/install
@@ -24,8 +26,6 @@ jobs:
             auto-optimise-store = true
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
             experimental-features = nix-command flakes
-      # - name: Enable magic Nix cache
-      #   uses: DeterminateSystems/magic-nix-cache-action@main
       - uses: cachix/cachix-action@v15
         with:
           name: space
@@ -36,8 +36,10 @@ jobs:
       - name: Update flake.lock
         uses: DeterminateSystems/update-flake-lock@main
         with:
-          pr-title: "feat: update flake.lock" # Title of PR to be created
-          pr-labels: | # Labels to be set on the PR
+          # Title of PR to be created and commit title
+          pr-title: "feat: update flake.lock"
+
+          # Labels to be set on the PR
+          pr-labels: |
             dependencies
             automated
-          pr-assignees: peario

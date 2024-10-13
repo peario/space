@@ -17,18 +17,6 @@ library:
 modules:
   - changed-files:
       - any-glob-to-any-file: modules/**/*
-modules/darwin:
-  - changed-files:
-      - any-glob-to-any-file: modules/darwin/**/*
-modules/home:
-  - changed-files:
-      - any-glob-to-any-file: modules/home/**/*
-modules/nixos:
-  - changed-files:
-      - any-glob-to-any-file: modules/nixos/**/*
-modules/shared:
-  - changed-files:
-      - any-glob-to-any-file: modules/shared/**/*
 overlays:
   - changed-files:
       - any-glob-to-any-file: overlays/**/*
@@ -50,6 +38,6 @@ templates:
 repository:
   - changed-files:
       - any-glob-to-any-file: "*"
-github-action:
+github_actions:
   - changed-files:
       - any-glob-to-any-file: .github/workflows/*
