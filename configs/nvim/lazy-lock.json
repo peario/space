@@ -273,7 +273,7 @@
   },
   "octo.nvim": {
     "branch": "master",
-    "commit": "2d183c5daaf779e4fbfdce59f40a4340c5fd202e"
+    "commit": "c8f503b38a6bcef5b658678136f03d7483683a71"
   },
   "one-small-step-for-vimkind": {
     "branch": "main",
@@ -297,11 +297,11 @@
   },
   "render-markdown.nvim": {
     "branch": "main",
-    "commit": "0c6de743a8d3c61b87bc7db9ab97dcda12ca6818"
+    "commit": "e13ac2c05d2f081453db1451ec07fbd8be33ceec"
   },
   "rustaceanvim": {
     "branch": "master",
-    "commit": "d1f56672638508a7bc971cde31a29df4018579a9"
+    "commit": "1c47bdd38150d9ba636fd234128e232dc618e832"
   },
   "snippet-converter.nvim": {
     "branch": "main",
@@ -381,7 +381,7 @@
   },
   "vimtex": {
     "branch": "master",
-    "commit": "a4db0ee3271f58a08596ba853ea1e167f41ff9d6"
+    "commit": "521fe5351ff9b092ded88aed247b00431177ee25"
   },
   "which-key.nvim": {
     "branch": "main",

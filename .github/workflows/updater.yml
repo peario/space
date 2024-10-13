@@ -9,7 +9,7 @@ name: Updater
     - cron: "0 0 * * *"
 
 jobs:
-  update_flakes:
+  updater:
     name: Update flake.lock
     permissions:
       contents: write
@@ -18,6 +18,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Install Nix
         uses: cachix/install-nix-action@v30
         with:
@@ -26,13 +27,22 @@ jobs:
             auto-optimise-store = true
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
             experimental-features = nix-command flakes
-      - uses: cachix/cachix-action@v15
+
+      - name: Use Cachix for cache
+        uses: cachix/cachix-action@v15
         with:
           name: space
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
           extraPullNames: nix-community
+
       - name: Check flake
         uses: DeterminateSystems/flake-checker-action@main
+
+        # Update lazy-lock.json (for LazyVim, NeoVim)
+      - name: Update lazy-lock.json
+        run: type nvim >/dev/null 2>&1 && nvim --headless "+Lazy! sync" +qa
+
+        # Update flake.lock (for nix config)
       - name: Update flake.lock
         uses: DeterminateSystems/update-flake-lock@main
         with:
