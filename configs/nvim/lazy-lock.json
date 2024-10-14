@@ -105,7 +105,7 @@
   },
   "kulala.nvim": {
     "branch": "main",
-    "commit": "ee9a49ad838637cf8dd6db74aa22dd22f0d1b1a8"
+    "commit": "c7a2c793dca8509f9792e9d35d377de016c88a5b"
   },
   "lazy.nvim": {
     "branch": "main",
@@ -181,7 +181,7 @@
   },
   "neotest-golang": {
     "branch": "main",
-    "commit": "33077c3662866a04af5f03d1dc6042d929fef037"
+    "commit": "1837348e444743949de33249aefddf3a420bdeba"
   },
   "neotest-python": {
     "branch": "master",
@@ -297,7 +297,7 @@
   },
   "render-markdown.nvim": {
     "branch": "main",
-    "commit": "e13ac2c05d2f081453db1451ec07fbd8be33ceec"
+    "commit": "317df8708ce0238b142317a42ab55a66a2fa8650"
   },
   "rustaceanvim": {
     "branch": "master",
@@ -381,7 +381,7 @@
   },
   "vimtex": {
     "branch": "master",
-    "commit": "521fe5351ff9b092ded88aed247b00431177ee25"
+    "commit": "9a5ef1d4ac8e4e06071179ebe8121350fcb97861"
   },
   "which-key.nvim": {
     "branch": "main",

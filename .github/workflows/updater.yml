@@ -45,9 +45,8 @@ jobs:
 
       # Update lazy-lock.json (for LazyVim, NeoVim)
       - name: Update lazy-lock.json
-        shell: bash
         run: |
-          type nvim >/dev/null 2>&1 && nvim --headless "+Lazy! sync" +qa
+          nvim --headless -c "Lazy! sync" +qa
 
       # Update flake.lock (for nix config)
       - name: Update flake.lock
