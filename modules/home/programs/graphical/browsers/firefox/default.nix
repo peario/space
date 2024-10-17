@@ -125,19 +125,20 @@ in
           definedAliases = [ "@no" ];
         };
 
-        "NixOS Wiki" = {
-          urls = [ { template = "https://wiki.nixos.org/w/index.php?search={searchTerms}"; } ];
-          iconUpdateURL = "https://wiki.nixos.org/favicon.png";
-          updateInterval = 24 * 60 * 60 * 1000;
-          definedAliases = [ "@nw" ];
-        };
-
         "MDN Web Docs" = {
           urls = [ { template = "https://developer.mozilla.org/en-US/search?q={searchTerms}"; } ];
           # TODO: Figure out either dynamic update of icon or fixed url to icon.
           iconUpdateURL = "https://developer.mozilla.org/favicon-48x48.bc390275e955dacb2e65.png";
           updateInterval = 24 * 60 * 60 * 1000;
           definedAliases = [ "@mdn" ];
+        };
+
+        "GitHub" = {
+          urls = [ { template = "https://github.com/search?type=repositories&q={searchTerms}"; } ];
+          # TODO: Figure out either dynamic update of icon or fixed url to icon.
+          iconUpdateURL = "https://github.com/favicon.ico";
+          updateInterval = 24 * 60 * 60 * 1000;
+          definedAliases = [ "@git" ];
         };
       };
     } "Search configuration";
@@ -172,7 +173,7 @@ in
         };
 
         ${config.${namespace}.user.name} = {
-          inherit (cfg) extraConfig extensions search;
+          inherit (cfg) extraConfig extensions; # search;
           inherit (config.${namespace}.user) name;
 
           id = 1;

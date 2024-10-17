@@ -65,7 +65,8 @@ in
         default = with pkgs; [
           gnumake
           cmake
-          bear
+          # FIX: Broken package
+          # bear
           meson
           bison
           ninja

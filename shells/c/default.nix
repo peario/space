@@ -30,7 +30,8 @@ mkShell {
       # builder
       gnumake
       cmake
-      bear
+      # FIX: Broken package
+      # bear
       meson
       ninja
 
