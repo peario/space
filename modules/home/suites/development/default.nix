@@ -28,7 +28,9 @@ in
         with pkgs;
         [
           act
+          eureka-ideas # TODO: Create alias for this one. Used to store ideas for later viewing
           fzf
+          grex
           jqp
           neovide
           onefetch
@@ -36,6 +38,7 @@ in
           silicon
           tree-sitter
           ttyper
+          xh
         ]
         ++ lib.optionals pkgs.stdenv.isLinux [
           github-desktop
@@ -125,18 +128,19 @@ in
             # helix = enabled;
             neovim = {
               enable = true;
-              # default = {
-              #   editor = true;
-              #   visual = true;
-              # };
-            };
-            emacs = {
-              enable = true;
-              daemon = enabled;
               default = {
                 editor = true;
                 visual = true;
               };
+            };
+            # micro = enabled;
+            emacs = {
+              enable = true;
+              daemon = enabled;
+              # default = {
+              #   editor = true;
+              #   visual = true;
+              # };
             };
           };
 

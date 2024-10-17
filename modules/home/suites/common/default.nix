@@ -7,7 +7,7 @@
 }:
 let
   inherit (lib) mkIf mkEnableOption;
-  inherit (lib.${namespace}) enabled;
+  inherit (lib.${namespace}) enabled disabled;
 
   cfg = config.${namespace}.suites.common;
 in
@@ -17,10 +17,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.shellAliases = {
-      nixcfg = "nvim ~/${namespace}/flake.nix";
-    };
-
     home.packages =
       with pkgs;
       lib.optionals pkgs.stdenv.isLinux [
@@ -39,12 +35,22 @@ in
 
         terminal = {
           emulators = {
-            # alacritty = enabled;
+            alacritty = {
+              enable = false;
+              font = "Monaspace Argon Var";
+            };
             foot.enable = pkgs.stdenv.isLinux;
-            kitty = enabled;
-            rio = enabled;
-            # warp = enabled;
-            # wezterm = enabled;
+            kitty = {
+              enable = true;
+              font = "Monaspace Argon Var";
+              fontSize = 15;
+            };
+            rio = {
+              enable = false;
+              font = "Monaspace Argon Var";
+            };
+            warp = disabled;
+            wezterm = disabled;
           };
 
           shell = {
@@ -57,8 +63,6 @@ in
           tools = {
             bat = enabled;
             bottom = enabled;
-            # btop = enabled;
-            # colorls = enabled;
             cachix = enabled;
             comma = enabled;
             direnv = enabled;
@@ -75,7 +79,6 @@ in
               ];
             };
             starship = enabled;
-            # fastfetch = enabled;
             fzf = enabled;
             fup-repl = enabled;
             git = {
@@ -85,13 +88,10 @@ in
             };
             glxinfo.enable = pkgs.stdenv.isLinux;
             jq = enabled;
-            # lsd = enabled;
-            # oh-my-posh = enabled;
             ripgrep = enabled;
             tmux = enabled;
             # topgrade = enabled;
             # yazi = enabled;
-            # zellij = enabled;
             zoxide = enabled;
           };
         };

@@ -28,7 +28,13 @@ in
         inter
         lexend
 
-        # Main font
+        # Main fonts
+        cascadia-code
+        fira-code
+        fira-code-symbols
+        iosevka
+        jetbrains-mono
+        monaspace
         victor-mono
 
         # Emojis
@@ -38,9 +44,13 @@ in
         # Nerd Fonts
         (nerdfonts.override {
           fonts = [
-            "FiraCode"
-            "Monaspace"
-            "JetBrainsMono"
+            # INFO: Don't add symbols here by default. Better add standard font family and add as
+            # extra "NerdFontsSymbolsOnly".
+            # "CascadiaCode"
+            # "Iosevka"
+            # "FiraCode"
+            # "Monaspace"
+            # "JetBrainsMono"
             "NerdFontsSymbolsOnly"
           ];
         })

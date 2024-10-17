@@ -15,6 +15,7 @@ in
   options.${namespace}.programs.terminal.emulators.kitty = with types; {
     enable = mkEnableOption "kitty";
     font = mkOpt str "Victor Mono" "Font to use in kitty.";
+    fontSize = mkOpt int 14 "Font size to use in kitty.";
   };
 
   config = mkIf cfg.enable {
@@ -33,9 +34,17 @@ in
         {
           # Fonts
           font_family = cfg.font;
-          font_size = 14;
+          italic_font = "auto";
+          bold_font = "auto";
+          bold_italic_font = "auto";
+          font_size = cfg.fontSize;
+
+          adjust_line_height = 0;
+          adjust_column_width = 0;
+          # box_drawing_scale = "0.001, 1, 1.5, 2";
 
           # Cursor
+          cursor_blink_interval = -1;
           cursor_shape = "block";
           disable_ligatures = "cursor";
 
