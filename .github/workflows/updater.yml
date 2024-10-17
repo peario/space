@@ -9,8 +9,8 @@ name: Updater
     - cron: "0 0 * * *"
 
 jobs:
-  updater:
-    name: Update dependencies
+  update_flake:
+    name: Update Nix dependencies
     permissions:
       contents: write
       pull-requests: write
@@ -38,16 +38,6 @@ jobs:
       - name: Check flake
         uses: DeterminateSystems/flake-checker-action@main
 
-      - name: Setup neovim
-        uses: MunifTanjim/setup-neovim-action@v1
-        with:
-          tag: stable
-
-      # Update lazy-lock.json (for LazyVim, NeoVim)
-      - name: Update lazy-lock.json
-        run: |
-          nvim --headless -c "Lazy! sync" +qa
-
       # Update flake.lock (for nix config)
       - name: Update flake.lock
         uses: DeterminateSystems/update-flake-lock@main
@@ -59,3 +49,23 @@ jobs:
           pr-labels: |
             dependencies
             automated
+
+  # update_nvim:
+  #   name: Update Neovim dependencies
+  #   permissions:
+  #     contents: write
+  #     pull-requests: write
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
+  #
+  #     - name: Setup neovim
+  #       uses: MunifTanjim/setup-neovim-action@v1
+  #       with:
+  #         tag: stable
+  #
+  #     # Update lazy-lock.json (for LazyVim, NeoVim)
+  #     - name: Update lazy-lock.json
+  #       run: |
+  #         nvim --headless -c \"Lazy! sync\" +qa
