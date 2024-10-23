@@ -1,21 +1,38 @@
+local function extend_ft_to_each(luasnip, targets, fts)
+  for _, target in ipairs(targets) do
+    -- Essentially, search target-, then fts-, then all-snippets.
+    luasnip.filetype_extend(target, fts)
+  end
+end
+
 return {
   -- Enable SuperTab
   {
     "hrsh7th/nvim-cmp",
-    keys = {
-      { "<C-N>", nil, mode = { "n", "s", "i", "c" } },
-      { "<C-P>", nil, mode = { "n", "s", "i", "c" } },
-    },
     dependencies = {
       -- General
       "neovim/nvim-lspconfig",
       -- Snippets :: LuaSnip
       {
         "L3MON4D3/LuaSnip",
+        dependencies = {
+          { "rafamadriz/friendly-snippets" },
+          { "nvim-treesitter/nvim-treesitter" },
+        },
         opts = function()
+          -- Add extra snippets from `friendly-snippets`
+          local ok, ls = pcall(require, "luasnip")
+          if ok then
+            extend_ft_to_each(ls, { "javascriptreact", "typescriptreact" }, { "html" })
+          end
+
+          -- Custom; my own snippets
           require("luasnip.loaders.from_lua").load({
             paths = { vim.fn.stdpath("config") .. "/snippets" },
           })
+
+          -- Snippets from `friendly-snippets`, among other sources
+          require("luasnip.loaders.from_vscode").lazy_load()
 
           return {
             enable_autosnippets = true,
@@ -125,14 +142,14 @@ return {
           end,
         },
         mapping = vim.tbl_extend("force", opts.mapping, {
-          ["<C-n>"] = cmp.mapping(function()
+          ["<C-E>"] = cmp.mapping(function(fallback)
+            if not require("cmp").abort() then
+              fallback()
+            end
+          end, { "i", "s", "c" }),
+          ["<C-,>"] = cmp.mapping(function()
             if ls.choice_active() then
               ls.change_choice(1)
-            end
-          end, { "i", "s" }),
-          ["<C-p>"] = cmp.mapping(function()
-            if ls.choice_active() then
-              ls.change_choice(-1)
             end
           end, { "i", "s" }),
           ["<CR>"] = cmp.mapping.confirm({ select = true }),

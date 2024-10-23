@@ -87,11 +87,15 @@ return {
       local nls = require("null-ls")
       -- Inject tools via Neovim as LSP
       opts.sources = vim.list_extend(opts.sources or {}, {
-        nls.builtins.formatting.rustywind,
+        -- Code Actions
+        nls.builtins.code_actions.gomodifytags,
+        nls.builtins.code_actions.impl,
+        -- Formatting
         nls.builtins.formatting.cbfmt,
         nls.builtins.formatting.goimports_reviser,
         nls.builtins.formatting.golines,
         nls.builtins.formatting.nixpkgs_fmt,
+        nls.builtins.formatting.rustywind,
         nls.builtins.formatting.stylelint,
       })
     end,
@@ -104,8 +108,32 @@ return {
         enabled = true,
       },
       ---@type lspconfig.options
+      ---@diagnostic disable-next-line: missing-fields
       servers = {
+        ---@diagnostic disable-next-line: missing-fields
         cssls = {
+          filetypes_include = { "html" },
+        },
+
+        ---@diagnostic disable-next-line: missing-fields
+        html = {
+          filetypes_include = {
+            "javascript",
+            "javascriptreact",
+            "javascript.jsx",
+            "typescript",
+            "typescriptreact",
+            "typescript.tsx",
+          },
+        },
+
+        ---@diagnostic disable-next-line: missing-fields
+        ts_ls = {
+          filetypes_include = { "html" },
+        },
+
+        ---@diagnostic disable-next-line: missing-fields
+        vtsls = {
           filetypes_include = { "html" },
         },
       },

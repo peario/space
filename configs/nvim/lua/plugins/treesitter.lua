@@ -9,6 +9,9 @@ return {
         enable = true,
         disable = {},
       },
+      autotag = {
+        enable = true,
+      },
     },
     dependencies = {
       "RRethy/nvim-treesitter-endwise",
