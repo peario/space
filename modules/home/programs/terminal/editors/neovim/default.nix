@@ -29,7 +29,7 @@ in
 
       packages = [
         # It's version is v0.10.1 and set within `overlays/neovim/default.nix`
-        pkgs.neovim
+        pkgs.neovim-unwrapped
       ];
     };
 

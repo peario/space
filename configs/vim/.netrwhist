@@ -1,0 +1,12 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhistcnt =0
+let g:netrw_dirhist_0='/'
+let g:netrw_dirhist_9='/Users'
+let g:netrw_dirhist_8='/Users/peario'
+let g:netrw_dirhist_7='/Users/peario/space'
+let g:netrw_dirhist_6='/Users/peario/space/configs'
+let g:netrw_dirhist_5='/Users/peario/space/configs/vim'
+let g:netrw_dirhist_4='/Users/peario/space/configs/vim/swap'
+let g:netrw_dirhist_3='/Users/peario/space/configs/vim'
+let g:netrw_dirhist_2='/Users/peario/space/configs/vim/swap'
+let g:netrw_dirhist_1='/Users/peario/space/configs/vim'
