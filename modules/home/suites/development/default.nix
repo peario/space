@@ -125,23 +125,26 @@ in
 
         terminal = {
           editors = {
-            # helix = enabled;
-            neovim = {
-              enable = true;
-              default = {
-                editor = true;
-                visual = true;
-              };
-            };
-            # micro = enabled;
             emacs = {
               enable = true;
               daemon = enabled;
+
               # default = {
               #   editor = true;
               #   visual = true;
               # };
             };
+            # helix = enabled;
+            # micro = enabled;
+            neovim = {
+              enable = true;
+
+              default = {
+                editor = true;
+                visual = true;
+              };
+            };
+            # vim = enabled;
           };
 
           tools = {

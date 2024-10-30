@@ -115,12 +115,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Neovim source code (for overlay)
-    neovim-src = {
-      url = "github:neovim/neovim";
-      flake = false;
-    };
-
     # Secure boot
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.4.1";
