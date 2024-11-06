@@ -83,11 +83,13 @@ in
             buildTools = enabled;
             other = enabled;
           };
+          elixir = enabled;
           erlang = {
             enable = true;
 
             other = enabled;
           };
+          gleam = enabled;
           go = enabled;
           lua = {
             enable = true;
