@@ -149,16 +149,15 @@ in
 
   config = mkIf cfg.enable (mkMerge [
     {
-      home.packages =
-        [ cfg.package ]
-        ++ lib.optionals pkgs.stdenv.isLinux [ pkgs.jetbrains.goland ]
-        ++ lib.optionals pkgs.stdenv.isDarwin (
-          with pkgs;
-          [
-            darwin.apple_sdk.frameworks.CoreFoundation
-            darwin.apple_sdk.frameworks.CoreServices
-          ]
-        );
+      home.packages = [ cfg.package ] ++ lib.optionals pkgs.stdenv.isLinux [ pkgs.jetbrains.goland ];
+      # ++ lib.optional pkgs.stdenv.isDarwin pkgs.apple-sdk_15;
+      # ++ lib.optionals pkgs.stdenv.isDarwin (
+      #   with pkgs.darwin.apple_sdk.frameworks;
+      #   [
+      #     CoreFoundation
+      #     CoreServices
+      #   ]
+      # );
 
       home.file =
         let

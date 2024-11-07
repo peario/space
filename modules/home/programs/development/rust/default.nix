@@ -40,9 +40,14 @@ in
           wasm-pack
           wasm-tools
           wasm-bindgen-cli
-          rustPlatform.bindgenHook
-          trunk
+          # rustPlatform.bindgenHook
+          # FIX: Broken install
+          # trunk
           silicon
+          # zig
+
+          # Libraries / dependencies
+          # openssl.dev
         ];
         description = "Other packages for Rust.";
       };
@@ -63,20 +68,19 @@ in
         [ cfg.package ]
         ++ lists.optionals cfg.other.enable cfg.other.packages
         ++ lists.optionals pkgs.stdenv.isLinux (with pkgs; [ jetbrains.rust-rover ])
-        ++ lists.optionals pkgs.stdenv.isDarwin (
-          with pkgs.darwin.apple_sdk.frameworks;
-          [
-            # TODO(apple_sdk): Check if all of them are necessary. Maybe extract somewhere else and
-            # make "opt-in"?
-            # For macOS systems
-            Security
-            CoreServices
-            CoreFoundation
-            Foundation
-            AppKit
-            IOKit
-          ]
-        );
+        ++ lib.optional pkgs.stdenv.isDarwin pkgs.apple-sdk_15;
+      # ++ lists.optionals pkgs.stdenv.isDarwin (
+      #   with pkgs.darwin.apple_sdk.frameworks;
+      #   [
+      #     # TODO(apple_sdk): Check if all of them are necessary. Maybe extract somewhere else and
+      #     # make "opt-in"?
+      #     # For macOS systems
+      #     CoreServices
+      #     CoreFoundation
+      #     Foundation
+      #     AppKit
+      #   ]
+      # );
 
       sessionVariables = {
         CARGO_HOME = "${config.home.homeDirectory}/${cfg.cargoHome}";
@@ -90,8 +94,10 @@ in
           builtins.map (a: ''-L ${a}/lib'') [
             # add libraries here (e.g. pkgs.libvmi)
             pkgs.libiconv
+            pkgs.openssl.dev
           ]
         );
+        OPENSSL_DIR = mkIf pkgs.stdenv.isDarwin "/opt/homebrew/opt/openssl";
       };
     };
   };

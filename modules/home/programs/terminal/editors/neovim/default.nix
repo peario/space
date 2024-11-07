@@ -27,9 +27,11 @@ in
         VISUAL = mkIf cfg.default.visual "nvim";
       };
 
-      packages = [
+      packages = with pkgs; [
         # It's version is v0.10.1 and set within `overlays/neovim/default.nix`
-        pkgs.neovim-unwrapped
+        neovim-unwrapped
+        # FIX: Broken install
+        # neovide
       ];
     };
 

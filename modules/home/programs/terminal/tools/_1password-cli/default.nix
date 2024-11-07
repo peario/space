@@ -20,11 +20,12 @@ let
       vault = "Development"
     '';
 
-  cfg = config.${namespace}.programs.graphical.apps._1password;
+  cfg = config.${namespace}.programs.terminal.tools._1password-cli;
 in
 {
-  options.${namespace}.programs.graphical.apps._1password = {
-    enable = mkEnableOption "1Password";
+  options.${namespace}.programs.terminal.tools._1password-cli = {
+    enable = mkEnableOption "1Password CLI";
+    sshSocket.enable = mkEnableOption "ssh-agent socket for 1Password";
   };
 
   config = mkIf cfg.enable {
@@ -33,16 +34,12 @@ in
         Host *.github.com
           AddKeysToAgent yes
           ForwardAgent yes
-          IdentityAgent "${identityAgent}"
+          ${lib.optionalString cfg.sshSocket.enable "IdentityAgent ${identityAgent}"}
       '';
     };
 
-    xdg.configFile = mkIf pkgs.stdenv.isLinux {
-      ".config/1Password/ssh/agent.toml".text = _1PasswordAgentConf;
-    };
-
-    home.file = mkIf pkgs.stdenv.isDarwin {
-      ".config/1Password/ssh/agent.toml".text = _1PasswordAgentConf;
+    xdg.configFile = {
+      "1Password/ssh/agent.toml".text = _1PasswordAgentConf;
     };
   };
 }

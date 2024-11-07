@@ -52,8 +52,8 @@ in
     };
 
     icons = mkOption {
-      type = types.bool;
-      default = false;
+      type = types.str;
+      default = "false";
       description = ''
         Display icons next to file names ({option}`--icons` argument).
       '';
@@ -72,8 +72,18 @@ in
 
   config =
     let
+      icons =
+        if cfg.icons == "true" then
+          true
+        else if cfg.icons == "auto" then
+          "auto"
+        else
+          false;
       args = lib.escapeShellArgs (
-        optional cfg.icons "--icons" ++ optional cfg.git "--git" ++ cfg.extraOptions
+        optional (icons != "auto") "--icons"
+        ++ optional (icons == "auto") "--icons=\"auto\""
+        ++ optional cfg.git "--git"
+        ++ cfg.extraOptions
       );
 
       optionsAlias = optionalAttrs (args != "") { eza = "eza ${args}"; };

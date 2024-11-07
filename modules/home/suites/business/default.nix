@@ -28,16 +28,15 @@ in
         jrnl
         np
         # TODO: replace once https://github.com/NixOS/nixpkgs/pull/337868 is available
-        # teams-for-linux
-        pkgs.${namespace}.teams-for-linux
+        teams-for-linux
       ]
       ++ lib.optionals stdenv.isLinux [ libreoffice ];
 
     space = {
       programs = {
-        graphical = {
-          apps = {
-            _1password = enabled;
+        terminal = {
+          tools = {
+            _1password-cli = enabled;
           };
         };
       };

@@ -12,6 +12,7 @@
       systems = [
         "x86_64-linux"
         "x86_64-darwin"
+        "aarch64-linux"
         "aarch64-darwin"
       ];
       perSystem =
@@ -32,10 +33,7 @@
                 rustup
                 glib
               ]
-              ++ lib.optionals stdenv.isDarwin [
-                darwin.apple_sdk.frameworks.CoreFoundation
-                darwin.apple_sdk.frameworks.CoreServices
-              ];
+              ++ lib.optional pkgs.stdenv.isDarwin pkgs.apple-sdk_15;
           };
         };
     };

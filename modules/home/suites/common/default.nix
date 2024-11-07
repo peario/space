@@ -20,7 +20,8 @@ in
     home.packages =
       with pkgs;
       lib.optionals pkgs.stdenv.isLinux [
-        ncdu
+        # FIXME: broken nixpkgs
+        # ncdu
         toilet
         tree
       ];
@@ -71,7 +72,7 @@ in
               enableIntegrations = true;
 
               git = true;
-              icons = true;
+              icons = "auto";
 
               extraOptions = [
                 "--group-directories-first"

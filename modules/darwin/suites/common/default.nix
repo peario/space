@@ -25,7 +25,8 @@ in
     };
 
     environment = {
-      loginShell = pkgs.zsh;
+      # NOTE: DEPRECATED, keep in case of change
+      # loginShell = pkgs.zsh;
 
       systemPackages = with pkgs; [
         bash-completion
@@ -45,7 +46,8 @@ in
         pkgs.${namespace}.bunnyfetch
         mas
         moreutils
-        ncdu
+        # FIXME: broken nixpkgs
+        # ncdu
         pigz
         rename
         spice-gtk

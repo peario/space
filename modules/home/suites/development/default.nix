@@ -32,13 +32,13 @@ in
           fzf
           grex
           jqp
-          neovide
           onefetch
           postman
           silicon
           tree-sitter
           ttyper
           xh
+          libtool
         ]
         ++ lib.optionals pkgs.stdenv.isLinux [
           github-desktop
