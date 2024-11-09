@@ -177,6 +177,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    stylix = {
+      url = "github:danth/stylix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     waybar = {
       url = "github:Alexays/Waybar";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -226,13 +231,19 @@
         nix-index-database.hmModules.nix-index
         nur.hmModules.nur
         sops-nix.homeManagerModules.sops
+        stylix.homeManagerModules.stylix
       ];
 
       systems = {
         modules = {
+          darwin = with inputs; [
+            stylix.darwinModules.stylix
+          ];
+
           nixos = with inputs; [
             lanzaboote.nixosModules.lanzaboote
             sops-nix.nixosModules.sops
+            stylix.nixosModules.stylix
           ];
         };
       };
