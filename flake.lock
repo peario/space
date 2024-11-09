@@ -656,22 +656,6 @@
         "type": "github"
       }
     },
-    "gpg-base-conf": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1724021581,
-        "narHash": "sha256-f+ghj8qiljbHyIPZb6b2IAxxQU9GvbYpTdEEjSN9g8E=",
-        "owner": "drduh",
-        "repo": "config",
-        "rev": "eedb4ecf4bb2b5fd71bb27768f76da0f2e2605c8",
-        "type": "github"
-      },
-      "original": {
-        "owner": "drduh",
-        "repo": "config",
-        "type": "github"
-      }
-    },
     "harfbuzz": {
       "flake": false,
       "locked": {
@@ -1807,7 +1791,6 @@
         "darwin": "darwin",
         "deploy-rs": "deploy-rs",
         "disko": "disko",
-        "gpg-base-conf": "gpg-base-conf",
         "home-manager": "home-manager",
         "hypr-socket-watch": "hypr-socket-watch",
         "hypridle": "hypridle",
@@ -1833,8 +1816,7 @@
         "spicetify-nix": "spicetify-nix",
         "waybar": "waybar",
         "wezterm": "wezterm",
-        "xdg-desktop-portal-hyprland": "xdg-desktop-portal-hyprland",
-        "yubikey-guide": "yubikey-guide"
+        "xdg-desktop-portal-hyprland": "xdg-desktop-portal-hyprland"
       }
     },
     "rust-overlay": {
@@ -2354,22 +2336,6 @@
       "original": {
         "owner": "hyprwm",
         "repo": "xdg-desktop-portal-hyprland",
-        "type": "github"
-      }
-    },
-    "yubikey-guide": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1730658116,
-        "narHash": "sha256-gmsr6uBQE9IG1+uK7mtIGXqrHeVG+Wf7uHc2zC4aWcY=",
-        "owner": "drduh",
-        "repo": "YubiKey-Guide",
-        "rev": "dea24f4fa0b6a543788c51dde8dfaf77cf9cffca",
-        "type": "github"
-      },
-      "original": {
-        "owner": "drduh",
-        "repo": "YubiKey-Guide",
         "type": "github"
       }
     },

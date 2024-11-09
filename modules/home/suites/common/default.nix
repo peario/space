@@ -57,7 +57,7 @@ in
               enable = true;
               # TODO: Setup font family support
               # font = "Monaspace Neon Var";
-              fontSize = 15;
+              fontSize = "15";
             };
           };
 

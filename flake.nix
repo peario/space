@@ -27,12 +27,6 @@
       url = "github:serokell/deploy-rs";
     };
 
-    # GPG default configuration
-    gpg-base-conf = {
-      url = "github:drduh/config";
-      flake = false;
-    };
-
     # Home Manager (master)
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -192,12 +186,6 @@
     waybar = {
       url = "github:Alexays/Waybar";
       inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    # Yubikey Guide
-    yubikey-guide = {
-      url = "github:drduh/YubiKey-Guide";
-      flake = false;
     };
 
     wezterm = {
