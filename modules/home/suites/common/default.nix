@@ -36,22 +36,29 @@ in
 
         terminal = {
           emulators = {
-            alacritty = {
-              enable = false;
-              font = "Monaspace Argon Var";
-            };
+            # alacritty = {
+            #   enable = false;
+            #   font = "Monaspace Argon Var";
+            # };
             foot.enable = pkgs.stdenv.isLinux;
-            kitty = {
+            # FIX: Broken in macOS 15.1, can't be launched via Raycast, only finder and as command
+            # kitty = {
+            #   enable = false;
+            #   font = "Monaspace Neon Var";
+            #   fontSize = 15;
+            # };
+            # FIX: Broken, lower half of terminal doesn't function
+            # rio = {
+            #   enable = false;
+            #   font = "Monaspace Argon Var";
+            # };
+            warp = disabled;
+            wezterm = {
               enable = true;
-              font = "Monaspace Argon Var";
+              # TODO: Setup font family support
+              # font = "Monaspace Neon Var";
               fontSize = 15;
             };
-            rio = {
-              enable = false;
-              font = "Monaspace Argon Var";
-            };
-            warp = disabled;
-            wezterm = disabled;
           };
 
           shell = {

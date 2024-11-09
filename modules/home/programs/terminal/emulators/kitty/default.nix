@@ -20,6 +20,7 @@ in
 
   config = mkIf cfg.enable {
     programs.kitty = {
+      # enable = mkIf (!pkgs.stdenv.isDarwin) true;
       enable = true;
 
       extraConfig = ''
@@ -39,8 +40,8 @@ in
           bold_italic_font = "auto";
           font_size = cfg.fontSize;
 
-          adjust_line_height = 0;
-          adjust_column_width = 0;
+          # adjust_line_height = 0;
+          # adjust_column_width = 0;
           # box_drawing_scale = "0.001, 1, 1.5, 2";
 
           # Cursor

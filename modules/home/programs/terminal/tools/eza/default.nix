@@ -79,9 +79,10 @@ in
           "auto"
         else
           false;
+
       args = lib.escapeShellArgs (
         optional (icons != "auto") "--icons"
-        ++ optional (icons == "auto") "--icons=\"auto\""
+        ++ optional (icons == "auto") "--icons=auto"
         ++ optional cfg.git "--git"
         ++ cfg.extraOptions
       );

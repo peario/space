@@ -28,7 +28,7 @@ in
           $character
         '';
 
-        palette = "bamboo";
+        palette = "onenord";
         palettes = {
           bamboo = {
             black = "#3a3d37";

@@ -48,7 +48,7 @@ return function(opts)
       fallback = jit.os:find("Windows"),
     },
     install = {
-      colorscheme = { "bamboo", "tokyonight", "habamax" },
+      colorscheme = { "onenord", "tokyonight", "habamax" },
     },
     checker = { enabled = true },
     change_detection = { notify = false },

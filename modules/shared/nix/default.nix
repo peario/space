@@ -62,6 +62,8 @@ in
       {
         inherit (cfg) package;
 
+        distributedBuilds = true;
+
         gc = {
           automatic = true;
           options = "--delete-older-than 7d";
@@ -71,7 +73,7 @@ in
         # Making legacy nix commands consistent as well
         nixPath = lib.mapAttrsToList (key: _: "${key}=flake:${key}") config.nix.registry;
 
-        optimise.automatic = pkgs.stdenv.isLinux;
+        optimise.automatic = true;
 
         # pin the registry to avoid downloading and evaluating a new nixpkgs version every time
         # this will add each flake input as a registry to make nix3 commands consistent with your flake
@@ -79,7 +81,7 @@ in
 
         settings = {
           allowed-users = users;
-          auto-optimise-store = true;
+          auto-optimise-store = pkgs.stdenv.isLinux;
           builders-use-substitutes = true;
           # TODO: pipe-operators throws annoying warnings
           experimental-features = "nix-command flakes";

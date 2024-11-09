@@ -16,7 +16,7 @@ return {
   {
     "rmehri01/onenord.nvim",
     lazy = false,
-    enabled = false, -- if this is not present, it automatically sets colorscheme
+    enabled = true, -- if this is not present, it automatically sets colorscheme
     priority = 1000,
     opts = {
       styles = {
@@ -51,7 +51,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "bamboo",
+      colorscheme = "onenord",
     },
   },
 

@@ -8,15 +8,17 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf mkEnableOption types;
+  inherit (lib.${namespace}) mkOpt;
   # inherit (inputs) wezterm;
 
   cfg = config.${namespace}.programs.terminal.emulators.wezterm;
-  catppuccin = import (lib.snowfall.fs.get-file "modules/home/theme/catppuccin/colors.nix");
 in
 {
-  options.${namespace}.programs.terminal.emulators.wezterm = {
+  options.${namespace}.programs.terminal.emulators.wezterm = with types; {
     enable = mkEnableOption "WezTerm";
+    # font = mkOpt str "Victor Mono" "Font to use in kitty.";
+    fontSize = mkOpt str "15" "Font size to use in kitty.";
   };
 
   config = mkIf cfg.enable {
@@ -25,15 +27,14 @@ in
       enableBashIntegration = true;
       enableZshIntegration = true;
       package = pkgs.wezterm;
-      # package = wezterm.packages.${system}.default;
 
       extraConfig = # lua
         ''
           function scheme_for_appearance(appearance)
             if appearance:find "Dark" then
-              return "Catppuccin Macchiato"
+              return "Nord (Gogh)"
             else
-              return "Catppuccin Frappe"
+              return "Nord Light (Gogh)"
             end
           end
 
@@ -60,16 +61,16 @@ in
           wezterm.on(
             'format-tab-title',
             function(tab, tabs, panes, config, hover, max_width)
-              local edge_background = '${catppuccin.colors.mantle.hex}'
-              local background = '${catppuccin.colors.base.hex}'
-              local foreground = '${catppuccin.colors.text.hex}'
+              local edge_background = '#e5e9f0' -- mantle
+              local background = '#eceff4' -- base
+              local foreground = '#4c566a' -- text
 
               if tab.is_active then
-                background = '${catppuccin.colors.blue.hex}'
-                foreground = '${catppuccin.colors.crust.hex}'
+                background = '#5e81ac' -- blue
+                foreground = '#d8dee9' -- crust
               elseif hover then
-                background = '${catppuccin.colors.mauve.hex}'
-                foreground = '${catppuccin.colors.crust.hex}'
+                background = '#b48ead' -- mauve
+                foreground = '#d8dee9' -- crust
               end
 
               local edge_foreground = background
@@ -108,9 +109,9 @@ in
 
             -- Color scheme
             color_schemes = {
-              ["Catppuccin"] = custom,
+              ["Nord"] = custom,
             },
-            color_scheme = "Catppuccin",
+            color_scheme = "Nord",
 
             -- Cursor
             cursor_blink_ease_in = 'Constant',
@@ -119,12 +120,15 @@ in
             default_cursor_style = "SteadyBar",
 
             -- font
-            font_size = 13.0,
+            font_size = ${cfg.fontSize},
             font = wezterm.font_with_fallback {
-              { family = 'MonaspiceKr Nerd Font', weight = "Regular" },
-              { family = 'CaskaydiaCove Nerd Font', weight = "Regular" },
-              { family = "Symbols Nerd Font", weight = "Regular" },
-              { family = 'Noto Color Emoji', weight = "Regular" },
+              'Monaspace Neon Var', -- Monaspace Neon
+              'Symbols Nerd Font',
+              'Noto Color Emoji'
+
+              -- { family = 'Monaspace Neon Var', weight = "Regular" }, -- Monaspace Neon
+              -- { family = "Symbols Nerd Font", weight = "Regular" },
+              -- { family = 'Noto Color Emoji', weight = "Regular" },
             },
 
             keys = {
@@ -155,10 +159,12 @@ in
               saturation = 1.0,
               brightness = 0.8
             },
-            window_background_opacity = 0.85,
+            -- window_background_opacity = 0.85,
+            window_background_opacity = 1,
             window_close_confirmation = "NeverPrompt",
             window_decorations = "RESIZE",
-            window_padding = { left = 12, right = 12, top = 12, bottom = 12, },
+            -- window_padding = { left = 12, right = 12, top = 12, bottom = 12, },
+            window_padding = { left = 1, right = 1, top = 1, bottom = 1 },
           }
         '';
     };
