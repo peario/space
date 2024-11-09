@@ -17,14 +17,14 @@ in
   };
 
   config = mkIf cfg.enable {
-    home.packages = lib.optionals pkgs.stdenv.isLinux [
-      # pkgs.element-desktop
-    ];
+    # home.packages = lib.optionals pkgs.stdenv.isLinux [
+    #   # pkgs.element-desktop
+    # ];
 
     space = {
       programs = {
         graphical.apps = {
-          discord = enabled;
+          discord = mkIf pkgs.stdenv.isLinux enabled;
         };
 
         terminal.social = {

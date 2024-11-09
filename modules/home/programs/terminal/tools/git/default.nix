@@ -11,9 +11,10 @@ let
     mkEnableOption
     mkIf
     mkForce
+    getExe
     getExe'
     ;
-  inherit (lib.${namespace}) mkOpt mkBoolOpt enabled;
+  inherit (lib.${namespace}) mkOpt mkBoolOpt;
   inherit (config.${namespace}) user;
 
   cfg = config.${namespace}.programs.terminal.tools.git;
@@ -103,11 +104,34 @@ in
             gpgsign = true;
           };
 
+          merge = {
+            conflictstyle = "diff3";
+          };
+
+          diff = {
+            colorMoved = "default";
+          };
+
+          interactive = {
+            diffFilter = "${getExe pkgs.delta} --color-only";
+          };
+
           init = {
             defaultBranch = "master";
           };
 
-          lfs = enabled;
+          lfs = {
+            smudge = "${getExe pkgs.git-lfs} smudge - - %f";
+            process = "${getExe pkgs.git-lfs} filter-process";
+            clean = "${getExe pkgs.git-lfs} clean -- %f";
+            required = true;
+          };
+
+          core = {
+            pager = "${getExe pkgs.delta}";
+            editor = "${getExe pkgs.neovim-unwrapped}";
+            longpaths = true;
+          };
 
           pull = {
             rebase = true;

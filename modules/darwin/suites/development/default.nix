@@ -20,6 +20,9 @@ in
     homebrew = {
       casks = [
         "cutter"
+        "github" # GitHub Desktop
+        "gitkraken" # Git client; GUI
+        "gitkraken-cli" # Git client; CLI
         "jetbrains-toolbox"
         "visual-studio-code"
       ] ++ lists.optional cfg.docker.enable "docker" ++ lists.optional cfg.podman.enable "podman-desktop";

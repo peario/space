@@ -41,10 +41,12 @@ in
           libtool
         ]
         ++ lib.optionals pkgs.stdenv.isLinux [
-          github-desktop
           qtcreator
           jetbrains-toolbox
           jetbrains.datagrip
+          # NOTE: "github-desktop" and "gitkraken" might have perm issues with "git" and "git lfs"
+          github-desktop
+          gitkraken
         ]
         ++ lib.optionals cfg.nix.enable [
           nixpkgs-hammering

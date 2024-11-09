@@ -18,9 +18,11 @@ in
   config = mkIf cfg.enable {
     homebrew = {
       casks = [
-        "bitwarden"
+        # TODO: Gradual removal of bitwarden
+        # "bitwarden"
         "calibre"
         "microsoft-office"
+        "microsoft-teams"
         "obsidian"
       ];
 

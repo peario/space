@@ -139,6 +139,10 @@ in
               { key = 'S', mods = 'SHIFT|CTRL', action = act.PasteFrom 'PrimarySelection' },
             },
 
+            -- Allow for special characters, mainly {}[]\|@$
+            send_composed_key_when_left_alt_is_pressed = true,
+            send_composed_key_when_right_alt_is_pressed = true,
+
             -- Tab bar
             enable_tab_bar = true,
             hide_tab_bar_if_only_one_tab = true,

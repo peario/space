@@ -20,10 +20,11 @@ in
       with pkgs;
       lib.optionals pkgs.stdenv.isLinux [
         appimage-run
-        bitwarden
+        # TODO: Gradual removal of bitwarden to 1Password
+        # bitwarden
         bleachbit
         clac
-        dropbox
+        # dropbox
         dupeguru
         feh
         filelight
@@ -32,7 +33,6 @@ in
         input-leap
         kdePackages.ark
         kdePackages.gwenview
-        # pkgs.${namespace}.pocketcasts
         realvnc-vnc-viewer
         # FIXME: broken nixpkgs
         # rustdesk
