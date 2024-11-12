@@ -19,6 +19,7 @@ in
   config = mkIf cfg.enable {
     homebrew = {
       casks = [
+        "azure-data-studio"
         "cutter"
         "github" # GitHub Desktop
         "gitkraken" # Git client; GUI

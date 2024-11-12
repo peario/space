@@ -21,6 +21,7 @@ in
         # TODO: Gradual removal of bitwarden
         # "bitwarden"
         "calibre"
+        "libreoffice"
         "microsoft-office"
         "microsoft-teams"
         "obsidian"
