@@ -122,14 +122,10 @@
     };
 
     # NixPkgs (nixos-unstable)
-    nixpkgs = {
-      url = "github:nixos/nixpkgs/nixos-unstable";
-    };
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     # NixPkgs (nixpkgs-unstable)
-    nixpkgs-unstable = {
-      url = "github:nixos/nixpkgs/nixpkgs-unstable";
-    };
+    nixpkgs-unstable.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
     # Build system images and artifacts supported by nixos-generators.
     # nixos-generators = {
@@ -150,14 +146,10 @@
     };
 
     # Nix User Repository (master)
-    nur = {
-      url = "github:nix-community/NUR";
-    };
+    nur.url = "github:nix-community/NUR";
 
     # Pre commit hooks
-    pre-commit-hooks = {
-      url = "github:cachix/git-hooks.nix";
-    };
+    pre-commit-hooks.url = "github:cachix/git-hooks.nix";
 
     # Snowfall lib
     snowfall-lib = {
@@ -182,9 +174,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    wezterm = {
-      url = "github:wez/wezterm?dir=nix";
-    };
+    wezterm.url = "github:wez/wezterm?dir=nix";
   };
 
   outputs =
