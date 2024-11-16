@@ -28,17 +28,18 @@ in
         with pkgs;
         [
           act
+          bruno
           eureka-ideas # TODO: Create alias for this one. Used to store ideas for later viewing
           fzf
           grex
           jqp
+          libtool
           onefetch
           postman
           silicon
           tree-sitter
           ttyper
           xh
-          libtool
         ]
         ++ lib.optionals pkgs.stdenv.isLinux [
           qtcreator
