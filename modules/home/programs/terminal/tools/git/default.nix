@@ -3,6 +3,7 @@
   lib,
   pkgs,
   namespace,
+  osConfig,
   ...
 }:
 let
@@ -21,6 +22,17 @@ let
 
   aliases = import ./aliases.nix;
   ignores = import ./ignores.nix;
+
+  tokenExports =
+    lib.optionalString osConfig.${namespace}.security.sops.enable # Bash
+      ''
+        if [ -f ${config.sops.secrets."github/access-token".path} ]; then
+          GITHUB_TOKEN="$(cat ${config.sops.secrets."github/access-token".path})"
+          export GITHUB_TOKEN
+          GH_TOKEN="$(cat ${config.sops.secrets."github/access-token".path})"
+          export GH_TOKEN
+        fi
+      '';
 in
 {
   options.${namespace}.programs.terminal.tools.git = {
@@ -178,24 +190,10 @@ in
         };
       };
 
-      bash.initExtra = # bash
-        ''
-          export GITHUB_TOKEN="$(cat ${config.sops.secrets."github/access-token".path})"
-        '';
-      fish.shellInit = # fish
-        ''
-          export GITHUB_TOKEN="(cat ${config.sops.secrets."github/access-token".path})"
-        '';
-      zsh.initExtra = # bash
-        ''
-          export GITHUB_TOKEN="$(cat ${config.sops.secrets."github/access-token".path})"
-        '';
+      bash.initExtra = tokenExports;
+      fish.shellInit = tokenExports;
+      zsh.initExtra = tokenExports;
     };
-
-    # NOTE: I don't need any of those.
-    # home = {
-    #   inherit (aliases) shellAliases;
-    # };
 
     sops.secrets = {
       # TODO(sops): Figure out how to make access-token and ssh-key unique to each machine
