@@ -5,26 +5,20 @@
   ...
 }:
 let
-  inherit (lib) mkIf;
-  inherit (lib.${namespace}) enabled;
-
   cfg = config.${namespace}.nix;
 in
 {
   imports = [ (lib.snowfall.fs.get-file "modules/shared/nix/default.nix") ];
 
-  config = mkIf cfg.enable {
+  config = lib.mkIf cfg.enable {
     nix = {
-      # INFO: Build binaries or libraries for GNU/Linux systems
-      linux-builder = enabled;
-
       # Options that aren't supported through nix-darwin
       extraOptions = ''
         # Run `softwareupdate --install-rosetta --agree-to-license` to uncomment line below
         extra-platforms = x86_64-darwin aarch64-darwin
 
         # bail early on missing cache hits
-        connect-timeout = 5
+        connect-timeout = 10
         keep-going = true
       '';
 
@@ -35,6 +29,21 @@ in
         };
 
         user = config.${namespace}.user.name;
+      };
+
+      linux-builder = {
+        enable = true;
+        ephemeral = true;
+        maxJobs = 4;
+        speedFactor = 15;
+        supportedFeatures = [
+          "big-parallel"
+          "nixos-test"
+        ];
+        config = {
+          virtualisation.darwin-builder.memorySize = 4 * 1024;
+          virtualisation.cores = 4;
+        };
       };
 
       optimise = {

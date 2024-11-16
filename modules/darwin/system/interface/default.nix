@@ -113,17 +113,14 @@ in
           # TODO: implement small_blank
           # Need to update upstream to accept something like this
           # ''{tile-data={}; tile-type="small-spacer-tile";}''
-          "/Applications/Steam.app"
           "/Applications/Discord.app"
           "/Applications/Microsoft\ Teams.app"
           "/Applications/Microsoft\ Outlook.app"
           # TODO: implement small_blank
           "/Applications/Firefox Developer Edition.app"
           # TODO: implement small_blank
-          # "/Applications/Visual Studio Code.app"
-          # "/Applications/Visual Studio (Preview).app"
-          "/Applications/GitHub\ Desktop.app"
-          "/Applications/GitKraken.app"
+          "/Applications/Visual Studio Code.app"
+          "${pkgs.bruno}/Applications/Bruno.app"
           # TODO: implement small_blank
           "${pkgs.wezterm}/Applications/WezTerm.app"
         ];

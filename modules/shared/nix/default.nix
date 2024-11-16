@@ -84,7 +84,10 @@ in
           auto-optimise-store = pkgs.stdenv.isLinux;
           builders-use-substitutes = true;
           # TODO: pipe-operators throws annoying warnings
-          experimental-features = "nix-command flakes";
+          experimental-features = [
+            "nix-command "
+            " flakes"
+          ];
           flake-registry = "/etc/nix/registry.json";
           http-connections = 50;
           keep-derivations = true;
@@ -114,5 +117,10 @@ in
           use-xdg-base-directories = true;
         };
       };
+
+    programs.ssh.knownHosts = {
+      "aarch64.nixos.community".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMUTz5i9u5H2FHNAmZJyoJfIGyUm/HfGhfwnc142L3ds";
+      "darwin-build-box.nix-community.org".publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFz8FXSVEdf8FvDMfboxhB5VjSe7y2WgSa09q1L4t099";
+    };
   };
 }
