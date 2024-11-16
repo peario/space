@@ -46,6 +46,11 @@ in
     knownNetworkServices = [ "Wi-Fi" ];
   };
 
+  nix.settings = {
+    cores = 0; # Automatically try to use all available
+    max-jobs = "auto"; # Automatically try to use all available
+  };
+
   security.pam.enableSudoTouchIdAuth = true;
 
   users.users.${cfg.name} = {
