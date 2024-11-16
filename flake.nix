@@ -13,7 +13,7 @@
     # macOS Support (master)
     darwin = {
       url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     # Disk Management via Nix
@@ -23,15 +23,10 @@
     };
 
     # System Deployment
-    deploy-rs = {
-      url = "github:serokell/deploy-rs";
-    };
+    deploy-rs.url = "github:serokell/deploy-rs";
 
     # Home Manager (master)
-    home-manager = {
-      url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    home-manager.url = "github:nix-community/home-manager";
 
     ## ==> Hyprland
     aquamarine = {
