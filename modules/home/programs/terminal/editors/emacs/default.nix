@@ -67,8 +67,8 @@ in
       };
 
       file = {
-        ".emacs".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/${namespace}/configs/.emacs";
-        ".emacs.custom.el".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/${namespace}/configs/.emacs.custom.el";
+        ".emacs".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/${namespace}/.config/.emacs";
+        ".emacs.custom.el".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/${namespace}/.config/.emacs.custom.el";
       };
 
       sessionVariables =

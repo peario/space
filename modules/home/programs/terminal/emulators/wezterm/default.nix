@@ -122,13 +122,13 @@ in
             -- font
             font_size = ${cfg.fontSize},
             font = wezterm.font_with_fallback {
-              'Monaspace Neon Var', -- Monaspace Neon
-              'Symbols Nerd Font',
-              'Noto Color Emoji'
+              -- 'Monaspace Neon Var', -- Monaspace Neon
+              -- 'Symbols Nerd Font',
+              -- 'Noto Color Emoji'
 
-              -- { family = 'Monaspace Neon Var', weight = "Regular" }, -- Monaspace Neon
-              -- { family = "Symbols Nerd Font", weight = "Regular" },
-              -- { family = 'Noto Color Emoji', weight = "Regular" },
+              { family = 'Monaspace Neon Var', weight = "Regular" }, -- Monaspace Neon
+              { family = "Symbols Nerd Font", weight = "Regular" },
+              { family = 'Noto Color Emoji', weight = "Regular" },
             },
 
             keys = {

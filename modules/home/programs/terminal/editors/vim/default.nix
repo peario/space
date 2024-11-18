@@ -34,7 +34,7 @@ in
     xdg.configFile = {
       vim = {
         enable = true;
-        source = mkOutOfStoreSymlink "${config.home.homeDirectory}/${namespace}/configs/vim";
+        source = mkOutOfStoreSymlink "${config.home.homeDirectory}/${namespace}/.config/vim";
         target = "../.vim";
       };
     };

@@ -6,7 +6,8 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf mkEnableOption types;
+  inherit (lib.${namespace}) mkOpt;
   inherit (config.lib.file) mkOutOfStoreSymlink;
 
   cfg = config.${namespace}.programs.terminal.editors.neovim;
@@ -14,6 +15,10 @@ in
 {
   options.${namespace}.programs.terminal.editors.neovim = {
     enable = mkEnableOption "neovim";
+    config = mkOpt (types.enum [
+      "LazyVim"
+      "NvChad"
+    ]) "LazyVim" "Which config to use";
     default = {
       editor = mkEnableOption "Set neovim as the session ${lib.env}`EDITOR`.";
       visual = mkEnableOption "Set neovim as the session ${lib.env}`VISUAL`.";
@@ -28,7 +33,7 @@ in
       };
 
       packages = with pkgs; [
-        # It's version is v0.10.1 and set within `overlays/neovim/default.nix`
+        # It's version is v0.10.2 and set within `overlays/neovim/default.nix`
         neovim-unwrapped
         # FIX: Broken install
         # neovide
@@ -45,7 +50,7 @@ in
     xdg.configFile = {
       neovim = {
         enable = true;
-        source = mkOutOfStoreSymlink "${config.home.homeDirectory}/${namespace}/configs/nvim";
+        source = mkOutOfStoreSymlink "${config.home.homeDirectory}/${namespace}/.config/${cfg.config}";
         target = "nvim";
       };
     };

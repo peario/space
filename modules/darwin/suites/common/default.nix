@@ -31,7 +31,8 @@ in
       systemPackages = with pkgs; [
         bash-completion
         cask
-        duti
+        # FIX: broken package
+        # duti
         fasd
         gawk
         gnugrep

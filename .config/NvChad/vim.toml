@@ -1,0 +1,45 @@
+# These are globals for selene.toml
+[selene]
+base = "lua51"
+name = "vim"
+
+[vim]
+any = true
+
+[jit]
+any = true
+
+[assert]
+any = true
+
+[describe]
+any = true
+
+[it]
+any = true
+
+[before_each.args]
+any = true
+
+# Globals for LuaSnip
+
+[s]
+any = true
+
+[sn]
+any = true
+
+[t]
+any = true
+
+[i]
+any = true
+
+[c]
+any = true
+
+[f]
+any = true
+
+[fmta]
+any = true
