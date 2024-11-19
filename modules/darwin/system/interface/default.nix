@@ -54,6 +54,7 @@ in
         FXPreferredViewStyle = "Nlsv";
         QuitMenuItem = true;
         ShowStatusBar = false;
+        _FXSortFoldersFirst = true;
         _FXShowPosixPathInTitle = true;
       };
 

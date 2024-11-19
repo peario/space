@@ -32,14 +32,25 @@ in
         ''
           function scheme_for_appearance(appearance)
             if appearance:find "Dark" then
-              return "Nord (Gogh)"
+              return wezterm.plugin.require('https://github.com/neapsix/wezterm').main
             else
-              return "Nord Light (Gogh)"
+              return wezterm.plugin.require('https://github.com/neapsix/wezterm').dawn
             end
           end
 
+          function use_color(light, dark)
+            -- If match, then light, else dark
+            return wezterm.gui.get_appearance():find("Dark") and light or dark
+            -- if wezterm.gui.get_appearance():find("Dark") then
+            --   return light
+            -- else
+            --   return dark
+            -- end
+          end
+
           local act = wezterm.action
-          local custom = wezterm.color.get_builtin_schemes()[scheme_for_appearance(wezterm.gui.get_appearance())]
+          local theme = scheme_for_appearance(wezterm.gui.get_appearance())
+          -- local custom = wezterm.color.get_builtin_schemes()[scheme_for_appearance(wezterm.gui.get_appearance())]
           local SOLID_LEFT_ARROW = wezterm.nerdfonts.pl_right_hard_divider
           local SOLID_RIGHT_ARROW = wezterm.nerdfonts.pl_left_hard_divider
 
@@ -61,16 +72,16 @@ in
           wezterm.on(
             'format-tab-title',
             function(tab, tabs, panes, config, hover, max_width)
-              local edge_background = '#e5e9f0' -- mantle
-              local background = '#eceff4' -- base
-              local foreground = '#4c566a' -- text
+              local edge_background = use_color("#fffaf3", "#1f1d2e") -- mantle, surface
+              local background = use_color("#faf4ed", "#191724") -- base
+              local foreground = use_color("#575279", "#e0def4") -- text
 
               if tab.is_active then
-                background = '#5e81ac' -- blue
-                foreground = '#d8dee9' -- crust
+                background = use_color("#286983", "#31748f") -- blue, pine
+                foreground = use_color("#f2e9e1", "#26233a") -- crust, overlay
               elseif hover then
-                background = '#b48ead' -- mauve
-                foreground = '#d8dee9' -- crust
+                background = use_color("#907aa9", "#c4a7e7") -- mauve, iris
+                foreground = use_color("#f2e9e1", "#26233a") -- crust, overlay
               end
 
               local edge_foreground = background
@@ -108,10 +119,12 @@ in
             animation_fps = 1,
 
             -- Color scheme
-            color_schemes = {
-              ["Nord"] = custom,
-            },
-            color_scheme = "Nord",
+            -- color_schemes = {
+            --   ["Nord"] = custom,
+            -- },
+            -- color_scheme = "Nord",
+            colors = theme.colors(),
+            window_frame = theme.window_frame(), -- needed only if using fancy tab bar
 
             -- Cursor
             cursor_blink_ease_in = 'Constant',

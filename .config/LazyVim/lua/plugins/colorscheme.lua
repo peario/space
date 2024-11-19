@@ -3,6 +3,7 @@ return {
   {
     "catppuccin/nvim",
     lazy = false,
+    enabled = false, -- if this is not present, it automatically sets colorscheme
     priority = 1000,
     opts = {
       flavour = "auto",
@@ -16,7 +17,7 @@ return {
   {
     "rmehri01/onenord.nvim",
     lazy = false,
-    enabled = true, -- if this is not present, it automatically sets colorscheme
+    enabled = false, -- if this is not present, it automatically sets colorscheme
     priority = 1000,
     opts = {
       styles = {
@@ -39,19 +40,22 @@ return {
       require("everforest").setup(opts)
     end,
   },
-  -- Bamboo
+  -- Rose Pine
   {
-    "ribru17/bamboo.nvim",
+    "rose-pine/neovim",
+    name = "rose-pine",
     lazy = false,
     priority = 1000,
-    opts = {},
+    opts = {
+      variant = "auto",
+    },
   },
 
   -- Configure LazyVim to easier change theme
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "onenord",
+      colorscheme = "rose-pine",
     },
   },
 

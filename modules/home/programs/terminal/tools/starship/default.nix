@@ -28,7 +28,7 @@ in
           $character
         '';
 
-        palette = "onenord";
+        palette = "rose_pine_moon";
         palettes = {
           bamboo = {
             black = "#3a3d37";
@@ -61,6 +61,17 @@ in
             cyan = "#85c1dc";
             white = "#c6d0f5";
             orange = "#ef9f76";
+          };
+          rose_pine_moon = {
+            black = "#393552";
+            red = "#eb6f92";
+            green = "#3e8fb0";
+            yellow = "#f6c177";
+            blue = "#9ccfd8";
+            magenta = "#c4a7e7";
+            # cyan = ""; # Couldn't find one
+            white = "#e0def4";
+            orange = "#ea9a97";
           };
         };
 
