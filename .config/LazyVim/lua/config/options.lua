@@ -21,8 +21,8 @@ vim.opt.softtabstop = 2
 vim.opt.grepprg = "rg --vimgrep --smart-case --no-heading"
 
 -- Language
-vim.opt.spell = true
-vim.opt.spelllang = { "en", "sv" }
+vim.opt.spelllang = { "sv", "en_us" }
+-- vim.opt.spelllang = { "en", "sv" }
 
 -- Other
 vim.opt.backup = true

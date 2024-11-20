@@ -31,11 +31,12 @@ in
       extraConfig = # lua
         ''
           function scheme_for_appearance(appearance)
-            if appearance:find "Dark" then
-              return wezterm.plugin.require('https://github.com/neapsix/wezterm').main
-            else
-              return wezterm.plugin.require('https://github.com/neapsix/wezterm').dawn
-            end
+              return wezterm.plugin.require('https://github.com/neapsix/wezterm').moon
+            -- if appearance:find "Dark" then
+            --   return wezterm.plugin.require('https://github.com/neapsix/wezterm').main
+            -- else
+            --   return wezterm.plugin.require('https://github.com/neapsix/wezterm').dawn
+            -- end
           end
 
           function use_color(light, dark)
