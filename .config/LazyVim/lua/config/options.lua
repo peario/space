@@ -1,7 +1,8 @@
 -- Use Space for leader
 vim.g.mapleader = " "
 -- Use Shift + Backspace for local leader
-vim.g.maplocalleader = vim.api.nvim_replace_termcodes("<S-BS>", false, false, true)
+-- vim.g.maplocalleader = vim.api.nvim_replace_termcodes("<S-BS>", false, false, true)
+vim.g.maplocalleader = ","
 
 -- Providers
 vim.g.loaded_perl_provider = 0
@@ -20,6 +21,7 @@ vim.opt.softtabstop = 2
 vim.opt.grepprg = "rg --vimgrep --smart-case --no-heading"
 
 -- Language
+vim.opt.spell = true
 vim.opt.spelllang = { "en", "sv" }
 
 -- Other

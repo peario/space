@@ -57,7 +57,7 @@
   },
   "conform.nvim": {
     "branch": "master",
-    "commit": "10fd7c1a6f10915093b7fd93001cf8daf93028a4"
+    "commit": "f1125f8eace158255cf55772ce039aaf178a6b42"
   },
   "crates.nvim": {
     "branch": "main",
@@ -117,7 +117,7 @@
   },
   "luvit-meta": {
     "branch": "main",
-    "commit": "13e9813f7115dbacd6b0a99b349c9bd332c7d1f9"
+    "commit": "57d464c4acb5c2e66bd4145060f5dc9e96a7bbb7"
   },
   "markdown-preview.nvim": {
     "branch": "master",
@@ -161,7 +161,7 @@
   },
   "neoconf.nvim": {
     "branch": "main",
-    "commit": "03189359744e95f8cd150f75ef937b2b7d2ebc32"
+    "commit": "6cbef40da67b18990670a90136773b55ce96f65e"
   },
   "neogen": {
     "branch": "main",
@@ -285,7 +285,7 @@
   },
   "refactoring.nvim": {
     "branch": "master",
-    "commit": "53ed6854e0bba64d467c58e87084dcf8b1c22d36"
+    "commit": "2db6d378e873de31d18ade549c2edba64ff1c2e3"
   },
   "render-markdown.nvim": {
     "branch": "main",
