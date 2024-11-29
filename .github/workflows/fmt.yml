@@ -11,7 +11,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Install Nix
-        # uses: DeterminateSystems/nix-installer-action@main
         uses: cachix/install-nix-action@v30
         with:
           install_url: https://nixos.org/nix/install
@@ -31,7 +30,6 @@ jobs:
           repo: sharkdp/fd
           tag: v10.2.0
           name: fd
-      # - run: nix run nixpkgs#nixfmt-rfc-style -- .
       - name: Run formatter
         run: |
           fd -H -tf -e nix -E ".config/emacs.doom" \

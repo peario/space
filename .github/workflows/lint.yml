@@ -4,7 +4,7 @@ name: Linter
 "on": [push, workflow_dispatch]
 
 jobs:
-  statix:
+  linting:
     name: Lint code
     runs-on: ubuntu-latest
     steps:
@@ -18,11 +18,19 @@ jobs:
             auto-optimise-store = true
             access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
             experimental-features = nix-command flakes
-      - name: Set up Cachix for lint cache
+      - name: Set up Cachix for linting cache
         uses: cachix/cachix-action@v15
         with:
           name: space
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
           extraPullNames: nix-community
-      - name: Lint nix code
-        uses: jocelynthode/statix-action@master
+      - name: Make sure `fd` is installed
+        uses: sigoden/install-binary@v1
+        with:
+          repo: sharkdp/fd
+          tag: v10.2.0
+          name: fd
+      - name: Run linter
+        run: |
+          fd -H -tf -e nix -E ".config/emacs.doom" \
+            -X nix run nixpkgs#statix -- check {}
