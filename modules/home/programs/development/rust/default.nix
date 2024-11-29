@@ -31,23 +31,23 @@ in
       packages = mkOption {
         type = with types; listOf package;
         default = with pkgs; [
-          rustycli
-          systemfd
+          hyperfine # benchmarking
           cargo-watch
           cargo-bloat
           cargo-expand
           cargo-sort
+          rustycli
+          # rustPlatform.bindgenHook
+          silicon # screenshot tool
+          skim # faster fzf
+          systemfd
+          # FIX: Broken install
+          # trunk
           wasm-pack
           wasm-tools
           wasm-bindgen-cli
-          # rustPlatform.bindgenHook
           # FIX: Broken install
-          # trunk
-          silicon
           # zig
-
-          # Libraries / dependencies
-          # openssl.dev
         ];
         description = "Other packages for Rust.";
       };

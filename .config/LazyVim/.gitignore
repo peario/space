@@ -1,3 +1,5 @@
+# ==> Original .gitignore <==
+
 *.log
 /.repro
 /.tests
@@ -7,3 +9,36 @@
 foo.*
 node_modules
 tt.*
+
+# ==> From project root <==
+
+# Dotfiles project
+**/*.tmp*
+setup.conf
+install.log
+
+# Folder view configuration files
+.DS_Store
+Desktop.ini
+
+# Thumbnail cache files
+._*
+Thumbs.db
+
+# Files that might appear on external disks
+.Spotlight-V100
+.Trashes
+
+# Application specific files
+venv
+node_modules
+
+.idea*
+
+# ==> Nix-related <==
+
+**/.direnv/*
+result
+.ccls-cache
+flake
+.pre-commit-config.yaml

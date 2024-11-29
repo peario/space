@@ -28,7 +28,8 @@
 #   nix-shell --argstr emacs ci-29.1   # 29.1    (barebones; no GUI)
 #   nix-shell --argstr emacs ci-HEAD   # 30.0.50 (barebones; no GUI)
 
-{ pkgs ? import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/22.05.tar.gz") {
+{
+  pkgs ? import (fetchTarball "https://github.com/NixOS/nixpkgs/archive/22.05.tar.gz") {
     overlays = [
       # emacs-overlay: provides EmacsGit, EmacsNativeComp, and EmacsPgtkNativeComp
       (import (
@@ -41,7 +42,10 @@
         inherit
           (import
             (fetchTarball "https://github.com/NixOS/nixpkgs/archive/11264a390b197b80edeffac6f20e582f3ea318bd.tar.gz")
-            { }) emacs26;
+            { }
+          )
+          emacs26
+          ;
         emacs27-1 =
           (import
             (fetchTarball "https://github.com/NixOS/nixpkgs/archive/11264a390b197b80edeffac6f20e582f3ea318bd.tar.gz")
@@ -64,12 +68,11 @@
           ).emacs29;
       })
     ];
-  }
-, emacs ? "29.1"
-, emacsdir ? "$(pwd)"
-, doomdir ? ""
-, doomlocaldir ? "$EMACSDIR/.local"
-,
+  },
+  emacs ? "29.1",
+  emacsdir ? "$(pwd)",
+  doomdir ? "",
+  doomlocaldir ? "$EMACSDIR/.local",
 }:
 
 let
