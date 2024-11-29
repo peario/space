@@ -31,6 +31,7 @@ in
       packages = mkOption {
         type = with types; listOf package;
         default = with pkgs; [
+          dotenv-linter # required by nvim plugin and diagnostics
           hyperfine # benchmarking
           cargo-watch
           cargo-bloat

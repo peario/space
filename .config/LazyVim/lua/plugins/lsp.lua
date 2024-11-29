@@ -36,6 +36,7 @@ return {
   -- Formatters
   {
     "stevearc/conform.nvim",
+    ---@diagnostic disable-next-line: undefined-doc-name
     ---@type conform.setupOpts
     opts = {
       formatters_by_ft = {
@@ -83,6 +84,15 @@ return {
   -- Neovim as LSP
   {
     "nvimtools/none-ls.nvim",
+    dependencies = {
+      -- Just to make sure "ts-node-action" is available.
+      -- It's required (not sure if direct or indirect) by `builtins.code_actions.ts_node_action`
+      {
+        "ckolkey/ts-node-action",
+        dependencies = { "nvim-treesitter" },
+        opts = {},
+      },
+    },
     opts = function(_, opts)
       local h = require("null-ls.helpers")
       local nls = require("null-ls")
@@ -98,8 +108,14 @@ return {
         -- Diagnostics
         nls.builtins.diagnostics.actionlint,
         nls.builtins.diagnostics.commitlint,
-        nls.builtins.diagnostics.dotenv_linter,
+        nls.builtins.diagnostics.dotenv_linter.with({
+          runtime_condition = h.cache.by_bufnr(function(params)
+            -- Include files containing ".env" but explicitly exclude ".envrc"
+            return params.bufname:find("%.env") ~= nil and not params.bufname:find("%.envrc$")
+          end),
+        }),
         nls.builtins.diagnostics.revive.with({
+          -- Make sure that revive checks for config files in project and use if found.
           args = h.cache.by_bufnr(function(params)
             local default_args = { "-formatter", "json", "./..." }
 
