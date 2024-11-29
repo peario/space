@@ -33,4 +33,4 @@ jobs:
       - name: Run linter
         run: |
           fd -H -tf -e nix -E ".config/emacs.doom" \
-            -X nix run nixpkgs#statix -- check {}
+            -x nix run nixpkgs#statix -- check {}
