@@ -25,14 +25,14 @@ jobs:
           name: space
           authToken: "${{ secrets.CACHIX_AUTH_TOKEN }}"
           extraPullNames: nix-community
-      # Make sure `fd` is installed
-      - uses: sigoden/install-binary@v1
+      - name: Make sure `fd` is installed
+        uses: sigoden/install-binary@v1
         with:
           repo: sharkdp/fd
           tag: v10.2.0
           name: fd
       # - run: nix run nixpkgs#nixfmt-rfc-style -- .
-      - run: |
-          fd -H -tf -e nix
-            \ -E ".config/emacs.doom"
-            \ -X nix run nixpkgs#nixfmt-rfc-style -- {}
+      - name: Run formatter
+        run: |
+          fd -H -tf -e nix -E ".config/emacs.doom" \
+            -X nix run nixpkgs#nixfmt-rfc-style -- {}
