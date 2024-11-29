@@ -1,5 +1,2 @@
 [diff "sopsdiffer"]
   textconv = "sops -d"
-
-[commit]
-  template = ./.gitmessage

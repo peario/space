@@ -93,7 +93,13 @@ in
             other = enabled;
           };
           gleam = enabled;
-          go = enabled;
+          go = {
+            enable = true;
+
+            formatter = enabled;
+            linter = enabled;
+            other = enabled;
+          };
           latex = {
             enable = true;
 
@@ -110,9 +116,13 @@ in
             LSP = enabled;
             other = enabled;
             npmPackages = [
+              "@commitlint/config-conventional" # required by nvim, diagnostics
+              "@commitlint/cli" # required by nvim, diagnostics
+              "commitlint-format-json" # required by nvim, diagnostics
               "lite-server"
-              "rimraf"
               "nodemon"
+              "rimraf"
+              "stylelint" # required by nvim, formatting
             ];
           };
           python = {

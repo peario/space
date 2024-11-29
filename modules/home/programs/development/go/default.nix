@@ -42,9 +42,11 @@ in
       packages = mkOption {
         type = with types; listOf (uniq package);
         # NOTE(golang): goimports is included in gotools, maybe extract it into it's own package?
+        # NOTE: Consider if "gotools" is needed since goimports-reviser is used instead?
         default = with pkgs; [
-          gotools
           gofumpt
+          goimports-reviser # required by nvim, formatter
+          gotools
         ];
         description = "Packages for Go formatting.";
       };
@@ -68,19 +70,21 @@ in
       };
     };
 
-    others = {
+    other = {
       enable = mkEnableOption "Other tooling for Go";
       packages = mkOption {
         type = with types; listOf (uniq package);
         default = with pkgs; [
-          iferr
-          gomodifytags
-          impl
-          golines
+          actionlint # required by nvim, diagnostics
+          golines # required by nvim, formatting
+          gomodifytags # required by nvim, code actions
           gotests
           gotestsum
+          iferr
+          impl # required by nvim, code actions
           json-to-struct
           nilaway
+          trivy # required by nvim, diagnostics
         ];
         description = "Other packages for Go.";
       };

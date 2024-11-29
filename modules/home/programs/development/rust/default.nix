@@ -31,13 +31,15 @@ in
       packages = mkOption {
         type = with types; listOf package;
         default = with pkgs; [
-          dotenv-linter # required by nvim plugin and diagnostics
+          cbfmt # required by nvim, formatting
+          dotenv-linter # required by nvim, diagnostics
           hyperfine # benchmarking
           cargo-watch
           cargo-bloat
           cargo-expand
           cargo-sort
           rustycli
+          rustywind # required by nvim, formatting
           # rustPlatform.bindgenHook
           silicon # screenshot tool
           skim # faster fzf

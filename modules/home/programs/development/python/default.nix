@@ -50,6 +50,7 @@ in
             pipenv
             pipreqs
             poetry
+            sqlfluff # required by nvim, diagnostics
           ]
           ++ (with pyPkgs; [
             distlib

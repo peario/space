@@ -107,7 +107,36 @@ return {
         nls.builtins.completion.luasnip,
         -- Diagnostics
         nls.builtins.diagnostics.actionlint,
-        nls.builtins.diagnostics.commitlint,
+        nls.builtins.diagnostics.commitlint.with({
+          runtime_condition = h.cache.by_bufnr(function(params)
+            local conf_file_names = { ".commitlintrc", "commitlint.config" }
+            local conf_file_exts = { "js", "cjs", "mjs", "ts", "cts" }
+            local conf_file_exts_extra = { "json", "yaml", "yml" }
+
+            -- Array with all valid filenames and filetypes for commitlint
+            local conf_files = { ".commitlintrc" }
+
+            -- Insert those valid config filetypes and filenames into the array above
+            for _, exts_extra in ipairs(conf_file_exts_extra) do
+              table.insert(conf_files, ".commitlintrc." .. exts_extra)
+            end
+            for _, file in ipairs(conf_file_names) do
+              for _, exts in ipairs(conf_file_exts) do
+                table.insert(conf_files, file .. "." .. exts)
+              end
+            end
+
+            -- Store first match of valid fileformats if found.
+            local config_file_paths = vim.fs.find(conf_files, {
+              path = params.bufname,
+              upward = true,
+              stop = vim.fs.dirname(params.root),
+            })[1]
+
+            -- If no config has been found, don't run
+            return config_file_paths and true or false
+          end),
+        }),
         nls.builtins.diagnostics.dotenv_linter.with({
           runtime_condition = h.cache.by_bufnr(function(params)
             -- Include files containing ".env" but explicitly exclude ".envrc"
@@ -141,7 +170,12 @@ return {
         nls.builtins.formatting.cbfmt,
         nls.builtins.formatting.goimports_reviser,
         nls.builtins.formatting.golines,
-        nls.builtins.formatting.nixpkgs_fmt,
+        nls.builtins.formatting.nixfmt.with({
+          generator_opts = {
+            command = "nix run nixpkgs#nixfmt-rfc-style -- .",
+            to_stdin = true,
+          },
+        }),
         nls.builtins.formatting.rustywind,
         nls.builtins.formatting.stylelint,
         -- Hover
