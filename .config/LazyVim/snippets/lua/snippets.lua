@@ -64,6 +64,82 @@ return {
     )
   ),
   s(
+    { trig = "snip", name = "[Snip] Base", dscr = "Create a new snippet" },
+    fmta(
+      [[
+  s({ trig = "<>", name = "<>"<> },
+    <>
+  ),
+  ]],
+      {
+        i(1, "trigger"),
+        i(2, "name"),
+        i(3),
+        i(4),
+      }
+    )
+  ),
+  s({ trig = "auto", name = "[Snip] Autosnippet" }, t('snippetType = "autosnippet"')),
+  s(
+    { trig = "word", name = "[Snip] Word Trigger" },
+    fmta([[wordTrig = <>]], {
+      c(1, {
+        t("true"),
+        t("false"),
+      }),
+    })
+  ),
+  s(
+    { trig = "regex", name = "[Snip] Regex Trigger" },
+    fmta([[regTrig = <>]], {
+      c(1, {
+        t("true"),
+        t("false"),
+      }),
+    })
+  ),
+  s(
+    { trig = "cond", name = "[Snip] Condition" },
+    fmta([[condition = <>]], {
+      c(1, {
+        sn(nil, {
+          i(1, "conds_expand"),
+          t(".line_begin"),
+        }),
+        i(nil, "is_math"),
+      }),
+    })
+  ),
+  s({ trig = "ism", name = "[Snip] Math condition" }, t("condition = is_math")),
+  s({ trig = "prio", name = "[Snip] Priority" }, fmta([[priority = <>]], { i(1, "1000") })),
+  s({ trig = "st", name = "[Snip] Text" }, fmta([[t(<>)<>]], { i(1), i(0) })),
+  s({ trig = "si", name = "[Snip] Insert" }, fmta([[i(<>)<>]], { i(1), i(0) })),
+  s(
+    { trig = "fmta", name = "[Snip] Format" },
+    c(1, {
+      fmta(
+        [=[
+fmta([[<>]], {<>})<>
+      ]=],
+        {
+          i(1),
+          i(2),
+          i(0),
+        }
+      ),
+      fmta(
+        [=[
+fmt([[<>]], {<>})<>
+      ]=],
+        {
+          i(1),
+          i(2),
+          i(0),
+        }
+      ),
+    })
+  ),
+  s(
     { trig = "snipp", name = "[Snip] Postfix", dscr = "Create a postfix snippet" },
     fmta(
       [[
@@ -113,6 +189,7 @@ return {
       local matches = require("luasnip.extras.postfix").matches
       local conds = require("luasnip.extras.conditions")
       local conds_expand = require("luasnip.extras.conditions.expand")
+      local make_condition = require("luasnip.extras.conditions").make_condition
       local events = require("luasnip.util.events")
       local types = require("luasnip.util.types")
 

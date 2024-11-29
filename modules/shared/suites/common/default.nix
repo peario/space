@@ -19,7 +19,9 @@ in
     environment.systemPackages =
       with pkgs;
       [
-        coreutils
+        coreutils-prefixed
+        # NOTE: Doom Emacs wants coreutils-prefixed
+        # coreutils
         fd
         file
         findutils

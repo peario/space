@@ -2,13 +2,9 @@ return {
   -- Filetype plugin and all-arounder
   {
     "lervag/vimtex",
-    ft = { "tex", "plaintex", "bibtex" },
+    ft = { "latex", "plaintex", "bibtex" },
     lazy = false, -- lazy-loading will disable inverse search
-    config = function()
-      -- resolve client-server for vimtex <-> nvim.
-      --  requires pynvim (python3 provider)
-      vim.g.vimtex_compiler_progname = "nvr"
-
+    init = function()
       -- Move auxiliary files to subfolder to reduce clutter
       vim.g.vimtex_compiler_latexmk = {
         aux_dir = "./auxiliary",
@@ -26,7 +22,7 @@ return {
       }
 
       -- setup a pdf-viewer, will later be switched to a terminal pdf-viewer
-      vim.g.vimtex_view_method = "sioyek"
+      vim.g.vimtex_view_method = vim.fn.executable("zathura") == 1 and "zathura" or "sioyek"
       vim.g.vimtex_view_sioyek_options = "--reuse-window"
 
       vim.g.vimtex_mappings_disable = { ["n"] = { "K" } } -- disable `K` as it conflicts with LSP hover
@@ -34,9 +30,9 @@ return {
       vim.g.vimtex_quickfix_mode = 0 -- Don't automatically show/hide quickfix window on save/build
     end,
     keys = {
-      { "<localLeader>l", "", desc = "+vimtext" },
+      { "<localleader>l", "", desc = "+vimtext" },
       {
-        "<C-c>",
+        "<C-i>",
         function()
           local success, vimtex = pcall(vim.api.nvim_buf_get_var, 0, "vimtex")
 
@@ -77,7 +73,7 @@ return {
         mode = "i",
       },
       {
-        "<localLeader>e",
+        "<localleader>e",
         function()
           local success, vimtex = pcall(vim.api.nvim_buf_get_var, 0, "vimtex")
 
@@ -121,19 +117,19 @@ return {
             modifyLineBreaks = true,
           },
           keys = {
-            { "<Leader>K", "<plug>(vimtex-doc-package)", desc = "Vimtex Docs", silent = true },
+            { "<localleader>K", "<plug>(vimtex-doc-package)", desc = "Vimtex Docs", silent = true },
           },
         },
       },
     },
   },
   -- Make vimtex handle syntax highlighting
-  {
-    "nvim-treesitter/nvim-treesitter",
-    opts = {
-      highlight = {
-        disable = { "latex" },
-      },
-    },
-  },
+  -- {
+  --   "nvim-treesitter/nvim-treesitter",
+  --   opts = {
+  --     highlight = {
+  --       disable = { "latex" },
+  --     },
+  --   },
+  -- },
 }

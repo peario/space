@@ -2,7 +2,7 @@
 
 root = true
 
-; These are based on https://github.com/NixOS/nixfmt/blob/master/standard.md 
+; These are based on https://github.com/NixOS/nixfmt/blob/master/standard.md
 ; Many of these are suitable for other filetypes as well
 
 [*]

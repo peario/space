@@ -18,15 +18,21 @@ let
   inherit (config.lib.file) mkOutOfStoreSymlink;
   inherit (pkgs) fetchpatch;
 
+  doomBinaries = # bash
+    ''
+      export PATH="$PATH:$HOME/.config/emacs/bin"
+    '';
+
   cfg = config.${namespace}.programs.terminal.editors.emacs;
 in
 {
   options.${namespace}.programs.terminal.editors.emacs = {
-    enable = mkEnableOption "emacs";
-    daemon.enable = mkEnableOption "Enable use of {command}`emacsclient`.";
+    enable = mkEnableOption "Emacs";
+    daemon.enable = mkEnableOption "Enable use of `emacsclient`";
+    doom.enable = mkEnableOption "Enable Emacs framework; Doom Emacs";
     default = {
-      editor = mkEnableOption "Set emacs (or emacsclient) as the session ${lib.env}`EDITOR`.";
-      visual = mkEnableOption "Set emacs (or emacsclient) as the session ${lib.env}`VISUAL`.";
+      editor = mkEnableOption "Set Emacs (or emacsclient) as the session ${lib.env}`EDITOR`.";
+      visual = mkEnableOption "Set Emacs (or emacsclient) as the session ${lib.env}`VISUAL`.";
     };
   };
 
@@ -56,19 +62,26 @@ in
       client = enabled;
     };
 
+    programs = mkIf cfg.doom.enable {
+      bash.initExtra = doomBinaries;
+      fish.shellInit = doomBinaries;
+      zsh.initExtra = doomBinaries;
+    };
+
     home = {
       shellAliases = mkIf cfg.daemon.enable {
+        # emacs = mkDefault "${
+        #   if pkgs.stdenv.isDarwin then
+        #     (getExe' pkgs.emacs29-pgtk "emacsclient")
+        #   else
+        #     (getExe' pkgs.emacs "emacsclient")
+        # } -nc -a ''";
         emacs = mkDefault "${
           if pkgs.stdenv.isDarwin then
             (getExe' pkgs.emacs29-pgtk "emacsclient")
           else
             (getExe' pkgs.emacs "emacsclient")
         } -nc -a ''";
-      };
-
-      file = {
-        ".emacs".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/${namespace}/.config/.emacs";
-        ".emacs.custom.el".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/${namespace}/.config/.emacs.custom.el";
       };
 
       sessionVariables =
@@ -90,14 +103,19 @@ in
         // optionalAttrs (!pkgs.stdenv.isDarwin) {
           EDITOR = mkIf cfg.default.editor "${
             if cfg.daemon.enable then (getExe' pkgs.emacs "emacsclient") else (getExe' pkgs.emacs "emacs")
-          } -t ";
+          } -t";
           VISUAL = mkIf cfg.default.visual "${
             if cfg.daemon.enable then (getExe' pkgs.emacs "emacsclient") else (getExe' pkgs.emacs "emacs")
           } -nc -a ''";
         };
 
       packages =
-        lists.optionals pkgs.stdenv.isLinux [ pkgs.emacs ]
+        with pkgs;
+        [
+          shellcheck
+          pandoc
+        ]
+        ++ lists.optionals pkgs.stdenv.isLinux [ pkgs.emacs ]
         ++ lists.optionals pkgs.stdenv.isDarwin [
           (pkgs.emacs29-pgtk.overrideAttrs (oa: {
             patches = (oa.patches or [ ]) ++ [
@@ -125,5 +143,17 @@ in
           }))
         ];
     };
+
+    # NOTE: Use `xdg.configFile` for files at `$HOME/.config`
+    xdg.configFile =
+      { }
+      // optionalAttrs (!cfg.doom.enable) {
+        "emacs".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/${namespace}/.config/.emacs";
+      }
+      # Depending on if Doom Emacs is enabled, change symlinks for emacs config
+      // optionalAttrs cfg.doom.enable {
+        "emacs".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/${namespace}/.config/emacs.doom";
+        "doom".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/${namespace}/.config/doom";
+      };
   };
 }

@@ -32,7 +32,7 @@ in
           };
 
           font = {
-            size = 13.0;
+            size = 15.0;
 
             offset = {
               x = 0;

@@ -223,6 +223,7 @@
       };
 
       templates = {
+        latex_simple.description = "LaTeX template - Simple setup";
         rust.description = "Rust template";
         snowfall.description = "Snowfall-lib template";
       };

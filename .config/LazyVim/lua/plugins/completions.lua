@@ -15,6 +15,7 @@ return {
       -- Snippets :: LuaSnip
       {
         "L3MON4D3/LuaSnip",
+        lazy = false,
         dependencies = {
           { "rafamadriz/friendly-snippets" },
           { "nvim-treesitter/nvim-treesitter" },
@@ -32,21 +33,27 @@ return {
           })
 
           -- Snippets from `friendly-snippets`, among other sources
-          require("luasnip.loaders.from_vscode").lazy_load()
+          require("luasnip.loaders.from_vscode").lazy_load({
+            exclude = { "latex" },
+          })
 
           return {
             enable_autosnippets = true,
+            store_selection_keys = "<Tab>",
             ---@see https://github.com/L3MON4D3/LuaSnip/blob/45db5addf8d0a201e1cf247cae4cdce605ad3768/lua/luasnip/default_config.lua#L20-L99
             snip_env = {
-              s = require("luasnip").snippet,
-              sn = require("luasnip").snippet_node,
-              t = require("luasnip").text_node,
-              i = require("luasnip").insert_node,
-              f = require("luasnip").function_node,
-              c = require("luasnip").choice_node,
-              d = require("luasnip").dynamic_node,
-              r = require("luasnip").restore_node,
-              ms = require("luasnip").new_multisnippet,
+              s = ls.snippet,
+              sn = ls.snippet_node,
+              isn = ls.indent_snippet_node,
+              t = ls.text_node,
+              i = ls.insert_node,
+              f = ls.function_node,
+              c = ls.choice_node,
+              d = ls.dynamic_node,
+              r = ls.restore_node,
+              ai = require("luasnip.nodes.absolute_indexer"),
+              events = require("luasnip.util.events"),
+              extras = require("luasnip.extras"),
               l = require("luasnip.extras").lambda,
               rep = require("luasnip.extras").rep,
               p = require("luasnip.extras").partial,
@@ -56,11 +63,15 @@ return {
               fmt = require("luasnip.extras.fmt").fmt,
               fmta = require("luasnip.extras.fmt").fmta,
               matches = require("luasnip.extras.postfix").matches,
+              conds = require("luasnip.extras.expand_conditions"),
+              conds_expand = require("luasnip.extras.conditions.expand"),
+              make_condition = require("luasnip.extras.conditions").make_condition,
               postfix = require("luasnip.extras.postfix").postfix,
               ts_postfix = require("luasnip.extras.treesitter_postfix").treesitter_postfix,
-              conds = require("luasnip.extras.conditions"),
-              conds_expand = require("luasnip.extras.conditions.expand"),
               types = require("luasnip.util.types"),
+              parse = require("luasnip.util.parser").parse_snippet,
+              ms = ls.multi_snippet,
+              k = require("luasnip.nodes.key_indexer").new_key,
             },
           }
         end,
@@ -133,6 +144,33 @@ return {
           { name = "luasnip" },
           { name = "path" },
         }),
+        formatting = {
+          format = function(entry, vim_item)
+            vim_item.menu = ({
+              nvim_lsp = "[LSP]",
+              lazydev = "[Lua]",
+              luasnip = "[Snippet]",
+              path = "[Path]",
+              buffer = "[Buffer]",
+              cmdline = "[Cmdline]",
+              git = "[Git]",
+              vimtex = "[VimTeX]",
+            })[entry.source.name]
+
+            vim_item.dup = ({
+              nvim_lsp = 0,
+              lazydev = 0,
+              luasnip = 0,
+              path = 0,
+              buffer = 0,
+              cmdline = 0,
+              git = 0,
+              vimtex = 0,
+            })[entry.source.name] or 0
+
+            return vim_item
+          end,
+        },
         snippet = {
           expand = function(args)
             local ok, luasnip = pcall(require, "luasnip")
@@ -152,14 +190,26 @@ return {
               ls.change_choice(1)
             end
           end, { "i", "s" }),
-          ["<CR>"] = cmp.mapping.confirm({ select = true }),
+          ["<CR>"] = cmp.mapping(function(fallback)
+            if cmp.visible() then
+              if ls.expandable() then
+                ls.expand()
+              else
+                cmp.confirm({ select = true })
+              end
+            else
+              fallback()
+            end
+          end),
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_next_item()
-            elseif ls.expand_or_jumpable() then
-              vim.schedule(function()
-                ls.expand_or_jump()
-              end)
+            elseif ls.locally_jumpable(1) then
+              ls.jump(1)
+            -- elseif vim.snippet.active({ direction = 1 }) then
+            --   vim.schedule(function()
+            --     vim.snippet.jump(1)
+            --   end)
             elseif has_words_before() then
               cmp.complete()
             else
@@ -169,14 +219,43 @@ return {
           ["<S-Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
               cmp.select_prev_item()
-            elseif ls.jumpable(-1) then
-              vim.schedule(function()
-                ls.jump(-1)
-              end)
+            elseif ls.locally_jumpable(-1) then
+              ls.jump(-1)
+            -- elseif vim.snippet.active({ direction = -1 }) then
+            --   vim.schedule(function()
+            --     vim.snippet.jump(-1)
+            --   end)
             else
               fallback()
             end
           end, { "i", "s" }),
+
+          -- ["<CR>"] = cmp.mapping.confirm({ select = false }),
+          -- ["<Tab>"] = cmp.mapping(function(fallback)
+          --   if cmp.visible() then
+          --     -- You could replace select_next_item() with confirm({ select = true }) to get VS Code autocompletion behavior
+          --     cmp.select_next_item()
+          --   elseif vim.snippet.active({ direction = 1 }) then
+          --     vim.schedule(function()
+          --       vim.snippet.jump(1)
+          --     end)
+          --   elseif has_words_before() then
+          --     cmp.complete()
+          --   else
+          --     fallback()
+          --   end
+          -- end, { "i", "s" }),
+          -- ["<S-Tab>"] = cmp.mapping(function(fallback)
+          --   if cmp.visible() then
+          --     cmp.select_prev_item()
+          --   elseif vim.snippet.active({ direction = -1 }) then
+          --     vim.schedule(function()
+          --       vim.snippet.jump(-1)
+          --     end)
+          --   else
+          --     fallback()
+          --   end
+          -- end, { "i", "s" }),
         }),
       }
     end,
@@ -184,7 +263,7 @@ return {
   -- Convert snippets from one engine to another
   {
     "smjonas/snippet-converter.nvim",
-    lazy = true,
+    lazy = false,
     enabled = false,
     config = function()
       local template = {

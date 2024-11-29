@@ -47,7 +47,7 @@ return {
     lazy = false,
     priority = 1000,
     opts = {
-      variant = "auto",
+      variant = "moon",
     },
   },
 

@@ -27,9 +27,9 @@ in
         dooit
         jrnl
         np
-        # TODO: replace once https://github.com/NixOS/nixpkgs/pull/337868 is available
+        zathura # PDF viewer
       ]
-      ++ lib.optionals stdenv.isLinux [
+      ++ lib.optionals pkgs.stdenv.isLinux [
         libreoffice
         teams-for-linux
       ];

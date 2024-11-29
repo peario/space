@@ -52,11 +52,12 @@ in
             poetry
           ]
           ++ (with pyPkgs; [
-            pip
-            pynvim
-            pipx
-            distutils-extra
             distlib
+            distutils-extra
+            pip
+            pipx
+            pynvim
+            sympy
           ]);
         description = "Other packages for Python.";
       };

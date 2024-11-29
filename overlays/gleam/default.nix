@@ -1,15 +1,24 @@
 _:
 (_final: prev: {
-  gleam = prev.gleam.overrideAttrs (_oa: rec {
+  gleam = prev.gleam.overrideAttrs (oa: rec {
     # NOTE: Updating version requires updating the hash of src and cargoHash
-    version = "1.5.1";
+    version = "1.6.2";
 
     src = prev.fetchFromGitHub {
       owner = "gleam-lang";
-      repo = "gleam";
-      rev = "v${version}";
+      repo = oa.pname;
+      rev = "refs/tag/v${version}";
       # For updating hash, leave empty and rebuild config (eg. `flake switch`).
-      hash = "sha256-4/NDZGq62M0tdWerIkmoYS0WHC06AV8c9vlo/6FhsAo=";
+      hash = "sha256-r+iN6eLmy6qnrhvHKUQufd/4mvZL9TCVaqLqEPcLu1E=";
     };
+
+    cargoDeps = oa.cargoDeps.overrideAttrs (
+      prev.lib.const {
+        name = "${oa.pname}-vendor.tar.gz";
+        inherit src;
+        # Same here as in `src.hash`
+        outputHash = "sha256-btpefSzC7HCPqdtKIkjFaZ6rYVgqqVpQYZaDcImAs9w=";
+      }
+    );
   });
 })

@@ -23,23 +23,6 @@ map.set("v", "<leader>T", "<cmd>normal! gc<cr>", "Toggle comment (selection)")
 map.set({ "n", "x" }, "<C-c>", "<cmd>normal! ciw<cr>", "Change Word")
 map.set({ "n", "x" }, "<C-a>", "<cmd>normal! ggVG<cr>", "Select All")
 
--- Technically, this command can be split into multiple parts;
--- "normal!", "mz", "gg=G", "`z" and "delmarks z".
---
---   1. "normal!"     Makes nvim register the command as if a user pressed each keys
---   2. "mz"          Creates mark with id "z" (like bookmark for that row and col)
---   3. "gg=G"        Re-indents the entire buffer (gg first line, = reindent, G last line)
---   4. "`z"          Jump to position of mark "z"
---   5. "delmarks z"  Deletes mark "z"
-map.set(
-  "n",
-  "<leader>I",
-  "<cmd>normal! mzgg=G`z<cr><cmd>delmarks z<cr>",
-  "Fix indentation (buffer)"
-)
-
-map.set("n", "<leader>C", "<cmd>normal! zz<cr>", "Center window around cursor")
-
 -- Utility
 map.set("n", "<leader>cT", "", "Treesitter")
 map.set("n", "<leader>cTH", "<cmd>Inspect<cr>", "Highlight group (cursor)")

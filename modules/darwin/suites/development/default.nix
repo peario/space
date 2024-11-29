@@ -25,6 +25,7 @@ in
         "gitkraken" # Git client; GUI
         "gitkraken-cli" # Git client; CLI
         "jetbrains-toolbox"
+        "sioyek"
         "visual-studio-code"
       ] ++ lists.optional cfg.docker.enable "docker" ++ lists.optional cfg.podman.enable "podman-desktop";
 

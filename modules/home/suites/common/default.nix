@@ -36,10 +36,10 @@ in
 
         terminal = {
           emulators = {
-            # alacritty = {
-            #   enable = false;
-            #   font = "Monaspace Argon Var";
-            # };
+            alacritty = {
+              enable = true;
+              font = "Monaspace Neon Var";
+            };
             foot.enable = pkgs.stdenv.isLinux;
             # FIX: Broken in macOS 15.1, can't be launched via Raycast, only finder and as command
             # kitty = {

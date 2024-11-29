@@ -94,6 +94,11 @@ in
           };
           gleam = enabled;
           go = enabled;
+          latex = {
+            enable = true;
+
+            other = enabled;
+          };
           lua = {
             enable = true;
 
@@ -133,6 +138,7 @@ in
             emacs = {
               enable = true;
               daemon = enabled;
+              doom = enabled;
 
               # default = {
               #   editor = true;

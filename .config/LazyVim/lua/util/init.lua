@@ -5,7 +5,7 @@ local LazyUtil = require("lazy.core.util")
 ---
 --- non-`global` modules/classes is written in all lower-case to indicate that it's imported rather than global access.
 ---@field generic util.generic
----@field map global.map
+---@field map util.map
 ---@field plugin util.plugin
 local M = {}
 

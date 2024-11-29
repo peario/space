@@ -84,12 +84,43 @@ return {
   {
     "nvimtools/none-ls.nvim",
     opts = function(_, opts)
+      local h = require("null-ls.helpers")
       local nls = require("null-ls")
+
       -- Inject tools via Neovim as LSP
       opts.sources = vim.list_extend(opts.sources or {}, {
         -- Code Actions
         nls.builtins.code_actions.gomodifytags,
         nls.builtins.code_actions.impl,
+        nls.builtins.code_actions.ts_node_action,
+        -- Completion
+        nls.builtins.completion.luasnip,
+        -- Diagnostics
+        nls.builtins.diagnostics.actionlint,
+        nls.builtins.diagnostics.commitlint,
+        nls.builtins.diagnostics.dotenv_linter,
+        nls.builtins.diagnostics.revive.with({
+          args = h.cache.by_bufnr(function(params)
+            local default_args = { "-formatter", "json", "./..." }
+
+            -- If config file exists, use it.
+            local config_file_name = "revive.toml"
+            local config_file_path = vim.fs.find(config_file_name, {
+              path = params.bufname,
+              upward = true,
+              stop = vim.fs.dirname(params.root),
+            })[1]
+
+            if config_file_path then
+              default_args = vim.list_extend({ "-config", config_file_path }, default_args)
+            end
+
+            return default_args
+          end),
+        }),
+        nls.builtins.diagnostics.sqlfluff,
+        nls.builtins.diagnostics.trivy,
+        nls.builtins.diagnostics.zsh,
         -- Formatting
         nls.builtins.formatting.cbfmt,
         nls.builtins.formatting.goimports_reviser,
@@ -97,6 +128,8 @@ return {
         nls.builtins.formatting.nixpkgs_fmt,
         nls.builtins.formatting.rustywind,
         nls.builtins.formatting.stylelint,
+        -- Hover
+        nls.builtins.hover.printenv,
       })
     end,
   },

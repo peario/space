@@ -60,7 +60,9 @@ local function create_key_snippets(keywords)
           local cs = comment()
 
           if #cs == 2 then
+            -- Format e.g. // text
             return sn(nil, {
+              -- First node (//)
               t(cs[1] .. " " .. (keyword:gsub("^%l+", string.upper))),
               c(1, {
                 t(": "),
@@ -71,11 +73,13 @@ local function create_key_snippets(keywords)
                   })
                 ),
               }),
+              -- Second (last) node (text)
               i(2, cs[2]),
-              i(0),
             })
           elseif #cs == 3 then
+            -- Format e.g. /* text */
             return sn(nil, {
+              -- First node (/*)
               t(cs[1] .. " " .. (keyword:gsub("^%l+", string.upper))),
               c(1, {
                 t(": "),
@@ -86,9 +90,12 @@ local function create_key_snippets(keywords)
                   })
                 ),
               }),
+              -- Second node (text)
               i(2, cs[2]),
+              -- Third (last) node (*/)
               t(" " .. cs[3]),
-              i(0),
+              -- Jump outside of comment
+              i(3),
             })
           end
         end, {}),

@@ -179,4 +179,16 @@ return {
       vim.g.matchup_matchparen_offscreen = { method = "popup" }
     end,
   },
+  -- Remove "," and ";" from flash.nvim.
+  -- Either will be used for maplocalleader.
+  {
+    "folke/flash.nvim",
+    opts = {
+      modes = {
+        char = {
+          keys = { "f", "F", "t", "T" },
+        },
+      },
+    },
+  },
 }
