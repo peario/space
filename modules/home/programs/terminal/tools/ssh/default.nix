@@ -8,11 +8,15 @@ let
   inherit (lib) mkIf mkEnableOption types;
   inherit (lib.${namespace}) mkOpt;
 
+  sshAgentShell =
+    mkIf cfg.sshAgent
+      # bash
+      ''
+        killall ssh-agent >/dev/null 2>&1
+        eval "$(ssh-agent)" >/dev/null
+      '';
+
   cfg = config.${namespace}.programs.terminal.tools.ssh;
-
-  # @TODO(jakehamilton): This is a hold-over from an earlier Snowfall Lib version which used
-  # the specialArg `name` to provide the host name.
-
 in
 # FIX(ssh): Find out what key should be here instead
 # default-key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJAZIwy7nkz8CZYR/ZTSNr+7lRBW2AYy1jw06b44zaID";
@@ -62,29 +66,9 @@ in
         extraConfig = "${cfg.extraConfig}";
       };
 
-      bash.initExtra =
-        mkIf cfg.sshAgent
-          # bash
-          ''
-            killall ssh-agent >/dev/null 2>&1
-            eval $(ssh-agent) >/dev/null
-          '';
-
-      fish.shellInit =
-        mkIf cfg.sshAgent
-          # fish
-          ''
-            killall ssh-agent &>/dev/null
-            eval $(ssh-agent) >/dev/null
-          '';
-
-      zsh.initExtra =
-        mkIf cfg.sshAgent
-          # bash
-          ''
-            killall ssh-agent >/dev/null 2>&1
-            eval $(ssh-agent) >/dev/null
-          '';
+      bash.initExtra = sshAgentShell;
+      fish.shellInit = sshAgentShell;
+      zsh.initExtra = sshAgentShell;
     };
 
     # home = {

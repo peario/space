@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   namespace,
   ...
 }:
@@ -19,12 +18,6 @@ in
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = with pkgs; [
-      age
-      sops
-      ssh-to-age
-    ];
-
     sops = {
       inherit (cfg) defaultSopsFile;
 
@@ -34,5 +27,12 @@ in
         keyFile = "${config.home.homeDirectory}/.config/sops/age/keys.txt";
       };
     };
+
+    # NOTE: Assign values once a linux system is setup
+    # sops.secrets = {
+    #   "git/ssh-key" = {
+    #     sopsFile = lib.snowfall.fs.get-file "secrets/magnetar/peario/default.yaml";
+    #   };
+    # };
   };
 }

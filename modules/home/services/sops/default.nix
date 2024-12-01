@@ -2,6 +2,7 @@
   config,
   lib,
   namespace,
+  pkgs,
   ...
 }:
 let
@@ -18,6 +19,12 @@ in
   };
 
   config = mkIf cfg.enable {
+    home.packages = with pkgs; [
+      age
+      sops
+      ssh-to-age
+    ];
+
     sops = {
       inherit (cfg) defaultSopsFile;
       defaultSopsFormat = "yaml";
@@ -30,9 +37,8 @@ in
 
       secrets = {
         nix = {
-          sopsFile = lib.snowfall.fs.get-file "secrets/shared/default.yaml";
-          # path = "${config.home.homeDirectory}/.config/nix/nix.conf";
-          path = "${config.xdg.configHome}/nix/nix.conf";
+          sopsFile = lib.snowfall.fs.get-file "secrets/peario/default.yaml";
+          path = "${config.home.homeDirectory}/.config/nix/nix.conf";
         };
       };
     };

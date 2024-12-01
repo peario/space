@@ -124,7 +124,15 @@ pre-commit-hooks.lib.${pkgs.system}.run {
       yamlfmt = disabled;
 
       # linter
-      yamllint = enabled;
+      yamllint = {
+        enable = true;
+
+        excludes = [
+          "\\.sops\\.yaml"
+          "secrets.*\\.yaml"
+          "secrets.*\\.yml"
+        ];
+      };
 
       # ==> Web development <==
       # linter

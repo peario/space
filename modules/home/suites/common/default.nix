@@ -99,6 +99,7 @@ in
             ripgrep = enabled;
             tmux = enabled;
             # topgrade = enabled;
+            wakatime = enabled;
             # yazi = enabled;
             zoxide = enabled;
           };

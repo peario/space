@@ -17,7 +17,11 @@ in
     };
 
     security = {
-      sops = enabled;
+      sops = {
+        enable = true;
+        sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+        defaultSopsFile = lib.snowfall.fs.get-file "secrets/magnetar/peario/default.yaml";
+      };
     };
 
     suites = {

@@ -170,12 +170,8 @@ return {
         nls.builtins.formatting.cbfmt,
         nls.builtins.formatting.goimports_reviser,
         nls.builtins.formatting.golines,
-        nls.builtins.formatting.nixfmt.with({
-          generator_opts = {
-            command = "nix run nixpkgs#nixfmt-rfc-style -- .",
-            to_stdin = true,
-          },
-        }),
+        nls.builtins.formatting.nixfmt,
+        nls.builtins.formatting.nixpkgs_fmt, -- TODO: Figure out if this is required.
         nls.builtins.formatting.rustywind,
         nls.builtins.formatting.stylelint,
         -- Hover

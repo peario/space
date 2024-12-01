@@ -98,10 +98,10 @@ in
           ]
         );
 
-      file = mkIf pkgs.stdenv.isDarwin { ".npmrc".text = npmrcConf; };
+      file = {
+        ".npmrc".text = npmrcConf;
+      };
     };
-
-    xdg.configFile = mkIf pkgs.stdenv.isLinux { ".npmrc".text = npmrcConf; };
 
     programs = mkIf ((builtins.length cfg.npmPackages) > 0) {
       # TODO: Check if this script works

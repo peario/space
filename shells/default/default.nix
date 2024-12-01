@@ -43,6 +43,7 @@ mkShell {
     nix-prefetch-git
     nix-search-cli
     nix-tree
+    nixfmt-rfc-style
     nixpkgs-hammering
     nixpkgs-lint
     snowfall-flake.packages.${system}.flake

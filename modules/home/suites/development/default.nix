@@ -53,6 +53,8 @@ in
           nixpkgs-hammering
           nixpkgs-lint-community
           nixpkgs-review
+          nixpkgs-fmt
+          nixfmt-rfc-style
           nix-update
           nix-init
           node2nix

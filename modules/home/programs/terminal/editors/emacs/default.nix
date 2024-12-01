@@ -28,8 +28,8 @@ in
 {
   options.${namespace}.programs.terminal.editors.emacs = {
     enable = mkEnableOption "Emacs";
-    daemon.enable = mkEnableOption "Enable use of `emacsclient`";
-    doom.enable = mkEnableOption "Enable Emacs framework; Doom Emacs";
+    daemon.enable = mkEnableOption "use of `emacsclient`";
+    doom.enable = mkEnableOption "use of emacs framework; Doom Emacs";
     default = {
       editor = mkEnableOption "Set Emacs (or emacsclient) as the session ${lib.env}`EDITOR`.";
       visual = mkEnableOption "Set Emacs (or emacsclient) as the session ${lib.env}`VISUAL`.";
@@ -146,8 +146,7 @@ in
 
     # NOTE: Use `xdg.configFile` for files at `$HOME/.config`
     xdg.configFile =
-      { }
-      // optionalAttrs (!cfg.doom.enable) {
+      optionalAttrs (!cfg.doom.enable) {
         "emacs".source = mkOutOfStoreSymlink "${config.home.homeDirectory}/${namespace}/.config/.emacs";
       }
       # Depending on if Doom Emacs is enabled, change symlinks for emacs config

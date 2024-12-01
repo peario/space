@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   namespace,
   ...
 }:
@@ -23,14 +22,9 @@ in
   };
 
   config = mkIf cfg.enable {
-    home = {
-      # NOTE: Testing to install via `development/nodejs/default.nix` with a conditional like `mkIf cfg.enable`.
-      # packages = with pkgs; [ cz-cli ];
-
-      file = mkIf pkgs.stdenv.isDarwin { ".czrc".text = commitizenConf; };
+    home.file = {
+      ".czrc".text = commitizenConf;
     };
-
-    xdg.configFile = mkIf pkgs.stdenv.isLinux { ".czrc".text = commitizenConf; };
 
     ${namespace}.programs.development.nodejs.npmPackages =
       lists.optionals config.${namespace}.programs.development.nodejs.enable

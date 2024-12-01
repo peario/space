@@ -195,23 +195,18 @@ in
       zsh.initExtra = tokenExports;
     };
 
-    sops.secrets = {
-      # TODO(sops): Figure out how to make access-token and ssh-key unique to each machine
+    sops.secrets = mkIf osConfig.${namespace}.security.sops.enable {
       "github/access-token" = {
-        sopsFile = lib.snowfall.fs.get-file "secrets/shared/default.yaml";
+        sopsFile = lib.snowfall.fs.get-file "secrets/peario/default.yaml";
         path = "${config.home.homeDirectory}/.config/gh/access-token";
       };
       # SSH stuff
       "git/ssh-key" = {
-        sopsFile = lib.snowfall.fs.get-file "secrets/shared/default.yaml";
+        sopsFile = lib.snowfall.fs.get-file "secrets/magnetar/peario/default.yaml";
         path = "${config.home.homeDirectory}/.ssh/ssh-key";
       };
-      "git/ssh-key-priv" = {
-        sopsFile = lib.snowfall.fs.get-file "secrets/shared/default.yaml";
-        path = "${config.home.homeDirectory}/.ssh/id_ed25519";
-      };
       "git/ssh-key-pub" = {
-        sopsFile = lib.snowfall.fs.get-file "secrets/shared/default.yaml";
+        sopsFile = lib.snowfall.fs.get-file "secrets/magnetar/peario/default.yaml";
         path = "${config.home.homeDirectory}/.ssh/id_ed25519.pub";
       };
     };

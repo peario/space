@@ -20,7 +20,7 @@ in
 
     # sops.secrets = {
     #   slack-term = {
-    #     sopsFile = lib.snowfall.fs.get-file "secrets/shared/default.yaml";
+    #     sopsFile = lib.snowfall.fs.get-file "secrets/peario/default.yaml";
     #     path = "${config.home.homeDirectory}/.config/slack-term/config";
     #   };
     # };

@@ -6,7 +6,11 @@
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption types;
+  inherit (lib)
+    mkIf
+    mkEnableOption
+    types
+    ;
   inherit (lib.${namespace}) mkOpt;
   inherit (config.lib.file) mkOutOfStoreSymlink;
 
@@ -39,13 +43,6 @@ in
         # neovide
       ];
     };
-
-    # sops.secrets = {
-    #   wakatime = {
-    #     sopsFile = lib.snowfall.fs.get-file "secrets/shared/default.yaml";
-    #     path = "${config.home.homeDirectory}/.wakatime.cfg";
-    #   };
-    # };
 
     xdg.configFile = {
       neovim = {

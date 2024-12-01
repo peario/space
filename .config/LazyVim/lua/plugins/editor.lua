@@ -29,4 +29,6 @@ return {
       },
     },
   },
+  -- Metrics and productivity tracker
+  { "wakatime/vim-wakatime", lazy = false },
 }

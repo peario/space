@@ -42,18 +42,20 @@ in
         twemoji-color-font
 
         # Nerd Fonts
-        (nerdfonts.override {
-          fonts = [
-            # INFO: Don't add symbols here by default. Better add standard font family and add as
-            # extra "NerdFontsSymbolsOnly".
-            # "CascadiaCode"
-            # "Iosevka"
-            # "FiraCode"
-            # "Monaspace"
-            # "JetBrainsMono"
-            "NerdFontsSymbolsOnly"
-          ];
-        })
+        # See https://github.com/NixOS/nixpkgs/issues/359731
+        nerd-fonts.symbols-only
+        # (nerdfonts.override {
+        #   fonts = [
+        #     # INFO: Don't add symbols here by default. Better add standard font family and add as
+        #     # extra "NerdFontsSymbolsOnly".
+        #     # "CascadiaCode"
+        #     # "Iosevka"
+        #     # "FiraCode"
+        #     # "Monaspace"
+        #     # "JetBrainsMono"
+        #     "NerdFontsSymbolsOnly"
+        #   ];
+        # })
       ] "Custom font packages to install.";
     default = mkOpt types.str "Victor Mono" "Default font name";
   };

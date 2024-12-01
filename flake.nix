@@ -215,6 +215,9 @@
 
       systems = {
         modules = {
+          darwin = with inputs; [
+            sops-nix.darwinModules.sops
+          ];
           nixos = with inputs; [
             lanzaboote.nixosModules.lanzaboote
             sops-nix.nixosModules.sops
