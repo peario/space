@@ -33,6 +33,7 @@ in
           eureka-ideas # TODO: Create alias for this one. Used to store ideas for later viewing
           fzf
           grex
+          jaq # Improved jq; JSON data processing tool.
           jqp
           libtool
           onefetch
