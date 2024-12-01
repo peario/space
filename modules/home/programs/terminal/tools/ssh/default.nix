@@ -13,7 +13,7 @@ let
       # bash
       ''
         killall ssh-agent >/dev/null 2>&1
-        eval "$(ssh-agent)" >/dev/null
+        eval $(ssh-agent) >/dev/null
       '';
 
   cfg = config.${namespace}.programs.terminal.tools.ssh;
@@ -47,7 +47,6 @@ in
 #   "Host ${name}\n  Hostname ${name}.local\n  User ${remote-user-name}\n  ForwardAgent yes\n  ${port-expr}\n  ${forward-gpg}"
 # ) (builtins.attrNames other-hosts);
 {
-  # TODO(ssh): Update config and integrate 1Password
   options.${namespace}.programs.terminal.tools.ssh = with types; {
     enable = mkEnableOption "SSH";
     authorizedKeys = mkOpt (listOf str) [

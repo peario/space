@@ -200,12 +200,8 @@ in
         sopsFile = lib.snowfall.fs.get-file "secrets/peario/default.yaml";
         path = "${config.home.homeDirectory}/.config/gh/access-token";
       };
-      # SSH stuff
+      # SSH
       "git/ssh-key" = {
-        sopsFile = lib.snowfall.fs.get-file "secrets/magnetar/peario/default.yaml";
-        path = "${config.home.homeDirectory}/.ssh/ssh_key";
-      };
-      "git/ssh-key-priv" = {
         sopsFile = lib.snowfall.fs.get-file "secrets/magnetar/peario/default.yaml";
         path = "${config.home.homeDirectory}/.ssh/id_ed25519";
       };

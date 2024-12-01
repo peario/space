@@ -29,6 +29,7 @@ in
         [
           act
           bruno
+          dos2unix # Convert text files, from DOS to Mac or Linux line breaks
           eureka-ideas # TODO: Create alias for this one. Used to store ideas for later viewing
           fzf
           grex
