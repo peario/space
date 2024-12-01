@@ -203,7 +203,11 @@ in
       # SSH stuff
       "git/ssh-key" = {
         sopsFile = lib.snowfall.fs.get-file "secrets/magnetar/peario/default.yaml";
-        path = "${config.home.homeDirectory}/.ssh/ssh-key";
+        path = "${config.home.homeDirectory}/.ssh/ssh_key";
+      };
+      "git/ssh-key-priv" = {
+        sopsFile = lib.snowfall.fs.get-file "secrets/magnetar/peario/default.yaml";
+        path = "${config.home.homeDirectory}/.ssh/id_ed25519";
       };
       "git/ssh-key-pub" = {
         sopsFile = lib.snowfall.fs.get-file "secrets/magnetar/peario/default.yaml";
