@@ -52,6 +52,7 @@ in
           gitkraken
         ]
         ++ lib.optionals cfg.nix.enable [
+          nil # Nix LSP
           nixpkgs-hammering
           nixpkgs-lint-community
           nixpkgs-review
@@ -100,6 +101,7 @@ in
           go = {
             enable = true;
 
+            LSP = enabled;
             formatter = enabled;
             linter = enabled;
             other = enabled;
@@ -107,6 +109,7 @@ in
           latex = {
             enable = true;
 
+            LSP = enabled;
             other = enabled;
           };
           lua = {
@@ -137,6 +140,7 @@ in
           rust = {
             enable = true;
 
+            LSP = enabled;
             other = enabled;
           };
         };

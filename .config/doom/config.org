@@ -1,3 +1,29 @@
+#+title: Doom Emacs Config
+#+author: Peario
+
+This is my literate Doom Emacs config.
+[[Basic]] sets up some basic emacs and doom configurations.
+[[Doom Modules]] contains the configuration for doom's modules ordered by the same order as in =init.el=.
+This section also contains configuration for otherp ackages in =packages.el= under headings that seem appropriate.
+
+Source to config can be found at: [[https://github.com/michaelneuper/doom][michaelneuper/doom]].
+
+* Contents :toc:
+- [[#basic][Basic]]
+  - [[#defaults][Defaults]]
+  - [[#visual-enhancements][Visual Enhancements]]
+- [[#doom-modules][Doom Modules]]
+  - [[#completion][:completion]]
+  - [[#ui][:ui]]
+  - [[#emacs][:emacs]]
+  - [[#tools][:tools]]
+  - [[#lang][:lang]]
+
+* Basic
+** Defaults
+*** Speed
+Make emacs faster.
+#+begin_src emacs-lisp
 (use-package! gcmh
 :init
 (setq gcmh-idle-delay 5
@@ -6,7 +32,10 @@
 (gcmh-mode 1))
 
 (setq gc-cons-threshold 200000000) ; previous 33554432
+#+end_src
 
+*** Basic
+#+begin_src emacs-lisp
 ;; credentials
 (setq user-full-name "Fredrik Dahlström"
       user-mail-address "fredahl71@gmail.com")
@@ -21,7 +50,11 @@
 ;; remap <localleader> from SPC m to SPC l
 (setq doom-localleader-key "SPC l"
       doom-localleader-alt-key "M-SPC l")
+#+end_src
 
+*** Pairing
+To quickly surround text with delimiters, use corral
+#+begin_src emacs-lisp
 (require 'corral)
 
 ;; recommended to use with US keyboard layout
@@ -32,13 +65,21 @@
 (global-set-key (kbd "M-{") 'corral-braces-backward)
 (global-set-key (kbd "M-}") 'corral-braces-forward)
 (global-set-key (kbd "M-\"") 'corral-double-quotes-backward)
+#+end_src
 
+*** macOS
+Modify the special modifier keys to enable for []{}|\ to be inserted on a scandinavian keyboard:
+#+begin_src emacs-lisp
 (if (featurep :system 'macos)
     (setq mac-option-modifier nil
           mac-command-modifier 'meta
           mac-right-option-modifier nil
           x-select-enable-clipboard t))
+#+end_src
 
+** Visual Enhancements
+*** Theme & Fonts
+#+begin_src emacs-lisp
 (setq doom-theme 'doom-gruvbox)
 
 (setq doom-font (font-spec :family "SF Mono" :size 15.5)
@@ -46,24 +87,45 @@
       doom-variable-pitch-font (font-spec :family "ETBembo" :size 20)
       doom-emoji-font (font-spec :family "Apple Color Emoji" :size 15.5)
       doom-symbol-font (font-spec :family "Cascadia Code" :size 15.5))
+#+end_src
 
+*** Lines
+Enable relative line numbers and make their slant normal (not italic).
+#+begin_src emacs-lisp
 (setq display-line-numbers-type 'relative) ;; TODO change to 'visual in org-mode
 
 (add-hook! display-line-numbers-mode
            (custom-set-faces!
              '(line-number :slint normal)
              '(line-number-current-line :slant normal)))
+#+end_src
 
+Disable highlightingof the current line.
+#+begin_src emacs-lisp
 (setq global-hl-line-modes nil)
+#+end_src
 
+Display a fill indicator at 80 characters in =prog-mode=.
+#+begin_src emacs-lisp
 (setq display-fill-column-indicator-column 80)
 (add-hook 'prog-mode-hook #'display-fill-column-indicator-mode)
+#+end_src
 
+Enable pixel-precision scrolling.
+#+begin_src emacs-lisp
 (pixel-scroll-precision-mode 1)
+#+end_src
 
+*** Window
+Start emacs in a 100x40 window.
+#+begin_src emacs-lisp
 (add-to-list 'default-frame-alist '(width . 100))
 (add-to-list 'default-frame-alist '(height . 40))
+#+end_src
 
+Format the title.
+Coped from [[https://hieuphay.com/doom-emacs-config/#some-good-defaults]].
+#+begin_src emacs-lisp
 (setq frame-title-format
       '(""
         (:eval
@@ -76,12 +138,23 @@
          (let ((project-name (projectile-project-name)))
            (unless (string= "-" project-name)
              (format (if (buffer-modifier-p) " ◉ %s" "  ●  %s") project-name)))))
+#+end_src
 
+* Doom Modules
+** :completion
+*** corfu
+Disable corfu's auto-popups and preselect the first candidate.
+#+begin_src emacs-lisp
 (after! corfu
   (setq corfu-auto nil
         corfu-preselect 'first
         +corfu-want-tab-prefer-expand-snippets t))
+#+end_src
 
+*** other
+**** copilot
+Add keybindings for [[https:https://github.com/copilot-emacs/copilot.el][copilot]] and [[https://github.com/chep/copilot-chat.el][copilot-chat]] with [[kbd:][<leader> e]]  prefix.
+#+begin_src emacs-lisp
 (after! (evil copilot)
   (evil-define-key 'insert 'global (kbd "<tab>") 'copilot-accept-completion))
 
@@ -109,7 +182,13 @@
        "R" #'copilot-chat-reset
        :desc "Remove Current Buffer"
        "x" #'copilot-chat-del-current-buffer))
+#+end_src
 
+** :ui
+*** doom-dashboard
+Customise the dashboard.
+Copied from [[https://discourse.doomemacs.org/t/how-to-change-your-splash-screen/57][https://discourse.doomemacs.org/t/how-to-change-your-splash-screen/57]].
+#+begin_src emacs-lisp
 (remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 
 (add-hook! '+doom-dashboard-functions :append
@@ -144,7 +223,11 @@
      'face 'doom-dashboard-banner)))
 
 (setq +doom-dashboard-ascii-banner-fn #'my-weebery-is-always-greater)
+#+end_src
 
+*** modeline
+Customise the modeline according to [[https://github.com/seagle0128/doom-modeline?tab=readme-ov-file#customize][https://github.com/seagle0128/doom-modeline?tab=readme-ov-file#customize]].
+#+begin_src emacs-lisp
 (after! doom-modeline
   (setq doom-modeline-buffer-file-name-style 'file-name
         doom-modeline-always-show-macro-register t
@@ -154,14 +237,25 @@
         doom-modeline-bar-width 0
         doom-modeline-height 25
         doom-modeline-modal nil))
+#+end_src
 
+*** zen
+Enable =mixed-pitch-mode= in org files and scale =doom-variable-pitch-font=.
+Copied from [[https://discourse.doomemacs.org/t/cant-size-doom-variable-pitch-font/4572/2][https://discourse.doomemacs.org/t/cant-size-doom-variable-pitch-font/4572/2]].
+#+begin_src emacs-lisp
 (add-hook! 'org-mode-hook #'mixed-pitch-mode)
 
 (after! mixed-pitch
   (setq mixed-pitch-set-height t)
   (setq variable-pitch-serif-font doom-variable-pitch-font)
   (set-face-attribute 'variable-pitch nil :height 1.2))
+#+end_src
 
+*** other
+**** spacious-padding
+Add padding to emacs frames and windows with [[doom-package:spacious-padding][spacious-padding]].
+See [[https://protesilaos.com/emacs/spacious-padding]] for configuration options.
+#+begin_src emacs-lisp
 (use-package! spacious-padding
   :ensure t
   :config
@@ -174,7 +268,12 @@
            :scroll-bar-width 8
            :fringe-width 0))
   (spacious-padding-mode 1))
+#+end_src
 
+** :emacs
+*** dired
+Set =quick-access-entries= for =dirvish=.
+#+begin_src emacs-lisp
 (after! dirvish
   (setq! dirvish-quick-access-entries
          `(("h" "~/"           "Home")
@@ -183,20 +282,43 @@
            ("d" "~/Downloads/" "Downloads")
            ("g" "~/GitHub/"    "GitHub")
            ("t" "~/.Trash/"    "Trash"))))
+#+end_src
 
+** :tools
+*** lsp
+Improve =eglot= performance.
+*NOTE*: Requires building [[https://github.com/blahgeek/emacs-lsp-booster?tab=readme-ov-file#obtain-or-build-emacs-lsp-booster][emacs-lsp-booster]].
+#+begin_src emacs-lisp
 (use-package! eglot-booster
   :after eglot
   :config (eglot-booster-mode))
+#+end_src
 
+** :lang
+*** cc
+Set indentation level for =cc-mode= to 2.
+#+begin_src emacs-lisp
 (after! cc-mode
   (setq c-basic-offset 2))
+#+end_src
 
+*** Golang
+Set indentation level for =go-mode= to 2.
+#+begin_src emacs-lisp
 (after! go-mode
   (setq c-basic-offset 2))
+#+end_src
 
+*** Java
+Set indentation level for =java-mode= to 2.
+#+begin_src emacs-lisp
 (after! java-mode
   (setq c-basic-offset 2))
+#+end_src
 
+*** LaTeX
+Use cdlatex completion instead of yasnippet
+#+begin_src emacs-lisp
 (map! :map cdlatex-mode-map
       :i "TAB" #'cdlatex-tab)
 
@@ -207,7 +329,10 @@
       "i" #'cdlatex-math-symbol
       :desc "Begin environment"
       "e" #'cdlatex-environment)
+#+end_src
 
+LaTeX-related settings
+#+begin_src emacs-lisp
 ; Set which program to view the PDF-files in.
 (setq +latex-viewers '(pdf-tools))
 
@@ -216,14 +341,22 @@
 
 ; Enable xenops (for rendering maths, tables, tikz, executing code, etc.)
 (add-hook LaTeX-mode-hook #'xenops-mode)
+#+end_src
 
+*** Org
+**** org-mode
+Set some org variables.
+#+begin_src emacs-lisp
 (setq org-directory "~/Documents/Org"
       org-use-property-inheritance t ; fix weird issue with src blocks
       org-startup-with-inline-images t
       org-hide-emphasis-markers t
       org-edit-src-content-indentation 0
       org-startup-with-latex-preview t)
+#+end_src
 
+Scale org headings.
+#+begin_src emacs-lisp
 (after! org
   (custom-set-faces!
     `((org-document-title)
@@ -244,7 +377,11 @@
     `((org-level-5)
       :foreground ,(face-attribute 'outline-5 :foreground)
       :weight medium)))
+#+end_src
 
+Setup LaTeX previews in =org-mode=.
+See [[https://abode.karthinks.com/org-latex-preview/][https://abode.karthinks.com/org-latex-preview/]] for configuration.
+#+begin_src emacs-lisp
 (after! org
   (add-to-list 'org-latex-packages-alist '("" "amsmath" t))
   (add-to-list 'org-latex-packages-alist '("" "amssymb" t))
@@ -263,7 +400,11 @@
   (setq org-latex-preview-numbered t)
   (setq org-latex-preview-live t)
   (setq org-latex-preview-live-debounce 0.25))
+#+end_src
 
+**** eye candy
+=org-modern= config modified from [[https://sophiebos.io/posts/beautifying-emacs-org-mode/][https://sophiebos.io/posts/beautifying-emacs-org-mode/]].
+#+begin_src emacs-lisp
 (use-package! org-modern
   :after org
   :config
@@ -285,7 +426,11 @@
    "⭠ now ─────────────────────────────────────────────────")
 
   (global-org-modern-mode))
+#+end_src
 
+**** org-roam
+Set up =org-roam= and =org-roam-ui= along with their keybindings that have the [[kbd:][<leader> r]]  prefix.
+#+begin_src emacs-lisp
 (use-package! org-roam
   :defer t
   :config
@@ -322,10 +467,17 @@
          "v" #'org-roam-node-visit
          :desc "Open ORUI"
          "u" #'org-roam-ui-open))
+#+end_src
 
+*** python
+Requires [[doom-module::lang python +lsp][eglot]]
+*NOTE*: Requires =pyright= to be installed.
+Install with ~npm install -g pyright~.
+#+begin_src emacs-lisp
 (after! eglot
   (add-to-list 'eglot-server-programs '(python-mode . ("pyright-langserver" "--stdio"))))
 
 (add-hook! python-mode
   (setq python-shell-interpreter "python3.12"
         doom-modeline-env-python-executable "python3.12"))
+#+end_src

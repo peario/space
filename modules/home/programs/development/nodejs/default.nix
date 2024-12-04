@@ -65,6 +65,7 @@ in
         default = with pkgs; [
           bun
           yarn
+          pnpm
           nodePackages.ts-node
         ];
         description = "Other packages for Node.js.";

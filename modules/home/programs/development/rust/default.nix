@@ -26,6 +26,15 @@ in
       description = "Package to use for Rust.";
     };
 
+    LSP = {
+      enable = mkEnableOption "LSP for Rust";
+      packages = mkOption {
+        type = with types; listOf (uniq package);
+        default = with pkgs; [ rust-analyzer ];
+        description = "Package for Rust LSP.";
+      };
+    };
+
     other = {
       enable = mkEnableOption "Other tooling for Rust";
       packages = mkOption {

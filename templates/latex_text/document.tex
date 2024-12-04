@@ -1,0 +1,16 @@
+\documentclass[a4paper]{article}
+
+\usepackage{fontspec}
+\setmonofont{Fira Code Light}
+
+\usepackage{nicematrix}
+
+\begin{document}
+\begin{NiceTabular}{p{5.5cm}|>{\ttfamily}p{2cm}}
+  \CodeBefore
+    \rowcolors{2}{white}{gray!30}
+  \Body \hline
+    Sender:    & \sender   \\ \hline
+    Recipient: & \receiver \\ \hline
+\end{NiceTabular}
+\end{document}
