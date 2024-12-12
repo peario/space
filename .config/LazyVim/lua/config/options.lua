@@ -8,9 +8,8 @@ for _, provider in ipairs(providers) do
   vim.g["loaded_" .. provider .. "_provider"] = 0
 end
 
--- NOTE: `vim.g.python3_host_prog` may need to be updated if python is updated.
+-- NOTE: Don't set `vim.g.python3_host_prog`, neovim finds the binary on its own.
 vim.g.loaded_python3_provider = 1
-vim.g.python3_host_prog = "/nix/store/zyak8iqzh1ww83qa4sqwwz3qax0lrky7-python3-3.12.7/bin/python3"
 
 -- Indentation
 vim.opt.autoindent = true

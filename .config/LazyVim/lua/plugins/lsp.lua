@@ -12,6 +12,7 @@ return {
         "lemminx",
         -- Formatter
         "crlfmt",
+        "clang-format",
         "goimports-reviser",
         "golines",
         "rustywind",
@@ -19,6 +20,7 @@ return {
         "nixpkgs-fmt",
         "xmlformatter",
         -- Linter
+        "cpplint",
         "revive",
         "trivy",
         "htmlhint",
@@ -44,10 +46,11 @@ return {
         --         Angular, CSS, Flow, GraphQL, HTML, JSON, JSX, JavaScript, Less, Markdown, SCSS, TypeScript, Vue and YAML
         --       Black is managed by `extras.formatting.black` and currently manages:
         --         Python
+        c = { "clang-format" },
+        cpp = { "clang-format" },
         go = { "crlfmt", "goimports-reviser", "golines", "gofumpt" },
         html = { "rustywind", "prettier" },
         markdown = { "cbfmt" },
-        nix = { "nixpkgs-fmt" },
         svg = { "xmlformatter" },
         xml = { "xmlformatter" },
       },
@@ -60,23 +63,19 @@ return {
       linters_by_ft = {
         -- NOTE: Eslint is managed by `extras.linting.eslint` and currently manages:
         --         JavaScript and TypeScript
-        c = { "trivy" },
-        cpp = { "trivy" },
-        cs = { "trivy" }, -- C#
+        c = { "cpplint", "trivy" },
+        cpp = { "cpplint", "trivy" },
         css = { "stylelint" },
         dart = { "trivy" },
         docker = { "trivy" },
         elixir = { "trivy" },
         go = { "revive", "trivy" },
-        helm = { "trivy" },
         html = { "htmlhint" },
         java = { "trivy" },
         javascript = { "trivy" },
         php = { "trivy" },
         python = { "trivy" },
-        ruby = { "trivy" },
         rust = { "trivy" },
-        terraform = { "trivy" },
         typescript = { "trivy" },
       },
     },
@@ -168,10 +167,10 @@ return {
         nls.builtins.diagnostics.zsh,
         -- Formatting
         nls.builtins.formatting.cbfmt,
+        nls.builtins.formatting.clang_format,
         nls.builtins.formatting.goimports_reviser,
         nls.builtins.formatting.golines,
         nls.builtins.formatting.nixfmt,
-        nls.builtins.formatting.nixpkgs_fmt, -- TODO: Figure out if this is required.
         nls.builtins.formatting.rustywind,
         nls.builtins.formatting.stylelint,
         -- Hover
@@ -182,10 +181,13 @@ return {
   -- LSP
   {
     "neovim/nvim-lspconfig",
+    keys = function()
+      local keys = require("lazyvim.plugins.lsp.keymaps").get()
+      -- Disable the keybind for `K` to allow hover.nvim
+      keys[#keys + 1] = { "K", false }
+    end,
     opts = {
-      inlay_hints = {
-        enabled = true,
-      },
+      inlay_hints = { enabled = true },
       ---@type lspconfig.options
       ---@diagnostic disable-next-line: missing-fields
       servers = {

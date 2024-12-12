@@ -39,7 +39,19 @@ in
       enable = mkEnableOption "Other tooling for LaTeX";
       packages = mkOption {
         type = with types; listOf (uniq package);
-        default = lib.optionals pkgs.stdenv.isLinux [ pkgs.sioyek ];
+        default =
+          with pkgs;
+          [
+            # LaTeX backend
+            biber
+          ]
+          ++ lists.optionals pkgs.stdenv.isLinux [
+            # Sioyek on Mac is installed via homebrew, zathura exists as "home package".
+            sioyek
+
+            # To use Forward Search with zathura
+            xdotool
+          ];
         description = "Other packages for LaTeX.";
       };
     };

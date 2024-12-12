@@ -27,19 +27,22 @@ in
   options.${namespace}.programs.graphical.browsers.firefox = with types; {
     enable = mkEnableOption "Firefox";
 
-    extensions = mkOpt (listOf package) (with config.nur.repos.rycee.firefox-addons; [
-      auto-tab-discard
-      bitwarden
-      darkreader
-      firefox-color
-      # NOTE: Do more research about this
-      # firenvim
-      onepassword-password-manager
-      react-devtools
-      reduxdevtools
-      ublock-origin
-      user-agent-string-switcher
-    ]) "Extensions to install";
+    extensions =
+      mkOpt (listOf package) [ ]
+        #   (with config.nur.repos.rycee.firefox-addons; [
+        #   auto-tab-discard
+        #   bitwarden
+        #   darkreader
+        #   firefox-color
+        #   # NOTE: Do more research about this
+        #   # firenvim
+        #   onepassword-password-manager
+        #   react-devtools
+        #   reduxdevtools
+        #   ublock-origin
+        #   user-agent-string-switcher
+        # ])
+        "Extensions to install";
 
     extraConfig = mkOpt str "" "Extra configuration for the user profile JS file.";
     gpuAcceleration = mkEnableOption "GPU acceleration";

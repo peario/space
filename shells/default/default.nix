@@ -12,7 +12,7 @@ in
 mkShell {
   packages = with pkgs; [
     # Development tools
-    neovim
+    neovim-unwrapped
     direnv
     git
     gh

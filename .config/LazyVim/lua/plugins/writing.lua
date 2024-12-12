@@ -2,7 +2,7 @@ return {
   -- Filetype plugin and all-arounder
   {
     "lervag/vimtex",
-    ft = { "latex", "plaintex", "bibtex" },
+    ft = { "tex", "latex", "plaintex", "bibtex" },
     lazy = false, -- lazy-loading will disable inverse search
     init = function()
       -- Move auxiliary files to subfolder to reduce clutter
@@ -22,7 +22,10 @@ return {
       }
 
       -- setup a pdf-viewer, will later be switched to a terminal pdf-viewer
-      vim.g.vimtex_view_method = vim.fn.executable("zathura") == 1 and "zathura" or "sioyek"
+      local hasSioyek = vim.fn.executable("sioyek") == 1
+      local hasZathura = vim.fn.executable("zathura") == 1
+
+      vim.g.vimtex_view_method = hasSioyek and "sioyek" or hasZathura and "zathura"
       vim.g.vimtex_view_sioyek_options = "--reuse-window"
 
       vim.g.vimtex_mappings_disable = { ["n"] = { "K" } } -- disable `K` as it conflicts with LSP hover
@@ -124,12 +127,18 @@ return {
     },
   },
   -- Make vimtex handle syntax highlighting
-  -- {
-  --   "nvim-treesitter/nvim-treesitter",
-  --   opts = {
-  --     highlight = {
-  --       disable = { "latex" },
-  --     },
-  --   },
-  -- },
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = {
+      highlight = {
+        disable = { "latex" },
+      },
+    },
+  },
+  -- Horizontal highlights for text filetypes, like markdown, orgmode, and neorg.
+  {
+    "lukas-reineke/headlines.nvim",
+    dependencies = { "nvim-treesitter/nvim-treesitter" },
+    opts = {},
+  },
 }

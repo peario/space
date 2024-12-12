@@ -30,27 +30,98 @@ in
 
       extraConfig = # lua
         ''
-          function scheme_for_appearance(appearance)
-              return wezterm.plugin.require('https://github.com/neapsix/wezterm').moon
-            -- if appearance:find "Dark" then
-            --   return wezterm.plugin.require('https://github.com/neapsix/wezterm').main
-            -- else
-            --   return wezterm.plugin.require('https://github.com/neapsix/wezterm').dawn
-            -- end
+          --- OneNord Dark
+          local onenord = {}
+
+          local onenord_palette = {
+            bg = "#2E3440",
+            fg = "#e0def4",
+            cursor_bg = "#81A1C1",
+            cursor_border = "#81A1C1",
+            selection_bg = "#3F4758",
+
+            ansi = {
+              "#3B4252",
+              "#BF616A",
+              "#A3BE8C",
+              "#EBCB8B",
+              "#81A1C1",
+              "#B988B0",
+              "#88C0D0",
+              "#E5E9F0",
+            },
+            brights = {
+              "#4C566A",
+              "#BF616A",
+              "#A3BE8C",
+              "#EBCB8B",
+              "#81A1C1",
+              "#B988B0",
+              "#8FBCBB",
+              "#ECEFF4",
+            },
+          }
+
+          local onenord_active_tab = {
+            bg_color = onenord_palette.bg,
+            fg_color = onenord_palette.fg,
+          }
+
+          local onenord_inactive_tab = {
+            bg_color = onenord_palette.bg,
+            fg_color = onenord_palette.selection_bg,
+          }
+
+          function onenord.colors()
+            return {
+              foreground = onenord_palette.fg,
+              background = onenord_palette.bg,
+              cursor_bg = onenord_palette.cursor_bg,
+              cursor_border = onenord_palette.cursor_border,
+              cursor_fg = onenord_palette.fg,
+              selection_bg = onenord_palette.selection_bg,
+              selection_fg = onenord_palette.fg,
+
+              ansi = onenord_palette.ansi,
+              brights = onenord_palette.brights,
+
+              tab_bar = {
+                background = onenord_palette.bg,
+                active_tab = dark_active_tab,
+                inactive_tab = onenord_inactive_tab,
+                inactive_tab_hover = onenord_active_tab,
+                new_tab = onenord_inactive_tab,
+                new_tab_hover = onenord_active_tab,
+                inactive_tab_edge = onenord_palette.selection_bg, -- (Fancy tab bar only)
+              },
+            }
           end
+
+          function onenord.window_frame() -- (Fancy tab bar only)
+            return {
+              active_titlebar_bg = onenord_palette.bg,
+              inactive_titlebar_bg = onenord_palette.bg,
+            }
+          end
+
+          -- NOTE: The config for wezterm, above is the colorscheme OneNord Dark.
+
+          -- function scheme_for_appearance(appearance)
+          --     return wezterm.plugin.require('https://github.com/neapsix/wezterm').moon
+          --   -- if appearance:find "Dark" then
+          --   --   return wezterm.plugin.require('https://github.com/neapsix/wezterm').main
+          --   -- else
+          --   --   return wezterm.plugin.require('https://github.com/neapsix/wezterm').dawn
+          --   -- end
+          -- end
 
           function use_color(light, dark)
             -- If match, then light, else dark
             return wezterm.gui.get_appearance():find("Dark") and light or dark
-            -- if wezterm.gui.get_appearance():find("Dark") then
-            --   return light
-            -- else
-            --   return dark
-            -- end
           end
 
           local act = wezterm.action
-          local theme = scheme_for_appearance(wezterm.gui.get_appearance())
+          -- local theme = scheme_for_appearance(wezterm.gui.get_appearance())
           -- local custom = wezterm.color.get_builtin_schemes()[scheme_for_appearance(wezterm.gui.get_appearance())]
           local SOLID_LEFT_ARROW = wezterm.nerdfonts.pl_right_hard_divider
           local SOLID_RIGHT_ARROW = wezterm.nerdfonts.pl_left_hard_divider
@@ -124,8 +195,8 @@ in
             --   ["Nord"] = custom,
             -- },
             -- color_scheme = "Nord",
-            colors = theme.colors(),
-            window_frame = theme.window_frame(), -- needed only if using fancy tab bar
+            colors = onenord.colors(),
+            window_frame = onenord.window_frame(), -- needed only if using fancy tab bar
 
             -- Cursor
             cursor_blink_ease_in = 'Constant',
@@ -136,13 +207,10 @@ in
             -- font
             font_size = ${cfg.fontSize},
             font = wezterm.font_with_fallback {
-              -- 'Monaspace Neon Var', -- Monaspace Neon
-              -- 'Symbols Nerd Font',
-              -- 'Noto Color Emoji'
-
-              { family = 'Monaspace Neon Var', weight = "Regular" }, -- Monaspace Neon
+              { family = "Hasklug Nerd Font", weight = "Regular" },
+              { family = "CaskaydiaCove Nerd Font", weight = "Regular" },
               { family = "Symbols Nerd Font", weight = "Regular" },
-              { family = 'Noto Color Emoji', weight = "Regular" },
+              { family = "Noto Color Emoji", weight = "Regular" },
             },
 
             keys = {

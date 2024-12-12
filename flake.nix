@@ -110,6 +110,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    neovim-src = {
+      url = "github:neovim/neovim";
+      flake = false;
+    };
+
     # Weekly updating nix-index database
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
@@ -209,7 +215,7 @@
         catppuccin.homeManagerModules.catppuccin
         hypr-socket-watch.homeManagerModules.default
         nix-index-database.hmModules.nix-index
-        nur.hmModules.nur
+        nur.modules.homeManager.default
         sops-nix.homeManagerModules.sops
       ];
 

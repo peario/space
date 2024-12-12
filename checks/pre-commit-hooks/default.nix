@@ -75,9 +75,18 @@ pre-commit-hooks.lib.${pkgs.system}.run {
       deadnix = {
         enable = true;
 
+        excludes = [
+          "LazyVim.*\\.nix"
+          "NvChad.*\\.nix"
+        ];
+
         settings = {
           # yes alert about unused vars, don't modify them
           edit = false;
+          exclude = [
+            "./.config/LazyVim/**/*.nix"
+            "./.config/NvChad/**/*.nix"
+          ];
         };
       };
 

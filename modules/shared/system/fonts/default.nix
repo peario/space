@@ -29,12 +29,12 @@ in
         lexend
 
         # Main fonts
-        cascadia-code
+        # cascadia-code
         fira-code
         fira-code-symbols
         iosevka
         jetbrains-mono
-        monaspace
+        # monaspace
         victor-mono
 
         # Emojis
@@ -43,21 +43,13 @@ in
 
         # Nerd Fonts
         # See https://github.com/NixOS/nixpkgs/issues/359731
+        nerd-fonts.caskaydia-cove
+        nerd-fonts.hasklug
+        nerd-fonts.lilex
+        nerd-fonts.monaspace
         nerd-fonts.symbols-only
-        # (nerdfonts.override {
-        #   fonts = [
-        #     # INFO: Don't add symbols here by default. Better add standard font family and add as
-        #     # extra "NerdFontsSymbolsOnly".
-        #     # "CascadiaCode"
-        #     # "Iosevka"
-        #     # "FiraCode"
-        #     # "Monaspace"
-        #     # "JetBrainsMono"
-        #     "NerdFontsSymbolsOnly"
-        #   ];
-        # })
       ] "Custom font packages to install.";
-    default = mkOpt types.str "Victor Mono" "Default font name";
+    default = mkOpt types.str "Hasklug Nerd Font" "Default font name";
   };
 
   config = mkIf cfg.enable {

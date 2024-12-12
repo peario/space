@@ -3,7 +3,6 @@ return {
   {
     "catppuccin/nvim",
     lazy = false,
-    enabled = false, -- if this is not present, it automatically sets colorscheme
     priority = 1000,
     opts = {
       flavour = "auto",
@@ -17,7 +16,6 @@ return {
   {
     "rmehri01/onenord.nvim",
     lazy = false,
-    enabled = false, -- if this is not present, it automatically sets colorscheme
     priority = 1000,
     opts = {
       styles = {
@@ -33,7 +31,7 @@ return {
     lazy = false,
     priority = 1000,
     opts = {
-      background = "medium",
+      background = "hard",
       inlay_hints_background = "dimmed",
     },
     config = function(_, opts)
@@ -55,7 +53,7 @@ return {
   {
     "LazyVim/LazyVim",
     opts = {
-      colorscheme = "rose-pine",
+      colorscheme = "onenord",
     },
   },
 

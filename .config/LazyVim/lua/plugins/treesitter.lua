@@ -14,8 +14,14 @@ return {
       },
     },
     dependencies = {
-      "RRethy/nvim-treesitter-endwise",
+      --- WARN: Use `metiulekm` (fork) until `RRethy` (original) is fixed
+      "metiulekm/nvim-treesitter-endwise",
+      -- "RRethy/nvim-treesitter-endwise",
       "andymass/vim-matchup",
     },
+  },
+  {
+    "calops/hmts.nvim",
+    version = "*",
   },
 }

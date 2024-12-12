@@ -20,6 +20,7 @@ in
   options.${namespace}.programs.terminal.editors.neovim = {
     enable = mkEnableOption "neovim";
     config = mkOpt (types.enum [
+      "AstroNvim"
       "LazyVim"
       "NvChad"
     ]) "LazyVim" "Which config to use";
@@ -30,6 +31,11 @@ in
   };
 
   config = mkIf cfg.enable {
+    # programs.neovim = {
+    #   enable = true;
+    #   package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
+    # };
+
     home = {
       sessionVariables = {
         EDITOR = mkIf cfg.default.editor "nvim";
@@ -37,7 +43,7 @@ in
       };
 
       packages = with pkgs; [
-        # It's version is v0.10.2 and set within `overlays/neovim/default.nix`
+        # Version: nightly (v0.11.0-dev), set within `overlays/neovim/default.nix`
         neovim-unwrapped
         # FIX: Broken install
         # neovide
