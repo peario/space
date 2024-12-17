@@ -49,7 +49,8 @@ in
           EOF
           else
             echo "WakaTime key file not found!" >&2
-            exit 1
+            # Don't exit in `.zshrc`!
+            # exit 1
           fi
         '';
       };

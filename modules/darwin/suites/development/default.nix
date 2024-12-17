@@ -14,6 +14,7 @@ in
     enable = mkEnableOption "Development suite";
     docker.enable = mkEnableOption "Docker";
     podman.enable = mkEnableOption "Podman";
+    surrealdb.enable = mkEnableOption "SurrealDB";
   };
 
   config = mkIf cfg.enable {
