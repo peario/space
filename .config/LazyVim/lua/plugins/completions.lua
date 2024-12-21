@@ -17,8 +17,8 @@ return {
         "L3MON4D3/LuaSnip",
         lazy = false,
         dependencies = {
-          { "rafamadriz/friendly-snippets" },
-          { "nvim-treesitter/nvim-treesitter" },
+          "rafamadriz/friendly-snippets",
+          "nvim-treesitter/nvim-treesitter",
         },
         opts = function()
           -- Add extra snippets from `friendly-snippets`
@@ -258,31 +258,6 @@ return {
           -- end, { "i", "s" }),
         }),
       }
-    end,
-  },
-  -- Convert snippets from one engine to another
-  {
-    "smjonas/snippet-converter.nvim",
-    lazy = false,
-    enabled = false,
-    config = function()
-      local template = {
-        sources = {
-          ultisnips = {
-            vim.fn.stdpath("config") .. "/UltiSnips",
-          },
-        },
-        output = {
-          -- Specify the output formats and paths
-          vscode_luasnip = {
-            vim.fn.stdpath("config") .. "/snippets",
-          },
-        },
-      }
-
-      require("snippet_converter").setup({
-        templates = { template },
-      })
     end,
   },
 }

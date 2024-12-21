@@ -24,12 +24,13 @@ return {
       -- setup a pdf-viewer, will later be switched to a terminal pdf-viewer
       local hasSioyek = vim.fn.executable("sioyek") == 1
       local hasZathura = vim.fn.executable("zathura") == 1
+      local hasPplatex = vim.fn.executable("pplatex") == 1
 
       vim.g.vimtex_view_method = hasSioyek and "sioyek" or hasZathura and "zathura"
       vim.g.vimtex_view_sioyek_options = "--reuse-window"
 
       vim.g.vimtex_mappings_disable = { ["n"] = { "K" } } -- disable `K` as it conflicts with LSP hover
-      vim.g.vimtex_quickfix_method = vim.fn.executable("pplatex") == 1 and "pplatex" or "latexlog"
+      vim.g.vimtex_quickfix_method = hasPplatex and "pplatex" or "latexlog"
       vim.g.vimtex_quickfix_mode = 0 -- Don't automatically show/hide quickfix window on save/build
     end,
     keys = {

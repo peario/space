@@ -18,7 +18,11 @@ in
   config = mkIf cfg.enable {
     home.packages =
       with pkgs;
-      [ chafa ]
+      [
+        chafa
+        viu
+        ueberzugpp
+      ]
       ++ lib.optionals stdenv.isLinux [
         darktable
         digikam

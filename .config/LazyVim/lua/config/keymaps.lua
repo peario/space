@@ -1,4 +1,21 @@
-local map = require("util.map")
+local map = {}
+
+---Set keybind
+---@param mode (string|string[])? Which modes to run mapping in, defaults to `n`
+---@param key string Which keypress(es) trigger the action
+---@param action string|function What happens once triggered
+---@param name string? Name/desc of mapping (overwrites `opts.desc`), defaults to `nil` (empty)
+---@param opts vim.keymap.set.Opts? All default options (for keymaps) are valid, defaults to `{ noremap = true, silent = true }`
+function map.set(mode, key, action, name, opts)
+  mode = mode or "n"
+  opts = opts or { noremap = true, silent = true }
+
+  if name ~= nil then
+    opts.desc = name
+  end
+
+  vim.keymap.set(mode, key, action, opts)
+end
 
 -- From my experience, use `<cmd>` instead of `:` for commands.
 -- Some commands using `:` very briefly shows cmd input/line

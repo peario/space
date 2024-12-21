@@ -15,7 +15,7 @@ in
   options.${namespace}.programs.terminal.emulators.kitty = with types; {
     enable = mkEnableOption "kitty";
     font = mkOpt str "Victor Mono" "Font to use in kitty.";
-    fontSize = mkOpt int 14 "Font size to use in kitty.";
+    fontSize = mkOpt int 15 "Font size to use in kitty.";
   };
 
   config = mkIf cfg.enable {
@@ -86,42 +86,49 @@ in
         }
         // {
           # Colorscheme - Bamboo
-          background = "#252623";
-          foreground = "#f1e9d2";
-          selection_background = "#5b5e5a";
-          selection_foreground = "#f1e9d2";
+          background = "#2E3440";
+          foreground = "#E5E9F0";
+          selection_background = "#3F4758";
 
-          cursor = "#fff8f0";
-          cursor_text_color = "#0f0800";
+          cursor = "#81A1C1";
+          url_color = "#88C0D0";
 
-          active_tab_background = "#f1e9d2";
-          active_tab_foreground = "#111210";
-          inactive_tab_background = "#3a3d37";
-          inactive_tab_foreground = "#5b5e5a";
+          active_tab_foreground = "#88C0D0";
+          active_tab_background = "#434C5E";
+          inactive_tab_foreground = "#6C7A96";
+          inactive_tab_background = "#2E3440";
 
-          color0 = "#1c1e1b";
-          color8 = "#5b5e5a";
+          # black
+          color0 = "#3B4252";
+          color8 = "#4C566A";
 
-          color1 = "#e75a7c";
-          color9 = "#e75a7c";
+          # red
+          color1 = "#E06C75";
+          color9 = "#E06C75";
 
-          color2 = "#8fb573";
-          color10 = "#8fb573";
+          # green
+          color2 = "#9EC183";
+          color10 = "#9EC183";
 
-          color3 = "#dbb651";
-          color11 = "#dbb651";
+          # yellow
+          color3 = "#EBCB8B";
+          color11 = "#EBCB8B";
 
-          color4 = "#57a5e5";
-          color12 = "#57a5e5";
+          # blue
+          color4 = "#81A1C1";
+          color12 = "#81A1C1";
 
-          color5 = "#aaaaff";
-          color13 = "#aaaaff";
+          # magenta
+          color5 = "#B988B0";
+          color13 = "#B988B0";
 
-          color6 = "#70c2be";
-          color14 = "#70c2be";
+          # cyan
+          color6 = "#88C0D0";
+          color14 = "#8FBCBB";
 
-          color7 = "#f1e9dc";
-          color15 = "#fff8f0";
+          # white
+          color7 = "#E5E9F0";
+          color15 = "#ECEFF4";
         }
         // lib.optionalAttrs pkgs.stdenv.isDarwin {
           hide_window_decorations = "titlebar-only";

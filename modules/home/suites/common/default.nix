@@ -38,15 +38,15 @@ in
           emulators = {
             alacritty = {
               enable = true;
-              font = "Monaspace Neon Var";
+              font = "Lilex Nerd Font";
+              fontSize = "16";
             };
             foot.enable = pkgs.stdenv.isLinux;
-            # FIX: Broken in macOS 15.1, can't be launched via Raycast, only finder and as command
-            # kitty = {
-            #   enable = false;
-            #   font = "Monaspace Neon Var";
-            #   fontSize = 15;
-            # };
+            kitty = {
+              enable = true;
+              font = "Lilex Nerd Font Mono";
+              fontSize = 16;
+            };
             # FIX: Broken, lower half of terminal doesn't function
             # rio = {
             #   enable = false;
@@ -55,8 +55,7 @@ in
             warp = disabled;
             wezterm = {
               enable = true;
-              # TODO: Setup font family support
-              # font = "Monaspace Neon Var";
+              # font = "Lilex Nerd Font";
               fontSize = "16";
             };
           };

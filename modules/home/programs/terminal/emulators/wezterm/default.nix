@@ -1,9 +1,7 @@
 {
   config,
-  # inputs,
   lib,
   pkgs,
-  # system,
   namespace,
   ...
 }:
@@ -17,8 +15,9 @@ in
 {
   options.${namespace}.programs.terminal.emulators.wezterm = with types; {
     enable = mkEnableOption "WezTerm";
-    # font = mkOpt str "Victor Mono" "Font to use in kitty.";
-    fontSize = mkOpt str "15" "Font size to use in kitty.";
+    # NOTE: fontSize is of type "str" due to config allowing decimal values.
+    # But Nix doesn't allow floating point numbers (decimal as number).
+    fontSize = mkOpt str "15.0" "Font size to use in WezTerm.";
   };
 
   config = mkIf cfg.enable {

@@ -15,6 +15,9 @@ in
   options.${namespace}.programs.terminal.emulators.alacritty = with types; {
     enable = mkEnableOption "Alacritty";
     font = mkOpt str "Victor Mono" "Font to use in alacritty.";
+    # NOTE: fontSize is of type "str" due to config allowing decimal values.
+    # But Nix doesn't allow floating point numbers (decimal as number).
+    fontSize = mkOpt str "15.0" "Font size to use in alacritty.";
   };
 
   config = mkIf cfg.enable {
@@ -32,7 +35,7 @@ in
           };
 
           font = {
-            size = 15.0;
+            size = cfg.fontSize;
 
             offset = {
               x = 0;

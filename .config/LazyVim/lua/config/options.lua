@@ -2,6 +2,9 @@
 vim.g.mapleader = " "
 vim.g.maplocalleader = ","
 
+-- LazyVim options
+vim.g.snacks_animate = false
+
 -- Providers
 local providers = { "perl", "ruby", "node" }
 for _, provider in ipairs(providers) do
