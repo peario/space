@@ -61,9 +61,12 @@ in
         LESSHISTFILE = "$XDG_CACHE_HOME/less.history";
         WGETRC = "$XDG_CONFIG_HOME/wgetrc";
 
-        MANPAGER = ''nvim -c 'set ft=man bt=nowrite noswapfile nobk shada=\"NONE\" ro noma' +Man! -o -'';
+        MANPAGER = "sh -c 'col -bx | bat -l man -p'";
+        # NOTE: Uncomment this if there's formatting issues in the man pager
+        # MANROFFOPT="-c";
+
         SYSTEMD_PAGERSECURE = "true";
-        PAGER = "less -FR";
+        PAGER = "bat";
         LESS = lib.concatStringsSep " " pagerArgs;
         SYSTEMD_LESS = lib.concatStringsSep " " (
           pagerArgs

@@ -38,14 +38,18 @@ in
         # Colors - Rose Pine Moon
         # "--color=fg:#908caa,bg:#232136,hl:#ea9a97"
         # "--color=fg+:#e0def4,bg+:#393552,hl+:#ea9a97"
-        "--color=border:#44415a,header:#3e8fb0,gutter:#232136"
-        "--color=spinner:#f6c177,info:#9ccfd8"
-        "--color=pointer:#c4a7e7,marker:#eb6f92,prompt:#908caa"
+        # "--color=border:#44415a,header:#3e8fb0,gutter:#232136"
+        # "--color=spinner:#f6c177,info:#9ccfd8"
+        # "--color=pointer:#c4a7e7,marker:#eb6f92,prompt:#908caa"
+
+        # Colors - OneNord.nvim
+        "--color=border:#646A76,header:#5E81AC,gutter:"
+        "--color=spinner:#EBCB8B,info:#88C0D0"
+        "--color=pointer:#81A1C1,marker:#D08F70,prompt:"
       ];
 
-      # TODO(zsh): Research why ZSH integration might be disabled.
       enableBashIntegration = true;
-      enableZshIntegration = false;
+      enableZshIntegration = true;
       enableFishIntegration = true;
 
       tmux = {

@@ -161,6 +161,9 @@ in
             # Hide "Last Login: ..." message in new terminal/session
             [ ! -f ~/.hushlogin ] && touch ~/.hushlogin
 
+            alias -g -- -h='-h 2>&1 | bat --language=help --style=plain'
+            alias -g -- --help='--help 2>&1 | bat --language=help --style=plain'
+
             bunnyfetch
           '';
 
