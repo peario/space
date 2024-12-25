@@ -2,6 +2,9 @@ return {
   {
     "ibhagwan/fzf-lua",
     version = "*",
+    dependencies = {
+      "nvim-tree/nvim-web-devicons",
+    },
     opts = function()
       -- local hasViu = vim.fn.executable("viu") == 1
       -- local hasChafa = vim.fn.executable("chafa") == 1

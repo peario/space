@@ -39,6 +39,8 @@ in
           onefetch
           postman
           silicon
+          sqruff # SQL linter
+          squawk # Postgresql linter
           tree-sitter
           ttyper
           xh
@@ -71,8 +73,10 @@ in
         ]
         ++ lib.optionals cfg.sql.enable [
           dbeaver-bin
-          mysql-workbench
-        ];
+          postgresql
+          sqlite
+        ]
+        ++ lib.optional (cfg.sql.enable && pkgs.stdenv.isLinux) mysql-workbench;
 
       shellAliases = {
         prefetch-sri = "nix store prefetch-file $1";

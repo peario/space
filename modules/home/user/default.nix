@@ -107,6 +107,9 @@ in
 
               echo "[3] 'nix-store --optimise -vv'"
               nix-store --optimise -vv
+
+              echo "[4] 'nix-index'"
+              nix-index
             '';
 
           gsed = "${getExe pkgs.gnused}";

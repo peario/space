@@ -12,3 +12,24 @@ vim.api.nvim_create_autocmd("FileType", {
     vim.opt_local.spelllang = { "sv", "en_us" }
   end,
 })
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = { "sql", "mysql", "plsql" },
+  callback = function()
+    local ok, cmp = pcall(require, "cmp")
+
+    if ok then
+      cmp.setup.buffer({
+        sources = {
+          { name = "vim-dadbod-completion" },
+          { name = "nvim_lsp" },
+          { name = "lazydev" },
+          { name = "luasnip" },
+          { name = "buffer" },
+          { name = "path" },
+        },
+      })
+    end
+  end,
+  group = augroup("dadbod_completion"),
+})

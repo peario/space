@@ -40,26 +40,23 @@ in
       packages = mkOption {
         type = with types; listOf package;
         default = with pkgs; [
-          cbfmt # required by nvim, formatting
-          dotenv-linter # required by nvim, diagnostics
-          hyperfine # benchmarking
           cargo-watch
           cargo-bloat
           cargo-expand
           cargo-sort
+          cbfmt # required by nvim, formatting
+          diesel-cli
+          diesel-cli-ext
+          dotenv-linter # required by nvim, diagnostics
+          hyperfine # benchmarking
           rustycli
           rustywind # required by nvim, formatting
-          # rustPlatform.bindgenHook
           silicon # screenshot tool
           skim # faster fzf
           systemfd
-          # FIX: Broken install
-          # trunk
+          wasm-bindgen-cli
           wasm-pack
           wasm-tools
-          wasm-bindgen-cli
-          # FIX: Broken install
-          # zig
         ];
         description = "Other packages for Rust.";
       };
@@ -81,18 +78,6 @@ in
         ++ lists.optionals cfg.other.enable cfg.other.packages
         ++ lists.optionals pkgs.stdenv.isLinux (with pkgs; [ jetbrains.rust-rover ])
         ++ lib.optional pkgs.stdenv.isDarwin pkgs.apple-sdk_15;
-      # ++ lists.optionals pkgs.stdenv.isDarwin (
-      #   with pkgs.darwin.apple_sdk.frameworks;
-      #   [
-      #     # TODO(apple_sdk): Check if all of them are necessary. Maybe extract somewhere else and
-      #     # make "opt-in"?
-      #     # For macOS systems
-      #     CoreServices
-      #     CoreFoundation
-      #     Foundation
-      #     AppKit
-      #   ]
-      # );
 
       sessionVariables = {
         CARGO_HOME = "${config.home.homeDirectory}/${cfg.cargoHome}";

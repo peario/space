@@ -70,7 +70,9 @@ in
       development = {
         enable = true;
 
+        docker.enable = true;
         nix.enable = true;
+        sql.enable = true;
       };
       music = enabled;
       networking = enabled;

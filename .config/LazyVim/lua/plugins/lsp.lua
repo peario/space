@@ -7,30 +7,33 @@ return {
     opts = {
       ensure_installed = {
         -- LSP
-        "templ",
         "css-lsp",
         "lemminx",
+        "sqlls",
+        "templ",
         -- Formatter
-        "crlfmt",
+        "cbfmt",
         "clang-format",
+        "crlfmt",
         "goimports-reviser",
         "golines",
         "rustywind",
-        "cbfmt",
         "nixpkgs-fmt",
         "xmlformatter",
         -- Linter
         "cpplint",
-        "revive",
-        "trivy",
         "htmlhint",
+        "revive",
         "stylelint",
+        -- NOTE: Needs to be installed outside of neovim
+        -- "sqruff",
+        "trivy",
         -- DAP
         -- QoF (Quality of Life), usually commands
+        "gomodifytags",
         "iferr",
         "impl",
         "json-to-struct",
-        "gomodifytags",
         "nilaway",
       },
     },
@@ -51,6 +54,7 @@ return {
         go = { "crlfmt", "goimports-reviser", "golines", "gofumpt" },
         html = { "rustywind", "prettier" },
         markdown = { "cbfmt" },
+        -- sql = { "sqruff" },
         svg = { "xmlformatter" },
         xml = { "xmlformatter" },
       },
@@ -76,6 +80,7 @@ return {
         php = { "trivy" },
         python = { "trivy" },
         rust = { "trivy" },
+        -- sql = { "sqruff" },
         typescript = { "trivy" },
       },
     },
@@ -91,6 +96,10 @@ return {
         dependencies = { "nvim-treesitter" },
         opts = {},
       },
+      -- For those sources which uses "vim.ui.select"
+      "ibhagwan/fzf-lua",
+      -- For those sources which uses "vim.ui.input"
+      "folke/snacks.nvim",
     },
     opts = function(_, opts)
       local h = require("null-ls.helpers")
@@ -127,7 +136,7 @@ return {
 
             -- Store first match of valid fileformats if found.
             local config_file_paths = vim.fs.find(conf_files, {
-              path = params.bufname,
+              path = vim.fn.bufname(params.bufnr),
               upward = true,
               stop = vim.fs.dirname(params.root),
             })[1]
@@ -138,8 +147,9 @@ return {
         }),
         nls.builtins.diagnostics.dotenv_linter.with({
           runtime_condition = h.cache.by_bufnr(function(params)
+            local buffer_name = vim.fn.bufname(params.bufnr)
             -- Include files containing ".env" but explicitly exclude ".envrc"
-            return params.bufname:find("%.env") ~= nil and not params.bufname:find("%.envrc$")
+            return buffer_name:find("%.env") ~= nil and not buffer_name:find("%.envrc$")
           end),
         }),
         nls.builtins.diagnostics.revive.with({
@@ -150,7 +160,7 @@ return {
             -- If config file exists, use it.
             local config_file_name = "revive.toml"
             local config_file_path = vim.fs.find(config_file_name, {
-              path = params.bufname,
+              path = vim.fn.bufname(params.bufnr),
               upward = true,
               stop = vim.fs.dirname(params.root),
             })[1]
@@ -162,7 +172,30 @@ return {
             return default_args
           end),
         }),
-        nls.builtins.diagnostics.sqlfluff,
+        nls.builtins.diagnostics.sqruff.with({
+          -- Overwrite "sqruff" with a different tool
+          command = "squawk",
+          -- Make sure that revive checks for config files in project and use if found.
+          args = h.cache.by_bufnr(function(params)
+            local default_args = {
+              "$FILENAME",
+            }
+
+            -- If config file exists, use it.
+            local config_file_name = ".squawk.toml"
+            local config_file_path = vim.fs.find(config_file_name, {
+              path = vim.fn.bufname(params.bufnr),
+              upward = true,
+              stop = vim.fs.dirname(params.root),
+            })[1]
+
+            if config_file_path then
+              default_args = vim.list_extend({ "--config", config_file_path }, default_args)
+            end
+
+            return default_args
+          end),
+        }),
         nls.builtins.diagnostics.trivy,
         nls.builtins.diagnostics.zsh,
         -- Formatting

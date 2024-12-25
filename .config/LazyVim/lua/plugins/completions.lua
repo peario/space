@@ -84,6 +84,7 @@ return {
       "hrsh7th/cmp-cmdline", -- Search (/) and Command (:)
       "petertriho/cmp-git", -- Git
       "micangl/cmp-vimtex", -- VimTeX
+      "kristijanhusak/vim-dadbod-completion", -- Database
     },
     ---@param opts cmp.ConfigSchema
     opts = function(_, opts)
@@ -109,7 +110,7 @@ return {
       })
 
       -- Add VimTeX completions in tex files
-      cmp.setup.filetype({ "plaintex", "tex" }, {
+      cmp.setup.filetype({ "plaintex", "latex", "tex" }, {
         sources = cmp.config.sources({
           { name = "vimtex" },
           { name = "nvim_lsp" },
@@ -131,7 +132,6 @@ return {
         mapping = cmp.mapping.preset.cmdline(),
         sources = cmp.config.sources({
           { name = "path" },
-        }, {
           { name = "cmdline" },
         }),
       })
@@ -142,6 +142,7 @@ return {
           { name = "nvim_lsp" },
           { name = "lazydev" },
           { name = "luasnip" },
+          { name = "buffer" },
           { name = "path" },
         }),
         formatting = {
@@ -155,6 +156,7 @@ return {
               cmdline = "[Cmdline]",
               git = "[Git]",
               vimtex = "[VimTeX]",
+              dadbod = "[DB]",
             })[entry.source.name]
 
             vim_item.dup = ({
@@ -166,6 +168,7 @@ return {
               cmdline = 0,
               git = 0,
               vimtex = 0,
+              dadbod = 0,
             })[entry.source.name] or 0
 
             return vim_item

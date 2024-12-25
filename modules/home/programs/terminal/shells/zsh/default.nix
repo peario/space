@@ -83,6 +83,7 @@ in
         sessionVariables = {
           LC_ALL = "en_US.UTF-8";
           KEYTIMEOUT = 0;
+          NIX_INDEX_DATABASE = "${config.${namespace}.user.home}/.local/state/nix/index";
         };
 
         syntaxHighlighting = {
