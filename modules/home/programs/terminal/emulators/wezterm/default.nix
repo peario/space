@@ -206,7 +206,7 @@ in
             -- font
             font_size = ${cfg.fontSize},
             font = wezterm.font_with_fallback {
-              { family = "Lilex Nerd Font", weight = "Regular" },
+              { family = "Lilex Nerd Font Mono", weight = "Regular" },
               { family = "CaskaydiaCove Nerd Font", weight = "Regular" },
               { family = "Symbols Nerd Font", weight = "Regular" },
               { family = "Noto Color Emoji", weight = "Regular" },

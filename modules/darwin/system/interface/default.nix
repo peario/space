@@ -123,7 +123,7 @@ in
           "/Applications/Visual Studio Code.app"
           "${pkgs.bruno}/Applications/Bruno.app"
           # TODO: implement small_blank
-          "${pkgs.wezterm}/Applications/WezTerm.app"
+          "${pkgs.kitty}/Applications/kitty.app"
         ];
       };
 

@@ -21,6 +21,7 @@ in
     homebrew = {
       casks = [
         "azure-data-studio"
+        "balenaetcher"
         "cutter"
         "github" # GitHub Desktop
         "gitkraken" # Git client; GUI

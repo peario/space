@@ -110,11 +110,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
-    neovim-src = {
-      url = "github:neovim/neovim";
-      flake = false;
-    };
+    neovim-nightly-overlay.url = "github:nix-community/neovim-nightly-overlay";
+    # neovim-src = {
+    #   url = "github:neovim/neovim";
+    #   flake = false;
+    # };
 
     # Weekly updating nix-index database
     nix-index-database = {

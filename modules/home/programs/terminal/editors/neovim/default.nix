@@ -3,6 +3,7 @@
   lib,
   pkgs,
   namespace,
+  inputs,
   ...
 }:
 let
@@ -31,10 +32,10 @@ in
   };
 
   config = mkIf cfg.enable {
-    # programs.neovim = {
-    #   enable = true;
-    #   package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
-    # };
+    programs.neovim = {
+      enable = true;
+      package = inputs.neovim-nightly-overlay.packages.${pkgs.system}.default;
+    };
 
     home = {
       sessionVariables = {
@@ -42,12 +43,12 @@ in
         VISUAL = mkIf cfg.default.visual "nvim";
       };
 
-      packages = with pkgs; [
-        # Version: nightly (v0.11.0-dev), set within `overlays/neovim/default.nix`
-        neovim-unwrapped
-        # FIX: Broken install
-        # neovide
-      ];
+      # packages = with pkgs; [
+      #   # Version: nightly (v0.11.0-dev), set within `overlays/neovim/default.nix`
+      #   neovim-unwrapped
+      #   # FIX: Broken install
+      #   # neovide
+      # ];
     };
 
     xdg.configFile = {
