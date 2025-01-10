@@ -17,9 +17,9 @@ in
   config = mkIf cfg.enable {
     homebrew = {
       casks = [
-        # NOTE: Currently not using either of these
+        # NOTE: Currently not in use
         # "cumulus" # Soundcloud
-        # "spotify"
+        "spotify"
       ];
     };
   };

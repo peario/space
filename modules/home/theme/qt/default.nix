@@ -76,7 +76,9 @@ in
         kdePackages.breeze-icons
         kdePackages.qqc2-desktop-style
         kdePackages.qt6ct
+        kdePackages.qt6gtk2 # qt6
         kdePackages.qtwayland # qt6
+        kdePackages.qtstyleplugin-kvantum # qt6
         libsForQt5.breeze-qt5
         libsForQt5.qt5.qtwayland # qt5
         libsForQt5.qt5ct
@@ -84,8 +86,8 @@ in
         libsForQt5.qtstyleplugins
         qt6.qtsvg # needed to load breeze icons
         qt6.qtwayland
-        qt6Packages.qt6gtk2
-        qt6Packages.qtstyleplugin-kvantum
+        # qt6Packages.qt6gtk2
+        # qt6Packages.qtstyleplugin-kvantum
       ];
 
       sessionVariables = {
