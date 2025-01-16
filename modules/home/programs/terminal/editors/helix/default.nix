@@ -38,8 +38,7 @@ in
               nil
               nixfmt-rfc-style
               bash-language-server
-              nodePackages.vscode-css-languageserver-bin
-              nodePackages.vscode-langservers-extracted
+              vscode-langservers-extracted
               nodePackages.prettier
               rustfmt
               rust-analyzer
@@ -50,7 +49,7 @@ in
 
       settings = {
         editor = {
-          bufferline = "always";
+          bufferline = "multiple";
           color-modes = true;
           completion-replace = true;
           cursorline = true;
@@ -122,10 +121,16 @@ in
           true-color = true;
         };
 
-        keys.normal.space.u = {
-          f = ":format"; # format using LSP formatter
-          w = ":set whitespace.render all";
-          W = ":set whitespace.render none";
+        keys.normal = {
+          esc = [
+            "collapse_selection"
+            "keep_primary_selection"
+          ];
+          space.u = {
+            f = ":format"; # format using LSP formatter
+            w = ":set whitespace.render all";
+            W = ":set whitespace.render none";
+          };
         };
       };
     };

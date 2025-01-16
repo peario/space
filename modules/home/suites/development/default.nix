@@ -170,7 +170,7 @@ in
               #   visual = true;
               # };
             };
-            # helix = enabled;
+            helix = enabled;
             # micro = enabled;
             neovim = {
               enable = true;

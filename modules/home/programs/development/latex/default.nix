@@ -22,7 +22,8 @@ in
 
     package = mkOption {
       type = types.package;
-      default = pkgs.texliveMedium; # This contains formatter, linter, etc.
+      # default = pkgs.texliveMedium; # This contains formatter, linter, etc.
+      default = pkgs.texliveBookPub;
       description = "Package to use for LaTeX.";
     };
 
@@ -43,7 +44,8 @@ in
           with pkgs;
           [
             # LaTeX backend
-            biber
+            # NOTE: added with `pkgs.texliveBookPub`
+            # biber
           ]
           ++ lists.optionals pkgs.stdenv.isLinux [
             # Sioyek on Mac is installed via homebrew, zathura exists as "home package".
